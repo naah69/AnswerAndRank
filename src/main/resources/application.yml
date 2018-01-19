@@ -2,8 +2,8 @@ logging:
   level:
     ROOT : INFO
 mybatis:
-#  config-location: classpath:mybatis/mybatis-config.xml
-#  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
 server:
   port: 80
 spring:
