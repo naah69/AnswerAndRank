@@ -1,6 +1,11 @@
+logging:
+  level:
+    ROOT : INFO
 mybatis:
-  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*.xml
+#  config-location: classpath:mybatis/mybatis-config.xml
+#  mapper-locations: classpath:mybatis/mapper/*.xml
+server:
+  port: 8080
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -9,23 +14,23 @@ spring:
       driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
       username: root
       password:
-      # ÏÂÃæÎªÁ¬½Ó³ØµÄ²¹³äÉèÖÃ£¬Ó¦ÓÃµ½ÉÏÃæËùÓĞÊı¾İÔ´ÖĞ
+      # ä¸‹é¢ä¸ºè¿æ¥æ± çš„è¡¥å……è®¾ç½®ï¼Œåº”ç”¨åˆ°ä¸Šé¢æ‰€æœ‰æ•°æ®æºä¸­
       initial-size: 5
-      # ³õÊ¼»¯´óĞ¡£¬×îĞ¡£¬×î´ó
+      # åˆå§‹åŒ–å¤§å°ï¼Œæœ€å°ï¼Œæœ€å¤§
       min-idle: 5
       max-active: 5000
-      # ÅäÖÃ»ñÈ¡Á¬½ÓµÈ´ı³¬Ê±µÄÊ±¼ä
+      # é…ç½®è·å–è¿æ¥ç­‰å¾…è¶…æ—¶çš„æ—¶é—´
       max-wait: 120000
       use-unfair-lock: true
-      # ÅäÖÃ¼ä¸ô¶à¾Ã²Å½øĞĞÒ»´Î¼ì²â£¬¼ì²âĞèÒª¹Ø±ÕµÄ¿ÕÏĞÁ¬½Ó£¬µ¥Î»ÊÇºÁÃë
+      # é…ç½®é—´éš”å¤šä¹…æ‰è¿›è¡Œä¸€æ¬¡æ£€æµ‹ï¼Œæ£€æµ‹éœ€è¦å…³é—­çš„ç©ºé—²è¿æ¥ï¼Œå•ä½æ˜¯æ¯«ç§’
       time-between-eviction-runs-millis: 300000
-      # ÅäÖÃÒ»¸öÁ¬½ÓÔÚ³ØÖĞ×îĞ¡Éú´æµÄÊ±¼ä£¬µ¥Î»ÊÇºÁÃë
+      # é…ç½®ä¸€ä¸ªè¿æ¥åœ¨æ± ä¸­æœ€å°ç”Ÿå­˜çš„æ—¶é—´ï¼Œå•ä½æ˜¯æ¯«ç§’
       min-evictable-idle-time-millis: 500
       validation-query: select 'x'
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
       remove-abandoned: true
-      # ´ò¿ªPSCache£¬²¢ÇÒÖ¸¶¨Ã¿¸öÁ¬½ÓÉÏPSCacheµÄ´óĞ¡
+      # æ‰“å¼€PSCacheï¼Œå¹¶ä¸”æŒ‡å®šæ¯ä¸ªè¿æ¥ä¸ŠPSCacheçš„å¤§å°
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 200
