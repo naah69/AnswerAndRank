@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xyl.game.Service.ExctFileSerivce;
-
+/**
+ * 
+ * @author dazhi
+ *
+ */
 @Controller
 public class FileLoadContraller {
 	
