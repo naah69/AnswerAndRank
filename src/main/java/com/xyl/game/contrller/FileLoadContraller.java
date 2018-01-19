@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.xyl.game.Service.ExctFileSerivce;
 /**
- * 
+ * 接收Exct文件
  * @author dazhi
  *
  */
