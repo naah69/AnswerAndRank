@@ -16,5 +16,6 @@ public class GameApplication {
 	public static void main(String[] args) {
 		PropertyConfigurator.configure(PropertiesUtils.initProperties("log4j.properties"));
 		SpringApplication.run(GameApplication.class, args);
+        System.out.println("111");
 	}
 }
