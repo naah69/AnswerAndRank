@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.Service.impl.AnnualMeetingQuestionExctFileServiceImpl;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 
 /**
@@ -22,6 +23,8 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
  */
 @Controller
 public class AnnualMeetingQuestionFileLoadContraller {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionFileLoadContraller.class);
 
 	@Autowired 
 	private AnnualMeetingQuestionExctFileSerivce exctFileSerivce;
@@ -36,6 +39,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		try {
 			savaDataForExct = exctFileSerivce.savaDataForExct(multipartFile.getInputStream());
 		} catch (IOException e) {
+			logger.error("系统异常");
 			e.printStackTrace();
 		}
 		return savaDataForExct;
@@ -43,14 +47,11 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	
 	/**
 	 * 查询数据库以及存储的数据
-	 */
+	 *//*
 	@RequestMapping("/loadExctFile")
 	@ResponseBody
 	public AnnualMeetingGameQuestionVo getAllGameQuestion(){
-		AnnualMeetingGameQuestionVo savaDataForExct = null;
-		
-		
-		
-		return savaDataForExct;
-	}
+		//return exctFileSerivce.getAllGameQuestion();
+		return null;
+	}*/
 }

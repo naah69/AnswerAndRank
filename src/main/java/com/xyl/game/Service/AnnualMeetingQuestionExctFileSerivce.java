@@ -16,6 +16,6 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	 */
 	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream);
 	
-	
+	//public AnnualMeetingGameQuestionVo getAllGameQuestion();
 	
 }

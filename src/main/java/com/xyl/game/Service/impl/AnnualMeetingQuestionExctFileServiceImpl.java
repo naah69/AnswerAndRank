@@ -19,6 +19,8 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQuestionExctFileSerivce{
 
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionExctFileServiceImpl.class);
+	/*@Autowired
+	private AnnualMeetingGameQuestionMapper annualMeetingGameQuestionMapper;*/
 	
 	@Override
 	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream){
@@ -62,5 +64,25 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	private List<AnnualMeetingGameQuestion> analyzingExctData(Workbook workbook) throws Exception{
 		return null;
 	}
+
+	/**
+	 * 获得所有年会问题数据
+	 */
+	
+	/*
+	 * @Override
+	 * public AnnualMeetingGameQuestionVo getAllGameQuestion() {
+		try {
+			List<AnnualMeetingGameQuestion> selectAll = annualMeetingGameQuestionMapper.selectAll();
+			
+			Integer allConut = annualMeetingGameQuestionMapper.getAllConut();
+			
+			return new AnnualMeetingGameQuestionVo(selectAll, AnnualMeetingGameQuestionVo.STATE_NUM_SUCCESS, "success", allConut);
+		} catch (Exception e) {
+			logger.error("数据查询异常");
+			return new AnnualMeetingGameQuestionVo(null, AnnualMeetingGameQuestionVo.STATE_NUM_EXCEPTION, "数据查询异常" , 0);
+		}
+		
+	}*/
 
 }

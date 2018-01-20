@@ -15,5 +15,9 @@
     <select id="selectAll" parameterType="AnnualMeetingGameQuestion" resultType="AnnualMeetingGameQuestion">
 		select * FROM  AnnualMeetingGameQuestion
 	</select>
+	
+	<select id="getAllConut" parameterType="AnnualMeetingGameQuestion" resultType="Integer">
+		select count() FROM  AnnualMeetingGameQuestion
+	</select>
 
 </mapper>
