@@ -1,5 +1,7 @@
 package com.xyl.game.Service.impl;
 
+import java.io.InputStream;
+
 import org.springframework.stereotype.Service;
 
 import com.xyl.game.Service.ExctFileSerivce;
@@ -8,8 +10,7 @@ import com.xyl.game.Service.ExctFileSerivce;
 public class ExctFileServiceImpl implements ExctFileSerivce{
 
 	@Override
-	public void savaDataForExct() throws Exception {
-		// TODO Auto-generated method stub
+	public void savaDataForExct(InputStream exctFileStream) throws Exception {
 		
 	}
 

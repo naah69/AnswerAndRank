@@ -1,5 +1,8 @@
 package com.xyl.game.contrller;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,8 @@ public class FileLoadContraller {
 	@RequestMapping("/loadExctFile")
 	@ResponseBody
 	public String uploadExct(@RequestParam(value="exctFile")MultipartFile multipartFile){
+		
+		
 		
 		return null;
 	}
