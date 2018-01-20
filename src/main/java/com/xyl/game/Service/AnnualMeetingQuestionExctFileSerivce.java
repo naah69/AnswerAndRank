@@ -7,5 +7,5 @@ import java.io.InputStream;
  * @author dazhi
  */
 public interface AnnualMeetingQuestionExctFileSerivce {
-	public void savaDataForExct(InputStream exctFileStream) throws Exception;
+	public Integer savaDataForExct(InputStream exctFileStream) throws Exception;
 }
