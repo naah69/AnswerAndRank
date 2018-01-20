@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 
 @Service
 public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQuestionExctFileSerivce{
@@ -19,7 +20,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionExctFileServiceImpl.class);
 	
 	@Override
-	public Integer savaDataForExct(InputStream exctFileStream) throws Exception {
+	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream) throws Exception {
 		//创建对Excel工作簿文件的引用
 		Workbook workbook = null;
 		try {
@@ -31,16 +32,15 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 				workbook = new XSSFWorkbook();
 			}
 			List<AnnualMeetingGameQuestion> analyzingExctData = analyzingExctData(workbook);
-			
 		} catch (Exception e) {
 			logger.error("文件加载异常",e.toString());
-			return 0;
+			return null;
 		} finally {
 			if(workbook != null){
 				workbook.close();
 			}
 		}
-		return 1;
+		return null;
 	}
 	
 	private List<AnnualMeetingGameQuestion> analyzingExctData(Workbook workbook) throws Exception{
