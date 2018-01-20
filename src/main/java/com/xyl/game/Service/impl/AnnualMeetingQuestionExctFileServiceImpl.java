@@ -4,10 +4,10 @@ import java.io.InputStream;
 
 import org.springframework.stereotype.Service;
 
-import com.xyl.game.Service.ExctFileSerivce;
+import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
 
 @Service
-public class ExctFileServiceImpl implements ExctFileSerivce{
+public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQuestionExctFileSerivce{
 
 	@Override
 	public void savaDataForExct(InputStream exctFileStream) throws Exception {

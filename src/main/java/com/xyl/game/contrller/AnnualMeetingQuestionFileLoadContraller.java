@@ -10,17 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.xyl.game.Service.ExctFileSerivce;
+import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+
 /**
  * 接收Exct文件
  * @author dazhi
  *
  */
 @Controller
-public class FileLoadContraller {
-	
+public class AnnualMeetingQuestionFileLoadContraller {
+
 	@Autowired 
-	private ExctFileSerivce exctFileSerivce;
+	private AnnualMeetingQuestionExctFileSerivce exctFileSerivce;
 	
 	@RequestMapping("/loadExctFile")
 	@ResponseBody
