@@ -23,6 +23,8 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream) throws Exception {
 		//创建对Excel工作簿文件的引用
 		Workbook workbook = null;
+		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo= new AnnualMeetingGameQuestionVo();
+		
 		try {
 			try{
 				workbook = new HSSFWorkbook(exctFileStream);
@@ -32,19 +34,25 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 				workbook = new XSSFWorkbook();
 			}
 			List<AnnualMeetingGameQuestion> analyzingExctData = analyzingExctData(workbook);
+			
+			//封装解析出来的所有exct数据
+			annualMeetingGameQuestionVo.setAllQuestions(analyzingExctData);
+			annualMeetingGameQuestionVo.setState(1);
+			annualMeetingGameQuestionVo.setStateInfo("success");
+			return annualMeetingGameQuestionVo;
 		} catch (Exception e) {
 			logger.error("文件加载异常",e.toString());
-			return null;
+			annualMeetingGameQuestionVo.setState(2);
+			annualMeetingGameQuestionVo.setStateInfo("文件加载异常");
+			return annualMeetingGameQuestionVo;
 		} finally {
 			if(workbook != null){
 				workbook.close();
 			}
 		}
-		return null;
 	}
 	
 	private List<AnnualMeetingGameQuestion> analyzingExctData(Workbook workbook) throws Exception{
-		
 		return null;
 	}
 
