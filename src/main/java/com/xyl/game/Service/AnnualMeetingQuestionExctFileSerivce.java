@@ -9,5 +9,5 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
  * @author dazhi
  */
 public interface AnnualMeetingQuestionExctFileSerivce {
-	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream) throws Exception;
+	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream);
 }

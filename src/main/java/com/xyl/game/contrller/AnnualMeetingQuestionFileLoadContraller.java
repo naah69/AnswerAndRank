@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 
 /**
  * 接收Exct文件
@@ -28,11 +29,14 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	
 	@RequestMapping("/loadExctFile")
 	@ResponseBody
-	public String uploadExct(@RequestParam(value="exctFile")MultipartFile multipartFile){
-		
-		
-		
-		return null;
+	public AnnualMeetingGameQuestionVo uploadExct(@RequestParam(value="exctFile")MultipartFile multipartFile){
+		AnnualMeetingGameQuestionVo savaDataForExct = null;
+		try {
+			savaDataForExct = exctFileSerivce.savaDataForExct(multipartFile.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return savaDataForExct;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.xyl.game.Service.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionExctFileServiceImpl.class);
 	
 	@Override
-	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream) throws Exception {
+	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream){
 		//创建对Excel工作簿文件的引用
 		Workbook workbook = null;
 		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo= new AnnualMeetingGameQuestionVo();
@@ -39,15 +40,21 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			annualMeetingGameQuestionVo.setAllQuestions(analyzingExctData);
 			annualMeetingGameQuestionVo.setState(1);
 			annualMeetingGameQuestionVo.setStateInfo("success");
+			
 			return annualMeetingGameQuestionVo;
 		} catch (Exception e) {
 			logger.error("文件加载异常",e.toString());
 			annualMeetingGameQuestionVo.setState(2);
 			annualMeetingGameQuestionVo.setStateInfo("文件加载异常");
+			
 			return annualMeetingGameQuestionVo;
 		} finally {
 			if(workbook != null){
-				workbook.close();
+				try {
+					workbook.close();
+				} catch (IOException e) {
+					logger.warn("workbook资源没有关闭");
+				}
 			}
 		}
 	}
