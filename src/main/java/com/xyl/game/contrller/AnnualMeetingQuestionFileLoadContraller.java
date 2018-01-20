@@ -26,6 +26,9 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	@Autowired 
 	private AnnualMeetingQuestionExctFileSerivce exctFileSerivce;
 	
+	/**
+	 * 接收年会游戏上传的exct表格文件
+	 */
 	@RequestMapping("/loadExctFile")
 	@ResponseBody
 	public AnnualMeetingGameQuestionVo uploadExct(@RequestParam(value="exctFile")MultipartFile multipartFile){
@@ -38,4 +41,16 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		return savaDataForExct;
 	}
 	
+	/**
+	 * 查询数据库以及存储的数据
+	 */
+	@RequestMapping("/loadExctFile")
+	@ResponseBody
+	public AnnualMeetingGameQuestionVo getAllGameQuestion(){
+		AnnualMeetingGameQuestionVo savaDataForExct = null;
+		
+		
+		
+		return savaDataForExct;
+	}
 }

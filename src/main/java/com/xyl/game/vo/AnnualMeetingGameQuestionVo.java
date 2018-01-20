@@ -14,6 +14,8 @@ public class AnnualMeetingGameQuestionVo {
 	private List<AnnualMeetingGameQuestion> allQuestions;
 	//加载后的状态：0->无状态,1->成功,2->异常
 	private int state;
-	//加载后的状态的信心
+	//加载后的状态的信息
 	private String stateInfo;
+	//数据的数量
+	private Integer count;
 }

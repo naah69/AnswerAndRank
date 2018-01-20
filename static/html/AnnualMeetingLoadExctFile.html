@@ -32,57 +32,37 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
   <legend>数据库数据</legend>
 </fieldset>
- <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
+<table class="layui-hide" id="annualMeeting_question_table" lay-filter="user"></table>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
+<script type="text/javascript" src="../js/uploadExctFile.js"></script>
 <script type="text/javascript">
-layui.use('upload', function(){
-	var $ = layui.jquery,upload = layui.upload;
-	var demoListView = $('#demoList');
-	//拖拽上传
-	upload.render({
-	   elem: '#exctFileLoad'
-	   ,url: '/loadExctFile'
-	   ,method:'post'
-	   ,accept:'file'
-	   ,exts:'xls|xlsx|xlsm|xlsb'
-	   ,field:'exctFile'
-	   ,before: function(obj){ 
-	   	  demoListView.empty(); 
-	      var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-	      
-	      if(files.length>0){
-	      	delete files[0];
-	      }
-	      
-	      //读取本地文件
-	      obj.preview(function(index, file, result){
-	        var tr = $(['<tr id="upload-'+ index +'">'
-	          ,'<td>'+ file.name +'</td>'
-	          ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
-	          ,'<td>等待上传</td>'
-	          ,'<td>'
-	            ,'<button class="layui-btn layui-btn-mini layui-btn-danger demo-delete">删除</button>'
-	          ,'</td>'
-	        ,'</tr>'].join(''));
-	        
-	        //删除
-	        tr.find('.demo-delete').on('click', function(){
-	          delete files[index]; //删除对应的文件
-	          tr.remove();
-	          uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-	          //删除以及上传的数据
-	          
-	        });
-	        
-	        demoListView.append(tr);
-	      });
-	    }
-	   ,done: function(res,index,upload){
-	     console.log(res)
-	   }
-	});
+layui.use('table', function(){
+	var table = layui.table;
+	 table.render({
+	 	elem: '#annualMeeting_question_table'
+	 	,url: '/demo/table/user/'
+	 	,cols: [[
+	 	   {field:'id', title: 'id', width:'5%',sort: true}
+	 	   ,{field:'topic', title: '题目', width:'70%'}
+	 	   ,{field:'answer_one', title: '答案一', width:'5%'}
+	 	   ,{field:'answer_two', title: '答案二', width:'5%'}
+	 	   ,{field:'answer_three', title: '答案三', width:'5%'}
+	 	   ,{field:'answer_four', title: '答案四', width:'5%'}
+	 	   ,{field:'right_answer', title: '正确答案', width:'5%'}
+	 	]]
+	 	,id:'annualMeeting_question_table'
+	 	,loading:true
+	 	,response:{
+	 		  statusName: 'state' //数据状态的字段名称
+			  ,statusCode: 1 //成功的状态码
+			  ,msgName: 'stateInfo' //状态信息的字段名称
+			  ,countName: 'count' //数据总数的字段名称
+			  ,dataName: 'allQuestions' //数据列表的字段名称
+	 	}
+	 })
+	
+	
 })
-
 </script>
 </html>

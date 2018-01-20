@@ -9,5 +9,13 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
  * @author dazhi
  */
 public interface AnnualMeetingQuestionExctFileSerivce {
+	/**
+	 * 解析exct表格
+	 * @param exctFileStream
+	 * @return
+	 */
 	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream);
+	
+	
+	
 }
