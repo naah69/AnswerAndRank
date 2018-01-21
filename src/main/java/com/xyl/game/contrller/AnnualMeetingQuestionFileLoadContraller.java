@@ -1,7 +1,6 @@
 package com.xyl.game.contrller;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
-import com.xyl.game.Service.impl.AnnualMeetingQuestionExctFileServiceImpl;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 
 /**

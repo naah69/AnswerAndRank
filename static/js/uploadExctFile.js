@@ -11,11 +11,11 @@ layui.use('upload', function(){
 	   ,field:'exctFile'
 	   ,before: function(obj){ 
 	   	  demoListView.empty(); 
-	      var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+	      //var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
 	      
-	      if(files.length>0){
+	    /*  if(files.length>0){
 	      	delete files[0];
-	      }
+	      }*/
 	      
 	      //读取本地文件
 	      obj.preview(function(index, file, result){
@@ -30,7 +30,7 @@ layui.use('upload', function(){
 	        
 	        //删除
 	        tr.find('.demo-delete').on('click', function(){
-	          delete files[index]; //删除对应的文件
+	          //delete files[index]; //删除对应的文件
 	          tr.remove();
 	          uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
 	          //删除以及上传的数据
@@ -41,7 +41,9 @@ layui.use('upload', function(){
 	      });
 	    }
 	   ,done: function(res,index,upload){
-	     console.log(res)
+		   table.reload('annualMeeting_question_table_temporaryData',{
+			   data:res.allQuestions
+		   })
 	   }
 	});
 })

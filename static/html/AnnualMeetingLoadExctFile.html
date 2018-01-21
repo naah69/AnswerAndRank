@@ -25,6 +25,8 @@
       </tr></thead>
       <tbody id="demoList"></tbody>
     </table>
+    
+    <table class="layui-hide" id="annualMeeting_question_table_temporaryData" lay-filter="user"></table>
   </div>
   <button type="button" class="layui-btn" id="testListAction">开始上传</button>
 </div> 
@@ -35,21 +37,22 @@
 <table class="layui-hide" id="annualMeeting_question_table" lay-filter="user"></table>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
-<script type="text/javascript" src="../js/uploadExctFile.js"></script>
+
 <script type="text/javascript">
+var table = null;
 layui.use('table', function(){
-	var table = layui.table;
-	 table.render({
+	table = layui.table;
+	table.render({
 	 	elem: '#annualMeeting_question_table'
 	 	,url: '/demo/table/user/'
 	 	,cols: [[
 	 	   {field:'id', title: 'id', width:'5%',sort: true}
 	 	   ,{field:'topic', title: '题目', width:'70%'}
-	 	   ,{field:'answer_one', title: '答案一', width:'5%'}
-	 	   ,{field:'answer_two', title: '答案二', width:'5%'}
-	 	   ,{field:'answer_three', title: '答案三', width:'5%'}
-	 	   ,{field:'answer_four', title: '答案四', width:'5%'}
-	 	   ,{field:'right_answer', title: '正确答案', width:'5%'}
+	 	   ,{field:'answerOne', title: '答案一', width:'5%'}
+	 	   ,{field:'answerTwo', title: '答案二', width:'5%'}
+	 	   ,{field:'answerThree', title: '答案三', width:'5%'}
+	 	   ,{field:'answerFour', title: '答案四', width:'5%'}
+	 	   ,{field:'rightAnswer', title: '正确答案', width:'5%'}
 	 	]]
 	 	,id:'annualMeeting_question_table'
 	 	,loading:true
@@ -61,8 +64,34 @@ layui.use('table', function(){
 			  ,dataName: 'allQuestions' //数据列表的字段名称
 	 	}
 	 })
+	 
+	 table.render({
+			 	elem: '#annualMeeting_question_table_temporaryData'
+			 	,cols: [[
+		 		 	   {field:'id', title: 'id', width:'5%',sort: true}
+		 		 	   ,{field:'topic', title: '题目', width:'70%' ,edit:'text'}
+		 		 	   ,{field:'answerOne', title: '答案一', width:'5%' ,edit:'text'}
+		 		 	   ,{field:'answerTwo', title: '答案二', width:'5%' ,edit:'text'}
+		 		 	   ,{field:'answerThree', title: '答案三', width:'5%' ,edit:'text'}
+		 		 	   ,{field:'answerFour', title: '答案四', width:'5%' ,edit:'text'}
+		 		 	   ,{field:'rightAnswer', title: '正确答案', width:'5%' ,edit:'text'}
+		 		 ]
+			 	]
+			 	,id:'annualMeeting_question_table_temporaryData'
+			 	,loading:true
+			 	,response:{
+			 		  statusName: 'state' //数据状态的字段名称
+					  ,statusCode: 1 //成功的状态码
+					  ,msgName: 'stateInfo' //状态信息的字段名称
+					  ,countName: 'count' //数据总数的字段名称
+					  ,dataName: 'allQuestions' //数据列表的字段名称
+			 	}
+			 })
+	 
+	 
 	
 	
 })
 </script>
+<script type="text/javascript" src="../js/uploadExctFile.js"></script>
 </html>

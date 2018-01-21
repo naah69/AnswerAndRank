@@ -2,9 +2,12 @@ package com.xyl.game.Service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -14,7 +17,10 @@ import org.springframework.stereotype.Service;
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
-
+/**
+ * 
+ * @author dazhi
+ */
 @Service
 public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQuestionExctFileSerivce{
 
@@ -30,11 +36,11 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 		
 		try {
 			try{
-				workbook = new HSSFWorkbook(exctFileStream);
+				workbook = new XSSFWorkbook(exctFileStream);
 			}catch(Exception e){
 				//上传的文件可能是offic2007以上的版本,记录日志
-				logger.info("可能上传offic2007以上的版本");
-				workbook = new XSSFWorkbook();
+				logger.info("可能上传offic2003以下的版本");
+				workbook = new HSSFWorkbook(exctFileStream);
 			}
 			List<AnnualMeetingGameQuestion> analyzingExctData = analyzingExctData(workbook);
 			
@@ -45,10 +51,10 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			
 			return annualMeetingGameQuestionVo;
 		} catch (Exception e) {
-			logger.error("文件加载异常",e.toString());
+			logger.error("文件加载异常，"+e.getMessage());
 			annualMeetingGameQuestionVo.setState(2);
-			annualMeetingGameQuestionVo.setStateInfo("文件加载异常");
-			
+			annualMeetingGameQuestionVo.setStateInfo("文件加载异常"+e.getMessage());
+			e.printStackTrace();
 			return annualMeetingGameQuestionVo;
 		} finally {
 			if(workbook != null){
@@ -61,9 +67,35 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 		}
 	}
 	
+	/**
+	 * 解析Excel表格数据
+	 * @param workbook
+	 * @return List<AnnualMeetingGameQuestion>
+	 * @throws Exception
+	 */
 	private List<AnnualMeetingGameQuestion> analyzingExctData(Workbook workbook) throws Exception{
-		return null;
+		//获得第一个sheet
+		Sheet sheetAt = workbook.getSheetAt(0);
+		int lastRowNum = sheetAt.getLastRowNum();
+		List<AnnualMeetingGameQuestion> annualMeetingGameQuestions = new ArrayList<AnnualMeetingGameQuestion>();
+		//解析第一个sheet数据
+		for (int i = 0 ; i<lastRowNum+1 ; i++) {
+			Row row = sheetAt.getRow(i);
+			//解析每行数据
+			AnnualMeetingGameQuestion annualMeetingGameQuestion = new AnnualMeetingGameQuestion();
+			annualMeetingGameQuestion.setTopic(row.getCell(0).toString());
+			annualMeetingGameQuestion.setAnswerOne(row.getCell(1).toString());
+			annualMeetingGameQuestion.setAnswerTwo(row.getCell(2).toString());
+			annualMeetingGameQuestion.setAnswerThree(row.getCell(3).toString());
+			annualMeetingGameQuestion.setAnswerFour(row.getCell(4).toString());
+			
+			annualMeetingGameQuestion.setRightAnswer((byte)(Float.valueOf(row.getCell(5).toString()).floatValue()));
+			annualMeetingGameQuestions.add(annualMeetingGameQuestion);
+		}
+		
+		return annualMeetingGameQuestions;
 	}
+	
 
 	/**
 	 * 获得所有年会问题数据
