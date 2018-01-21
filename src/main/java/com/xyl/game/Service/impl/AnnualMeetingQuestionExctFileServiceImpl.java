@@ -1,10 +1,12 @@
 package com.xyl.game.Service.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -102,7 +104,18 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 
 	@Override
 	public Boolean WriteExcelFile(String Path) {
-		// TODO Auto-generated method stub
+		File excelFile = new File(Path);
+		if( !excelFile.exists() ){
+			//新建文件
+			try {
+				excelFile.createNewFile();
+			} catch (IOException e) {
+				logger.error(Arrays.toString(e.getStackTrace()));
+				return false;
+			}
+		}
+		
+		
 		return null;
 	}
 

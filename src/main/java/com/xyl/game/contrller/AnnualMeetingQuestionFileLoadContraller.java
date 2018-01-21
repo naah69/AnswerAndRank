@@ -65,9 +65,9 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		AnnualMeetingGameQuestionVo attribute = (AnnualMeetingGameQuestionVo)session.getAttribute(session.getId());
 		try {
 			if(exctFileSerivce.updataData(attribute, id, fieldValue, fieldName)){
-				logger.info("年后问题缓存数据修改成功");
+				logger.info("年会问题缓存数据修改成功");
 			}else{
-				logger.info("年后问题缓存数据未修改");
+				logger.info("年会问题缓存数据未修改");
 			}
 		} catch (Exception e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
@@ -75,10 +75,12 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		return "OK";
 	}
 	
-	
+	/**
+	 * 定时输出excel表
+	 * @param request
+	 */
 	@Scheduled(initialDelay = FIRST_DELAY,fixedDelay=ONE_MINUTE)
 	public void timedEritingWriteExcelFile(HttpServletRequest request){
-		
 		
 	}
 	

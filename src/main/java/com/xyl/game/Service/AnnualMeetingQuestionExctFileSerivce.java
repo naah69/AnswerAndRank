@@ -19,7 +19,7 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	//public AnnualMeetingGameQuestionVo getAllGameQuestion();
 	
 	/**
-	 * 写出Excel文件到指定的路径
+	 * 定时写出Excel文件到指定的路径
 	 * @return Boolean
 	 */
 	public Boolean WriteExcelFile(String Path);
