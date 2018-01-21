@@ -18,4 +18,21 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	
 	//public AnnualMeetingGameQuestionVo getAllGameQuestion();
 	
+	/**
+	 * 写出Excel文件到指定的路径
+	 * @return Boolean
+	 */
+	public Boolean WriteExcelFile(String Path);
+	
+	/**
+	 * 修改问题数据的缓存
+	 * @param vo
+	 * @param id
+	 * @param fieldValue
+	 * @param fieldName
+	 * @return
+	 * @throws Exception
+	 */
+	public Boolean updataData(AnnualMeetingGameQuestionVo vo,Integer id,String fieldValue,String fieldName) throws Exception;
+	
 }

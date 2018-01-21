@@ -2,6 +2,8 @@ package com.xyl.game.Service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.utils.StringUtil;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 /**
  * 
@@ -54,7 +57,6 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			logger.error("文件加载异常，"+e.getMessage());
 			annualMeetingGameQuestionVo.setState(2);
 			annualMeetingGameQuestionVo.setStateInfo("文件加载异常"+e.getMessage());
-			e.printStackTrace();
 			return annualMeetingGameQuestionVo;
 		} finally {
 			if(workbook != null){
@@ -76,6 +78,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	private List<AnnualMeetingGameQuestion> analyzingExctData(Workbook workbook) throws Exception{
 		//获得第一个sheet
 		Sheet sheetAt = workbook.getSheetAt(0);
+		int id = 0 ; 
 		int lastRowNum = sheetAt.getLastRowNum();
 		List<AnnualMeetingGameQuestion> annualMeetingGameQuestions = new ArrayList<AnnualMeetingGameQuestion>();
 		//解析第一个sheet数据
@@ -83,6 +86,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			Row row = sheetAt.getRow(i);
 			//解析每行数据
 			AnnualMeetingGameQuestion annualMeetingGameQuestion = new AnnualMeetingGameQuestion();
+			annualMeetingGameQuestion.setId(id++);
 			annualMeetingGameQuestion.setTopic(row.getCell(0).toString());
 			annualMeetingGameQuestion.setAnswerOne(row.getCell(1).toString());
 			annualMeetingGameQuestion.setAnswerTwo(row.getCell(2).toString());
@@ -94,6 +98,40 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 		}
 		
 		return annualMeetingGameQuestions;
+	}
+
+	@Override
+	public Boolean WriteExcelFile(String Path) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean updataData(AnnualMeetingGameQuestionVo vo,Integer id,String fieldValue,String fieldName) throws Exception{
+		//获得缓存中的所有数据
+		List<AnnualMeetingGameQuestion> allQuestions = vo.getAllQuestions();
+		//遍历数据，查找需要修改的字段
+		for (AnnualMeetingGameQuestion annualMeetingGameQuestion : allQuestions) {
+			if(annualMeetingGameQuestion.getId() == id){
+				Class<? extends AnnualMeetingGameQuestion> clazz = annualMeetingGameQuestion.getClass();
+				//查找字段
+				Field[] fields = clazz.getDeclaredFields();
+				for (int i = 0; i < fields.length; i++) {
+					if(fieldName.equals(fields[i].getName())){
+						Method method = clazz.getMethod("set"+StringUtil.initialsUpper(fieldName),fields[i].getType() );
+						if(!fieldValue.equals("rightAnswer")){
+							method.invoke(annualMeetingGameQuestion, fieldValue);
+						}else{
+							method.invoke(annualMeetingGameQuestion, (byte)(Float.valueOf(fieldValue).floatValue()));
+						}
+						break;
+					}
+				}
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 

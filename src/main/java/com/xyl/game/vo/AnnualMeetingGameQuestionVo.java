@@ -6,9 +6,11 @@ import com.xyl.game.po.AnnualMeetingGameQuestion;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class AnnualMeetingGameQuestionVo {
 	//状态码
 	public static final Integer STATE_NUM_NOSTATE = 0;
