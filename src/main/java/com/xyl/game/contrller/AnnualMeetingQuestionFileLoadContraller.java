@@ -75,6 +75,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
 		HeapVariable.annualMeetingGameQuestionVos.put(session.getId(), attribute);
+		
 		return "OK";
 	}
 	

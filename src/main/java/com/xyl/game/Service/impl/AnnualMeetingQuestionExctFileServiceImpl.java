@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.utils.InitData;
 import com.xyl.game.utils.StringUtil;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 /**
@@ -138,11 +140,8 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	 @Override
 	 public AnnualMeetingGameQuestionVo getAllGameQuestion() {
 		try {
-			List<AnnualMeetingGameQuestion> selectAll = annualMeetingGameQuestionMapper.selectAll();
-			
-			Integer allConut = annualMeetingGameQuestionMapper.getAllConut();
-			
-			return new AnnualMeetingGameQuestionVo(selectAll, AnnualMeetingGameQuestionVo.STATE_NUM_SUCCESS, "success", allConut);
+			List<AnnualMeetingGameQuestion> selectAll = HeapVariable.questionsList;
+			return new AnnualMeetingGameQuestionVo(selectAll, AnnualMeetingGameQuestionVo.STATE_NUM_SUCCESS, "success", selectAll.size());
 		} catch (Exception e) {
 			logger.error("数据查询异常");
 			e.printStackTrace();
@@ -155,6 +154,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	public Boolean savaAnnualMeetingGameQuestion(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions) {
 		try {
 			annualMeetingGameQuestionMapper.insertQuestion(annualMeetingGameQuestions);
+			InitData.initQuestion();
 			logger.info("插入成功！");
 			return true;
 		} catch (Exception e) {

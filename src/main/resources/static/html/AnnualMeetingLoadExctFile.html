@@ -16,7 +16,7 @@
 	  <p>点击上传，或将文件拖拽到此处</p>
 	</div>
   <div class="layui-upload-list">
-    <table class="layui-table">
+    <table class="layui-table" id="loadFile" lay-filter="loadFile">
       <thead>
         <tr><th>文件名</th>
         <th>大小</th>
@@ -34,6 +34,7 @@
   <legend>数据库数据</legend>
 </fieldset>
 <table class="layui-hide" id="annualMeeting_question_table" lay-filter="annualMeeting_question_table"></table>
+<button type="button" class="layui-btn" id="dumpData">清除数据</button>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript" src="../js/tableExcet.js"></script>
@@ -52,7 +53,11 @@
 					layer.msg("插入失败")
 				}
 			}); 
-			
+			table.reload('annualMeeting_question_table');
+			table.reload('annualMeeting_question_table_temporaryData',{
+				data:[]
+			});
+			$('td_waitFor').html('上传成功！');
 			layer.close(index);
 		})
 	  });
