@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,9 +31,6 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 public class AnnualMeetingQuestionFileLoadContraller {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionFileLoadContraller.class);
-	
-	public final static long FIRST_DELAY =  60 * 1000;
-    public final static long ONE_MINUTE =  60 * 1000;
 
 	@Autowired 
 	private AnnualMeetingQuestionExctFileSerivce exctFileSerivce;
@@ -49,6 +47,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		} catch (IOException e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
+		
 		HeapVariable.annualMeetingGameQuestionVos.put(session.getId(), savaDataForExct);
 		return savaDataForExct;
 	}
@@ -85,6 +84,11 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	@RequestMapping("/userData")
 	@ResponseBody
 	public AnnualMeetingGameQuestionVo getAllGameQuestion(){
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return exctFileSerivce.getAllGameQuestion();
 		//return null;
 	}
@@ -101,7 +105,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		if(annualMeetingGameQuestionVos == null){
 			return "ok";
 		}
-		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo = annualMeetingGameQuestionVos.get(session.getId());
+		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo = annualMeetingGameQuestionVos.remove(session.getId());
 		
 		if(annualMeetingGameQuestionVo ==null ){
 			return "ok";
@@ -118,4 +122,20 @@ public class AnnualMeetingQuestionFileLoadContraller {
 			return "fail";
 		}
 	}
+	
+	/**
+	 * 清除所有数据
+	 * @return
+	 */
+	@RequestMapping("/clearAllData")
+	@ResponseBody
+	public String clearAllData(){
+		HeapVariable.atomic.set(0);
+		exctFileSerivce.clearAllData();
+		return "ok";
+	}
+	
+	
+	
+	
 }

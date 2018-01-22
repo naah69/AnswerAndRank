@@ -14,11 +14,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Answer {
-
     private Integer index;
     private AnnualMeetingGameQuestion question;
     private String answer;
     private Integer time;
     private Boolean isRight;
-
 }

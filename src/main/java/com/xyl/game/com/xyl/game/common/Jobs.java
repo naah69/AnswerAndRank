@@ -22,6 +22,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.jws.soap.InitParam;
+
 /**
  * Jobs
  * 定时输出excel 任务
@@ -37,7 +39,7 @@ public class Jobs {
 
     private static final Logger logger = LoggerFactory.getLogger(Jobs.class);
 
-    @Scheduled(fixedDelay=ONE_MINUTE)
+    @Scheduled(initialDelay = FIRST_DELAY,fixedDelay=ONE_MINUTE)
     public void fixedDelayJob(){
     	Workbook workbook = null;
 		try {
@@ -92,6 +94,11 @@ public class Jobs {
 				}
 			}
 		}
+    }
+    
+    @Scheduled(fixedDelay = 5000)
+    public void testTask() {
+        logger.info("测试定时任务");
     }
 
 

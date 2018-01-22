@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * HeapVariable
@@ -26,4 +27,5 @@ public class HeapVariable {
     public static Map<String,AnnualMeetingGameQuestionVo> annualMeetingGameQuestionVos;
     public static ApplicationContext context;
     public static AnnualMeetingGameQuestionMapper mapper;
+    public static AtomicInteger atomic;
 }

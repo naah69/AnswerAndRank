@@ -33,5 +33,8 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	 */
 	public Boolean updataData(AnnualMeetingGameQuestionVo vo,Integer id,String fieldValue,String fieldName) throws Exception;
 	
-	
+	/**
+	 * 清除所有数据
+	 */
+	public void clearAllData();
 }

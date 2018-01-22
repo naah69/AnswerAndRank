@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * initData
@@ -36,6 +37,8 @@ public class InitData {
         }
         HeapVariable.questionsList=questionList;
         HeapVariable.questionDTOList = questionDTOList;
+        HeapVariable.atomic = new AtomicInteger();
+        HeapVariable.atomic.set(questionList.size());;
     }
 
     public static void initTable(){

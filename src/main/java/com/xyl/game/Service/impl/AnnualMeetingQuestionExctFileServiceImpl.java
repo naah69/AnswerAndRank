@@ -83,11 +83,14 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	private List<AnnualMeetingGameQuestion> analyzingExctData(Workbook workbook) throws Exception{
 		//获得第一个sheet
 		Sheet sheetAt = workbook.getSheetAt(0);
-		int id = 0 ; 
+		
+		List<AnnualMeetingGameQuestion> questionsList = HeapVariable.questionsList;
+		int id = questionsList.size()+1 ; 
 		int lastRowNum = sheetAt.getLastRowNum();
+		HeapVariable.atomic.addAndGet(lastRowNum);
 		List<AnnualMeetingGameQuestion> annualMeetingGameQuestions = new ArrayList<AnnualMeetingGameQuestion>();
 		//解析第一个sheet数据
-		for (int i = 0 ; i<lastRowNum+1 ; i++) {
+		for (int i = 2 ; i<lastRowNum+1 ; i++) {
 			Row row = sheetAt.getRow(i);
 			//解析每行数据
 			AnnualMeetingGameQuestion annualMeetingGameQuestion = new AnnualMeetingGameQuestion();
@@ -153,6 +156,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	@Override
 	public Boolean savaAnnualMeetingGameQuestion(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions) {
 		try {
+			//InitData.initTable();
 			annualMeetingGameQuestionMapper.insertQuestion(annualMeetingGameQuestions);
 			InitData.initQuestion();
 			logger.info("插入成功！");
@@ -162,6 +166,12 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public void clearAllData() {
+		InitData.initTable();
+		InitData.initQuestion();
 	}
 
 }
