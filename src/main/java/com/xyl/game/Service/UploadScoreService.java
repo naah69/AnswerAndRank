@@ -20,5 +20,5 @@ public interface UploadScoreService {
      * @param user
      * @return
      */
-    public GridPage<QuestionDTO> uploadScore(Integer id,String answer, Integer times,String sessionId,User user);
+    public GridPage<QuestionDTO> uploadScore(Byte answer, Integer times,String sessionId,User user);
 }

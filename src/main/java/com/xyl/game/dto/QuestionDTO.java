@@ -14,6 +14,10 @@ import lombok.Getter;
 public class QuestionDTO {
     private  Integer id;
     private String question;
+    private String answerOne;
+    private String answerTwo;
+    private String answerThree;
+    private String answerFour;
 
 
 }

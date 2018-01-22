@@ -4,6 +4,7 @@ import com.xyl.game.Service.UploadScoreService;
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.po.*;
 import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.utils.QuestionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,17 +18,10 @@ import java.util.List;
 @Service
 public class UploadScoreServiceImpl implements UploadScoreService {
     @Override
-    public GridPage<QuestionDTO> uploadScore(Integer id, String answer, Integer times, String sessionId, User user) {
+    public GridPage<QuestionDTO> uploadScore(Byte answer, Integer times, String sessionId, User user) {
         GridPage<QuestionDTO> grid = new GridPage<>();
-        if (id == null) {
-            grid.setErrorCode("21");
-            grid.setMessage("id not fouond");
+          int id = user.getAnswers().size()+1;
 
-        }
-        if (answer == null) {
-            grid.setErrorCode("22");
-            grid.setMessage("answer not found");
-        }
 
         if (times == null) {
             grid.setErrorCode("23");
@@ -43,12 +37,13 @@ public class UploadScoreServiceImpl implements UploadScoreService {
             grid.setErrorCode("25");
             grid.setMessage("user not found");
         }
+
         List<AnnualMeetingGameQuestion> questionsList = HeapVariable.questionsList;
         if (id > questionsList.size()) {
             grid.setErrorCode("26");
             grid.setMessage("index over flow");
-
         }
+
         if (user.getDieIndex() != null) {
             grid.setErrorCode("27");
             grid.setMessage("you had died");
@@ -56,6 +51,11 @@ public class UploadScoreServiceImpl implements UploadScoreService {
 
         if (grid.getErrorCode()!=null) {
             return grid;
+        }
+        if (answer == null) {
+             user.setDieIndex(id);
+             grid.setErrorCode("20");
+             grid.setMessage("lost");
         }
 
 
@@ -72,13 +72,10 @@ public class UploadScoreServiceImpl implements UploadScoreService {
                  grid.setMessage("you win");
 
             }else{
-                List<QuestionDTO> questionDTOList = HeapVariable.questionDTOList;
-                QuestionDTO dto=questionDTOList.get(id);
-                Page<QuestionDTO> page=new Page<>();
-                page.set(dto.getId(),dto);
+
                 grid.setErrorCode("0");
                 grid.setMessage("next question");
-                grid.setPageList(page);
+                grid.setPageList(QuestionUtils.getNextQuestion(id));
             }
 
         }else{
@@ -90,4 +87,6 @@ public class UploadScoreServiceImpl implements UploadScoreService {
 
         return grid;
     }
+
+
 }
