@@ -1,19 +1,9 @@
 package com.xyl.game.com.xyl.game.common;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
-
+import com.xyl.game.po.User;
+import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.utils.MD5Util;
+import com.xyl.game.utils.StringUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -25,11 +15,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.arjuna.ats.internal.jdbc.drivers.modifiers.extensions;
-import com.xyl.game.po.User;
-import com.xyl.game.utils.HeapVariable;
-import com.xyl.game.utils.MD5Util;
-import com.xyl.game.utils.StringUtil;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 
@@ -55,7 +48,7 @@ public class Jobs {
     	int count = 0;
     	Map<String, User> usersMap = HeapVariable.usersMap;
 		Collection<User> values = usersMap.values();
-		
+
     	if(file.exists()){
     		try {
 				file.createNewFile();
@@ -74,7 +67,7 @@ public class Jobs {
     		HeapVariable.MD5DataChange = md5;
     		logger.info("数据修改，执行写入操作！");
     	}
-    	
+
     	Workbook workbook = null;
 		try {
 			workbook = new XSSFWorkbook(new FileInputStream(file));
@@ -83,7 +76,7 @@ public class Jobs {
 			count = sheetAt.getLastRowNum()+1;
 			//解析数据
 			analyticData(count,sheetAt,values);
-			
+
 			workbook.write(new FileOutputStream(file));
 			logger.info("写入操作完成");
 		} catch (Exception e) {
@@ -117,7 +110,7 @@ public class Jobs {
 		Cell createCell2 = time.createCell(0);
 		createCell2.setCellValue(format);
 		createSheet.addMergedRegion(cra);
-		
+
 		//生成表格标题
 		Row createRow = createSheet.createRow(count+2);
 		Class clazz = User.class;
@@ -128,7 +121,7 @@ public class Jobs {
 			Cell createCell = createRow.createCell(i);
 			createCell.setCellValue(declaredFields[i].getName());
 		}
-		
+
 		//迭代插入所有user数据
 		writeDataExecl(createSheet, createRow, clazz, declaredFields,count+3,values);
 	}
@@ -170,6 +163,6 @@ public class Jobs {
 			}
 		}
 	}
-    
-    
+
+
 }

@@ -18,5 +18,5 @@ public interface InitService {
      * @param user
      * @return
      */
-    public GridPage initGame(HttpServletRequest request, User user);
+    public GridPage initGame(String sessionId, User user);
 }

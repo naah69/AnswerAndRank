@@ -9,7 +9,6 @@ import com.xyl.game.utils.QuestionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 /**
@@ -23,11 +22,10 @@ public class InitServiceImpl implements InitService {
     private final static Logger log = Logger.getLogger(InitServiceImpl.class);
 
     @Override
-    public GridPage initGame(HttpServletRequest request, User user) {
+    public GridPage initGame( String sessionId , User user) {
         GridPage result = new GridPage();
         log.info("初始化用户：" + user.getUsername() + " 开始");
         try {
-            String sessionId = request.getSession().getId();
             if (HeapVariable.usersMap.containsKey(sessionId)) {
                 log.info("初始化用户：" + user.getUsername() + " 已存在");
 

@@ -32,7 +32,7 @@ public class InitController {
             result.setMessage(time+"");
             return result;
         }
-        GridPage result = service.initGame(request, user);
+        GridPage result = service.initGame(request.getSession().getId(), user);
 
         return result;
     }
