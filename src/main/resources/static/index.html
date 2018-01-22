@@ -36,7 +36,7 @@
 
 </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-
+<script type="text/javascript" src="../js/layui/layui.js"></script>
 <script>
 	var table = null;
     $('#btn').on('click', function () {
@@ -77,6 +77,9 @@
         $('#div3').css('display', 'block');
         $.get("/rank", function (data) {
             console.log(data)
+            table.reload('annualMeeting_question_table',{
+            	data:data.rows
+            })
         });
 
     }
@@ -95,16 +98,18 @@
     layui.use('table', function(){
     	table = layui.table;
     	table.render({
-    		cols: [[
+    		elem: '#annualMeeting_question_table'
+    		,cols: [[
 	 	   {field:'username', title: 'username', width:'25%'}
 	 	   ,{field:'department', title: 'department', width:'25%'}
 	 	   ,{field:'score', title: 'score', width:'25%'}
 	 	   ,{field:'timesSecond', title: 'timesSecond', width:'25%'}
 	 		]]
+	 		,id:'annualMeeting_question_table'
     	})
     });
     
 </script>
 </body>
-<script type="text/javascript" src="../js/layui/layui.js"></script>
+
 </html>
