@@ -2,6 +2,8 @@ package com.xyl.game.contrller;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 
@@ -93,8 +96,25 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	@ResponseBody
 	public String savaAnnualMeetingGameQuestion(HttpSession session){
 		//获得数据
-		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo = HeapVariable.annualMeetingGameQuestionVos.get(session.getId());
+		Map<String, AnnualMeetingGameQuestionVo> annualMeetingGameQuestionVos = HeapVariable.annualMeetingGameQuestionVos;
+		if(annualMeetingGameQuestionVos == null){
+			return "ok";
+		}
+		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo = annualMeetingGameQuestionVos.get(session.getId());
 		
-		return "";
+		if(annualMeetingGameQuestionVo ==null ){
+			return "ok";
+		}
+		
+		List<AnnualMeetingGameQuestion> allQuestions = annualMeetingGameQuestionVo.getAllQuestions();
+		if(allQuestions == null){
+			return "ok";
+		}
+		
+		if(exctFileSerivce.savaAnnualMeetingGameQuestion(allQuestions)){
+			return "ok";
+		}else{
+			return "fail";
+		}
 	}
 }

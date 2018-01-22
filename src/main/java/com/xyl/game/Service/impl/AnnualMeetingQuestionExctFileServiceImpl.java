@@ -135,8 +135,6 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	/**
 	 * 获得所有年会问题数据
 	 */
-	
-	
 	 @Override
 	 public AnnualMeetingGameQuestionVo getAllGameQuestion() {
 		try {
@@ -154,8 +152,14 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 
 	@Override
 	public Boolean savaAnnualMeetingGameQuestion(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			annualMeetingGameQuestionMapper.insertQuestion(annualMeetingGameQuestions);
+			logger.info("插入成功！");
+			return true;
+		} catch (Exception e) {
+			logger.error("插入失败！");
+			return false;
+		}
 	}
 
 }

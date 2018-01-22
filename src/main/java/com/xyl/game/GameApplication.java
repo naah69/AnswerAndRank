@@ -5,6 +5,8 @@ import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.PropertiesUtils;
+import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.mybatis.spring.annotation.MapperScan;
@@ -13,7 +15,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -31,8 +35,8 @@ public class GameApplication {
        ApplicationContext context=SpringApplication.run(GameApplication.class, args);
        AnnualMeetingGameQuestionMapper mapper = context.getBean(AnnualMeetingGameQuestionMapper.class);
 
-        initLog4j();
-        initData(mapper);
+       initLog4j();
+       initData(mapper);
 
 
 
@@ -55,5 +59,11 @@ public class GameApplication {
         }
         HeapVariable.questionsList=questionList;
         HeapVariable.usersMap=new ConcurrentHashMap<>(1024);
+        HeapVariable.questionDTOList = questionDTOList;
+        Map<String, AnnualMeetingGameQuestionVo> annualMeetingGameQuestionVos = HeapVariable.annualMeetingGameQuestionVos;
+        if(annualMeetingGameQuestionVos == null){
+        	annualMeetingGameQuestionVos = new HashMap<String, AnnualMeetingGameQuestionVo>();
+        }
+        
     }
 }
