@@ -22,10 +22,16 @@ public interface AnnualMeetingGameQuestionMapper {
      * @return
      */
     public List<AnnualMeetingGameQuestion> selectAll();
-    
+
     /**
      * 获得数据的总数
      * @return
      */
     public Integer getAllConut();
+
+    public void copyTableStruct();
+
+    public void deleteTable();
+
+    public void renameTableName();
 }
