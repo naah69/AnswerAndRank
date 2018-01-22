@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>demo</title>
 </head>
+<link rel="stylesheet" href="../js/layui/css/layui.css" />
 <body>
 
 //用户信息初始化
@@ -31,15 +32,13 @@
 
 //排行榜
 <div id="div3" style="display: none">
-<table>
-
-
-</table>
+<table class="layui-hide" id="annualMeeting_question_table" lay-filter="annualMeeting_question_table"></table>
 
 </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 
 <script>
+	var table = null;
     $('#btn').on('click', function () {
         $.get("/initGame", {username: $('#username').val(), department: $('#department').val(), tel: $('#tel').val()},
             function (data) {
@@ -92,8 +91,20 @@
         $('#a3r').val("3");
         $('#answer4').text(que['answerFour']);
         $('#a4r').val("4");
-
     }
+    layui.use('table', function(){
+    	table = layui.table;
+    	table.render({
+    		cols: [[
+	 	   {field:'username', title: 'username', width:'25%'}
+	 	   ,{field:'department', title: 'department', width:'25%'}
+	 	   ,{field:'score', title: 'score', width:'25%'}
+	 	   ,{field:'timesSecond', title: 'timesSecond', width:'25%'}
+	 		]]
+    	})
+    });
+    
 </script>
 </body>
+<script type="text/javascript" src="../js/layui/layui.js"></script>
 </html>
