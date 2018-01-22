@@ -1,6 +1,7 @@
 package com.xyl.game.utils;
 
 import com.xyl.game.dto.QuestionDTO;
+import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.Page;
 
 import java.util.List;
@@ -15,9 +16,18 @@ public class QuestionUtils {
     public static Page<QuestionDTO> getNextQuestion(int id){
         List<QuestionDTO> list = HeapVariable.questionDTOList;
         Page<QuestionDTO> page=new Page<>();
-        if (list.size()>id+1) {
+        if (list.size()>=id+1) {
             page.add(list.get(id));
         }
         return page;
+    }
+    public static Page<QuestionDTO> getNowQuestion(){
+        Page<QuestionDTO> page=new Page<>();
+        page.add(HeapVariable.now);
+        return page;
+    }
+
+    public static AnnualMeetingGameQuestion getQuestion(int id){
+         return HeapVariable.questionsList.get(id - 1);
     }
 }
