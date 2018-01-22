@@ -2,12 +2,15 @@ package com.xyl.game.Service.impl;
 
 import com.xyl.game.Service.UploadScoreService;
 import com.xyl.game.dto.QuestionDTO;
-import com.xyl.game.po.*;
+import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.po.Answer;
+import com.xyl.game.po.GridPage;
+import com.xyl.game.po.User;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.QuestionUtils;
-import org.apache.commons.net.ntp.TimeStamp;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -54,7 +57,7 @@ public class UploadScoreServiceImpl implements UploadScoreService {
 
 
         AnnualMeetingGameQuestion question=QuestionUtils.getQuestion(id);
-        Answer userAnswer = new Answer(id, question, answer!=null?answer:0, times,false,new TimeStamp(System.currentTimeMillis()));
+        Answer userAnswer = new Answer(id, question, answer!=null?answer:0, times,false,new Timestamp(System.currentTimeMillis()));
         Long t=answers.size()>id?answers.get(answers.size() - 1).getCommitTime().getTime():0;
         boolean overTime=answers.size()>id
                 ?userAnswer.getCommitTime().getTime()<t+20000

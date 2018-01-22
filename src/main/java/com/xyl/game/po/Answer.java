@@ -1,10 +1,11 @@
 package com.xyl.game.po;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.sql.Timestamp;
+
 
 /**
  * Answer
@@ -21,7 +22,7 @@ public class Answer {
     private Byte answer;
     private Integer time;
     private Boolean isRight;
-     private TimeStamp commitTime;
+     private Timestamp commitTime;
     @Override
     public String toString() {
     	StringBuffer sb = new StringBuffer();
