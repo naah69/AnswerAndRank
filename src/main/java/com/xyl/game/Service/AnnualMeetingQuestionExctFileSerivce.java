@@ -16,7 +16,7 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	 */
 	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream);
 	
-	//public AnnualMeetingGameQuestionVo getAllGameQuestion();
+	public AnnualMeetingGameQuestionVo getAllGameQuestion();
 	
 	/**
 	 * 修改问题数据的缓存

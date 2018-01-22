@@ -14,9 +14,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.utils.StringUtil;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
@@ -28,8 +30,9 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQuestionExctFileSerivce{
 
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionExctFileServiceImpl.class);
-	/*@Autowired
-	private AnnualMeetingGameQuestionMapper annualMeetingGameQuestionMapper;*/
+	
+	@Autowired
+	private AnnualMeetingGameQuestionMapper annualMeetingGameQuestionMapper;
 	
 	@Override
 	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream){
@@ -133,9 +136,9 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	 * 获得所有年会问题数据
 	 */
 	
-	/*
-	 * @Override
-	 * public AnnualMeetingGameQuestionVo getAllGameQuestion() {
+	
+	 @Override
+	 public AnnualMeetingGameQuestionVo getAllGameQuestion() {
 		try {
 			List<AnnualMeetingGameQuestion> selectAll = annualMeetingGameQuestionMapper.selectAll();
 			
@@ -147,6 +150,6 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			return new AnnualMeetingGameQuestionVo(null, AnnualMeetingGameQuestionVo.STATE_NUM_EXCEPTION, "数据查询异常" , 0);
 		}
 		
-	}*/
+	}
 
 }
