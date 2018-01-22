@@ -43,7 +43,5 @@ public class InitData {
          mapper.copyTableStruct();
          mapper.deleteTable();
          mapper.renameTableName();
-         initVariable();
-         initQuestion();
     }
 }
