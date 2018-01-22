@@ -7,6 +7,7 @@ import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -21,13 +22,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 @SpringBootApplication
+@MapperScan("com.xyl.game.mapper")
 public class GameApplication {
      private  static Logger log=null;
 
 	public static void main(String[] args) {
 
-        ApplicationContext  run = SpringApplication.run(GameApplication.class, args);
-        AnnualMeetingGameQuestionMapper mapper = run.getBean(AnnualMeetingGameQuestionMapper.class);
+       ApplicationContext context=SpringApplication.run(GameApplication.class, args);
+       AnnualMeetingGameQuestionMapper mapper = context.getBean(AnnualMeetingGameQuestionMapper.class);
 
         initLog4j();
         initData(mapper);
@@ -38,7 +40,7 @@ public class GameApplication {
 
     private static void initLog4j() {
 	    PropertyConfigurator.configure(PropertiesUtils.initProperties("log4j.properties"));
-	    log=Logger.getLogger(GameApplication.class);
+	    log= Logger.getLogger(GameApplication.class);
 
     }
 

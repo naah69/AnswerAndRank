@@ -15,11 +15,5 @@ public class QuestionDTO {
     private  Integer id;
     private String question;
 
-    @Override
-    public String toString() {
-        return "QuestionDTO{" +
-                "id=" + id +
-                ", question='" + question + '\'' +
-                '}';
-    }
+
 }
