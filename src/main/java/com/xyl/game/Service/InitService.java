@@ -1,5 +1,6 @@
 package com.xyl.game.Service;
 
+import com.xyl.game.po.GridPage;
 import com.xyl.game.po.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,5 +18,5 @@ public interface InitService {
      * @param user
      * @return
      */
-    public int initGame(HttpServletRequest request, User user);
+    public GridPage initGame(HttpServletRequest request, User user);
 }

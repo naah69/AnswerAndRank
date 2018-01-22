@@ -20,7 +20,6 @@ public class RankController {
 
 @GetMapping("rank")
     public GridPage getRank(){
-
-    return null;
+      return  service.getRank();
 }
 }

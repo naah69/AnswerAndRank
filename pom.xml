@@ -58,6 +58,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -71,14 +72,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-        	<groupId>org.scala-lang</groupId>
-        	<artifactId>scala-library</artifactId>
-        	<version>2.11.0</version>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>2.11.0</version>
         </dependency>
         <dependency>
-        	<groupId>org.apache.hadoop</groupId>
-        	<artifactId>hadoop-core</artifactId>
-        	<version>1.0.0</version>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
@@ -87,6 +88,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 如果没有该项配置，devtools不会起作用，即应用不会restart -->
+                    <fork>true</fork>
+                </configuration>
             </plugin>
         </plugins>
     </build>

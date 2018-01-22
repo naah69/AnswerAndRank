@@ -24,17 +24,8 @@ public class InitController {
 
     @GetMapping("initGame")
     public GridPage init(User user, HttpServletRequest request) {
-        int result = service.initGame(request, user);
-        GridPage res=new GridPage();
-        switch (result) {
-            case 1:
-                res.setMessage("success");
-                break;
-            default:
-                res.setErrorCode("1");
-                res.setMessage("init Failed");
-                break;
-        }
-        return res;
+        GridPage result = service.initGame(request, user);
+
+        return result;
     }
 }

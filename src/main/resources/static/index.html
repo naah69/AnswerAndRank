@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+</head>
+<body>
+<div id="div1">
+<input type="text" id="username" name="username">
+<input type="text" id="department" name="department">
+<input type="text" id="tel" name="tel">
+<input type="button" value="开始游戏" id="btn">
+</div>
+
+<div id="div2" style="display: none">
+    <div id="question"></div>
+    <div id="answers">
+        <p id="answer1"><input type="radio" id="a1r"  name="answer"></p>
+        <p id="answer2"><input type="radio" id="a2r"  name="answer"></p>
+        <p id="answer3"><input type="radio" id="a3r"  name="answer"></p>
+        <p id="answer4"><input type="radio" id="a4r"  name="answer"></p>
+    </div>
+<input type="button" value="提交" id="comit">
+
+</div>
+<script type="text/javascript" src="../../../../static/js/layui/layui.js"></script>
+<script>
+     var $;
+    layui.use('table', function(){
+        $ = layui.$;
+    });
+</script>
+<script>
+    $.get("127.0.0.1/initGame", { username: $('#username'), department:$('#department'),tel:$('#tel')},
+          function(data){
+          alert("Data Loaded: " + data);
+    });
+</script>
+</body>
+</html>

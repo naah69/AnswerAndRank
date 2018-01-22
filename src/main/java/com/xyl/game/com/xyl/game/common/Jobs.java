@@ -1,14 +1,8 @@
 package com.xyl.game.com.xyl.game.common;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-
+import com.xyl.game.po.User;
+import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.utils.StringUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -19,9 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.xyl.game.po.User;
-import com.xyl.game.utils.HeapVariable;
-import com.xyl.game.utils.StringUtil;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Jobs
@@ -33,9 +32,9 @@ import com.xyl.game.utils.StringUtil;
 public class Jobs {
     public final static long FIRST_DELAY =  60 * 1000;
     public final static long ONE_MINUTE =  60 * 1000;
-    
+
     public final static String USERDATA ="userData";
-    
+
     private static final Logger logger = LoggerFactory.getLogger(Jobs.class);
 
     @Scheduled(fixedDelay=ONE_MINUTE)
@@ -44,15 +43,15 @@ public class Jobs {
 		try {
 			workbook = new XSSFWorkbook();
 			//生成一各sheet
-			
+
 			Sheet createSheet = workbook.createSheet(USERDATA);
-			
+
 			//生成表格标题
 			Row createRow = createSheet.createRow(0);
 			Class clazz = User.class;
-			
+
 			Field[] declaredFields = clazz.getDeclaredFields();
-			
+
 			for (int i = 0; i < declaredFields.length; i++) {
 				Cell createCell = createRow.createCell(i);
 				createCell.setCellValue(declaredFields[i].getName());
