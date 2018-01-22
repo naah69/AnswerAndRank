@@ -23,4 +23,6 @@ public class User {
     private Integer dieIndex;
     private List<Answer> answers;
 
+    
+    
 }

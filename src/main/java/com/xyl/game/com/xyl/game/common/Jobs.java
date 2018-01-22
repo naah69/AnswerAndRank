@@ -1,5 +1,6 @@
 package com.xyl.game.com.xyl.game.common;
 
+import com.graphbuilder.math.func.LgFunction;
 import com.xyl.game.po.User;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.StringUtil;
@@ -32,15 +33,26 @@ import javax.jws.soap.InitParam;
  */
 @Component
 public class Jobs {
-    public final static long FIRST_DELAY =  60 * 1000;
-    public final static long ONE_MINUTE =  60 * 1000;
+    public final static long FIRST_DELAY =  6 * 1000;
+    public final static long ONE_MINUTE =  6 * 1000;
 
     public final static String USERDATA ="userData";
+    public final static String FILESUFFIX = ".xlsx";
 
     private static final Logger logger = LoggerFactory.getLogger(Jobs.class);
 
-    @Scheduled(initialDelay = FIRST_DELAY,fixedDelay=ONE_MINUTE)
+    @Scheduled(initialDelay=FIRST_DELAY,fixedDelay=ONE_MINUTE)
     public void fixedDelayJob(){
+    	File file = new File("E://"+USERDATA+FILESUFFIX);
+    	if(file.exists()){
+    		try {
+				file.createNewFile();
+			} catch (IOException e) {
+				logger.error("文件未建立！");
+				e.printStackTrace();
+				return;
+			}
+    	}
     	Workbook workbook = null;
 		try {
 			workbook = new XSSFWorkbook();
@@ -61,6 +73,7 @@ public class Jobs {
 			//迭代插入所有user数据
 			Map<String, User> usersMap = HeapVariable.usersMap;
 			Collection<User> values = usersMap.values();
+			System.out.println(values);
 			Iterator<User> iterator = values.iterator();
 			int count = 1;
 			while (iterator.hasNext()) {
@@ -82,7 +95,8 @@ public class Jobs {
 					}
 				}
 			}
-			workbook.write(new FileOutputStream(new File("E:\\")));
+			
+			workbook.write(new FileOutputStream(file));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -96,10 +110,5 @@ public class Jobs {
 		}
     }
     
-    @Scheduled(fixedDelay = 5000)
-    public void testTask() {
-        logger.info("测试定时任务");
-    }
-
-
+    
 }

@@ -10,6 +10,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * SpringBOOT 启动类
@@ -19,6 +20,7 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 @MapperScan("com.xyl.game.mapper")
+@EnableScheduling
 public class GameApplication {
     private static Logger log = null;
 
