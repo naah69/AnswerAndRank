@@ -75,14 +75,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		return "OK";
 	}
 	
-	/**
-	 * 定时输出excel表
-	 * @param request
-	 */
-	@Scheduled(initialDelay = FIRST_DELAY,fixedDelay=ONE_MINUTE)
-	public void timedEritingWriteExcelFile(HttpServletRequest request){
-		
-	}
+	
 	
 	
 	/**

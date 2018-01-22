@@ -108,5 +108,4 @@ public class GridPage<T> implements Serializable {
 	public void setSize(Integer size) {
 		this.size = size;
 	}
-
 }

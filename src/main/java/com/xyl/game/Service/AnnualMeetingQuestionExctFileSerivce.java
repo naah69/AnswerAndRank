@@ -19,12 +19,6 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	//public AnnualMeetingGameQuestionVo getAllGameQuestion();
 	
 	/**
-	 * 定时写出Excel文件到指定的路径
-	 * @return Boolean
-	 */
-	public Boolean WriteExcelFile(String Path);
-	
-	/**
 	 * 修改问题数据的缓存
 	 * @param vo
 	 * @param id
