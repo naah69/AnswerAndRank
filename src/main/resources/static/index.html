@@ -5,36 +5,95 @@
     <title>demo</title>
 </head>
 <body>
+
+//用户信息初始化
 <div id="div1">
-<input type="text" id="username" name="username">
-<input type="text" id="department" name="department">
-<input type="text" id="tel" name="tel">
-<input type="button" value="开始游戏" id="btn">
+    <p>用户名:<input type="text" id="username" name="username"></p>
+    <p>部门:<input type="text" id="department" name="department"></p>
+    <p>电话号码:<input type="text" id="tel" name="tel"></p>
+    <p><input type="button" value="开始游戏" id="btn"></p>
 </div>
 
+//答题
 <div id="div2" style="display: none">
     <div id="question"></div>
     <div id="answers">
-        <p id="answer1"><input type="radio" id="a1r"  name="answer"></p>
-        <p id="answer2"><input type="radio" id="a2r"  name="answer"></p>
-        <p id="answer3"><input type="radio" id="a3r"  name="answer"></p>
-        <p id="answer4"><input type="radio" id="a4r"  name="answer"></p>
+        <form id="form1">
+            <input type="hidden" name="times" value="1">
+            <p><input type="radio" id="a1r" name="answer"><span id="answer1"></span></p>
+            <p><input type="radio" id="a2r" name="answer"><span id="answer2"></span></p>
+            <p><input type="radio" id="a3r" name="answer"><span id="answer3"></span></p>
+            <p><input type="radio" id="a4r" name="answer"><span id="answer4"></span></p>
+        </form>
     </div>
-<input type="button" value="提交" id="comit">
+    <input type="button" value="提交" id="comit">
+</div>
+
+//排行榜
+<div id="div3" style="display: none">
+<table>
+
+
+</table>
 
 </div>
-<script type="text/javascript" src="../../../../static/js/layui/layui.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+
 <script>
-     var $;
-    layui.use('table', function(){
-        $ = layui.$;
+    $('#btn').on('click', function () {
+        $.get("/initGame", {username: $('#username').val(), department: $('#department').val(), tel: $('#tel').val()},
+            function (data) {
+                console.log(data);
+                $('#div1').css('display', 'none');
+                if (data.errorCode == 0) {
+                    var que = data.rows[0];
+                    refreshForm(que);
+                    $('#div2').css('display', 'block');
+                } else {
+                    alert(data.message());
+                    rank();
+                }
+
+            });
     });
-</script>
-<script>
-    $.get("127.0.0.1/initGame", { username: $('#username'), department:$('#department'),tel:$('#tel')},
-          function(data){
-          alert("Data Loaded: " + data);
+
+    $('#comit').on('click', function () {
+        $.post("/uploadScore", $('#form1').serialize(),
+            function (data) {
+                console.log(data);
+                if (data.errorCode == 0) {
+                    var que = data.rows[0];
+                    refreshForm(que);
+
+                } else {
+                    alert(data.message);
+                    $('#div2').css('display', 'none');
+                    rank();
+                }
+
+            });
     });
+
+    function rank() {
+        $('#div3').css('display', 'block');
+        $.get("/rank", function (data) {
+            console.log(data)
+        });
+
+    }
+
+    function refreshForm(que) {
+        $('#question').text(que['question']);
+        $('#answer1').text(que['answerOne']);
+        $('#a1r').val("1");
+        $('#answer2').text(que['answerTwo']);
+        $('#a2r').val("2");
+        $('#answer3').text(que['answerThree']);
+        $('#a3r').val("3");
+        $('#answer4').text(que['answerFour']);
+        $('#a4r').val("4");
+
+    }
 </script>
 </body>
 </html>

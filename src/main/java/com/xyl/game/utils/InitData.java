@@ -19,32 +19,34 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2018-01-22
  */
 public class InitData {
-    private final static Logger log=Logger.getLogger(InitData.class);
+    private final static Logger log = Logger.getLogger(InitData.class);
 
-    public static void initVariable(){
-         log.info("初始化用户Map。。。");
-         HeapVariable.usersMap=new ConcurrentHashMap<>(1024);
-         HeapVariable.annualMeetingGameQuestionVos = new HashMap<String, AnnualMeetingGameQuestionVo>();
+    public static void initVariable() {
+        log.info("初始化用户Map。。。");
+        HeapVariable.usersMap = new ConcurrentHashMap<>(1024);
+        HeapVariable.annualMeetingGameQuestionVos = new HashMap<String, AnnualMeetingGameQuestionVo>();
     }
-    public static void initQuestion(){
-        AnnualMeetingGameQuestionMapper mapper=HeapVariable.mapper;
+
+    public static void initQuestion() {
+        AnnualMeetingGameQuestionMapper mapper = HeapVariable.mapper;
         log.info("初始化题目列表。。。");
         log.info("初始化题目DTO列表。。。");
         List<AnnualMeetingGameQuestion> questionList = mapper.selectAll();
-        List<QuestionDTO> questionDTOList=new ArrayList<>(questionList.size());
+        List<QuestionDTO> questionDTOList = new ArrayList<>(questionList.size());
         for (AnnualMeetingGameQuestion question : questionList) {
-            questionDTOList.add(new QuestionDTO(question.getId(),question.getTopic()));
+            questionDTOList.add(new QuestionDTO(question.getId(), question.getTopic(), question.getAnswerOne(),
+                    question.getAnswerTwo(), question.getAnswerThree(), question.getAnswerFour()));
         }
-        HeapVariable.questionsList=questionList;
+        HeapVariable.questionsList = questionList;
         HeapVariable.questionDTOList = questionDTOList;
         HeapVariable.atomic = new AtomicInteger();
         HeapVariable.atomic.set(questionList.size());;
     }
 
-    public static void initTable(){
-         AnnualMeetingGameQuestionMapper mapper=HeapVariable.mapper;
-         mapper.copyTableStruct();
-         mapper.deleteTable();
-         mapper.renameTableName();
+    public static void initTable() {
+        AnnualMeetingGameQuestionMapper mapper = HeapVariable.mapper;
+        mapper.copyTableStruct();
+        mapper.deleteTable();
+        mapper.renameTableName();
     }
 }

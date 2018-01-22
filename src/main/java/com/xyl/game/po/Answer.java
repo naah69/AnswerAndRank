@@ -16,7 +16,7 @@ import lombok.Setter;
 public class Answer {
     private Integer index;
     private AnnualMeetingGameQuestion question;
-    private String answer;
+    private Byte answer;
     private Integer time;
     private Boolean isRight;
 }
