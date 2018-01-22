@@ -19,12 +19,9 @@ import java.util.List;
 @Service
 public class UploadScoreServiceImpl implements UploadScoreService {
     @Override
-    public GridPage<QuestionDTO> uploadScore(Byte answer, Integer times, String sessionId, User user) {
+    public GridPage<QuestionDTO> uploadScore(Integer id,Byte answer, Integer times, String sessionId, User user) {
         GridPage<QuestionDTO> grid = new GridPage<>();
         List<Answer> answers = user.getAnswers();
-        int id = answers.size()+1;
-
-
         if (times == null) {
             grid.setErrorCode("21");
             grid.setMessage("time not found");
@@ -40,10 +37,9 @@ public class UploadScoreServiceImpl implements UploadScoreService {
             grid.setMessage("user not found");
         }
 
-        List<AnnualMeetingGameQuestion> questionsList = HeapVariable.questionsList;
-        if (id > questionsList.size()) {
+        if (id !=HeapVariable.now.getId()-1) {
             grid.setErrorCode("24");
-            grid.setMessage("index over flow");
+            grid.setMessage("id error");
         }
 
         if (user.getDieIndex() != null) {
@@ -57,9 +53,12 @@ public class UploadScoreServiceImpl implements UploadScoreService {
 
 
 
-        AnnualMeetingGameQuestion question = questionsList.get(id - 1);
+        AnnualMeetingGameQuestion question=QuestionUtils.getQuestion(id);
         Answer userAnswer = new Answer(id, question, answer!=null?answer:0, times,false,new TimeStamp(System.currentTimeMillis()));
-        boolean overTime=answers.size()>id?userAnswer.getCommitTime().getTime()<answers.get(answers.size() - 1).getCommitTime().getTime()+20000:times<20;
+        Long t=answers.size()>id?answers.get(answers.size() - 1).getCommitTime().getTime():0;
+        boolean overTime=answers.size()>id
+                ?userAnswer.getCommitTime().getTime()<t+20000
+                :times<20;
         answers.add(userAnswer);
         user.setTimesSecond(user.getTimesSecond() + times);
 
@@ -67,7 +66,7 @@ public class UploadScoreServiceImpl implements UploadScoreService {
 
             userAnswer.setIsRight(true);
             user.setScore(user.getScore()+1);
-            if (id == questionsList.size()) {
+            if (id == HeapVariable.questionsList.size()) {
                  grid.setErrorCode("-1");
                  grid.setMessage("you win");
 
@@ -75,13 +74,13 @@ public class UploadScoreServiceImpl implements UploadScoreService {
 
                 grid.setErrorCode("0");
                 grid.setMessage("next question");
-                grid.setPageList(QuestionUtils.getNextQuestion(id));
+                grid.setPageList(QuestionUtils.getNowQuestion());
             }
 
         }else if (!overTime) {
              user.setDieIndex(id);
              grid.setErrorCode("26");
-             grid.setMessage("time over 10 seconds");
+             grid.setMessage("time over 12 seconds");
         }else{
              user.setDieIndex(id);
              grid.setErrorCode("20");

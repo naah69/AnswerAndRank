@@ -5,10 +5,12 @@ import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.User;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
+import org.apache.commons.net.ntp.TimeStamp;
 import org.springframework.context.ApplicationContext;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -28,4 +30,7 @@ public class HeapVariable {
     public static ApplicationContext context;
     public static AnnualMeetingGameQuestionMapper mapper;
     public static AtomicInteger atomic;
+    public static TimeStamp beginTime;
+    public static QuestionDTO now;
+    public static ConcurrentLinkedQueue<QuestionDTO> questionQueue;
 }

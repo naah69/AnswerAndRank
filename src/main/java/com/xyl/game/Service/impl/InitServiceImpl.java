@@ -20,40 +20,48 @@ import java.util.ArrayList;
  */
 @Service
 public class InitServiceImpl implements InitService {
-    private  final static Logger log=Logger.getLogger(InitServiceImpl.class);
+    private final static Logger log = Logger.getLogger(InitServiceImpl.class);
+
     @Override
     public GridPage initGame(HttpServletRequest request, User user) {
-        GridPage result=new GridPage();
-        log.info("初始化用户："+user.getUsername()+" 开始");
+        GridPage result = new GridPage();
+        log.info("初始化用户：" + user.getUsername() + " 开始");
         try {
             String sessionId = request.getSession().getId();
             if (HeapVariable.usersMap.containsKey(sessionId)) {
-                log.info("初始化用户："+user.getUsername()+" 已存在");
+                log.info("初始化用户：" + user.getUsername() + " 已存在");
 
                 User u = HeapVariable.usersMap.get(sessionId);
                 if (u.getDieIndex() != null) {
                     result.setErrorCode("12");
-                    result.setMessage("游戏已经结束！最高分数："+u.getScore()+"！");
-                     return result;
-                }else{
-                    result.setErrorCode("0");
-                    result.setMessage("user had inited ,continue to answer,please");
+                    result.setMessage("游戏已经结束！最高分数：" + u.getScore() + "！");
+                    return result;
+                } else {
+                    result.setErrorCode("13");
+                    result.setMessage("you had exit");
                 }
-                int index = u.getAnswers().size();
-                result.setPageList(QuestionUtils.getNextQuestion(index));
+                if (u.getScore() == HeapVariable.questionsList.size()) {
+                    result.setErrorCode("-1");
+                    result.setMessage("you had won!");
+                }
                 return result;
+            } else if(HeapVariable.now.getId()==1) {
+                user.setSessionId(sessionId);
+                user.setScore(0);
+                user.setTimesSecond(0);
+                user.setAnswers(new ArrayList<Answer>(HeapVariable.questionsList.size()));
+                HeapVariable.usersMap.put(sessionId, user);
+                result.setErrorCode("0");
+                result.setMessage("hello " + user.getUsername());
+                result.setPageList(QuestionUtils.getNowQuestion());
+                log.info("初始化用户：" + user.getUsername() + " 成功");
+            }else{
+                 result.setErrorCode("14");
+                 result.setMessage("sorry,you are late" );
             }
-            user.setSessionId(sessionId);
-            user.setScore(0);
-            user.setTimesSecond(0);
-            user.setAnswers(new ArrayList<Answer>(HeapVariable.questionsList.size()));
-            HeapVariable.usersMap.put(sessionId,user);
-            result.setErrorCode("0");
-            result.setMessage("hello "+user.getUsername());
-            result.setPageList(QuestionUtils.getNextQuestion(0));
-            log.info("初始化用户："+user.getUsername()+" 成功");
+
         } catch (Exception e) {
-            log.info("初始化用户异常："+user.getUsername());
+            log.info("初始化用户异常：" + user.getUsername());
             result.setErrorCode("0");
             result.setMessage("初始化异常");
             e.printStackTrace();

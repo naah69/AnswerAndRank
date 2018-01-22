@@ -45,19 +45,19 @@ public class Answer {
     			indexc[i] = ' ';
     	}
     	}
-    	
+
     	sb.append("题号:"+indexc[0]+";");
     	sb.append("用户回答"+indexc[1]+";");
     	sb.append("使用答题时间："+time+";");
-    	String isRightStr = ""; 
+    	String isRightStr = "";
     	if(isRight){
     		isRightStr="是";
     	} else {
     		isRightStr="否";
     	}
-    	
+
     	sb.append("是否答对："+isRightStr+";");
-    	
+
     	return sb.toString();
     }
 }

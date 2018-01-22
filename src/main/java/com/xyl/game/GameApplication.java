@@ -10,7 +10,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * SpringBOOT 启动类
@@ -20,7 +19,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("com.xyl.game.mapper")
-@EnableScheduling
+//@EnableScheduling
 public class GameApplication {
     private static Logger log = null;
 
@@ -36,6 +35,7 @@ public class GameApplication {
     private static void initLog4j() {
         PropertyConfigurator.configure(PropertiesUtils.initProperties("log4j.properties"));
         log = Logger.getLogger(GameApplication.class);
+
 
     }
 

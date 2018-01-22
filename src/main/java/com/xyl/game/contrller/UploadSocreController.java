@@ -25,12 +25,12 @@ public class UploadSocreController {
     private UploadScoreService service;
 
     @PostMapping("uploadScore")
-    public GridPage<QuestionDTO> uploadScore(Byte answer, Integer times,HttpServletRequest request){
+    public GridPage<QuestionDTO> uploadScore(Integer id,Byte answer, Integer times,HttpServletRequest request){
 
         String sessionId = request.getSession().getId();
         User user = HeapVariable.usersMap.get(sessionId);
 
-        GridPage<QuestionDTO> result = service.uploadScore( answer, times, sessionId, user);
+        GridPage<QuestionDTO> result = service.uploadScore(id, answer, times, sessionId, user);
 
         return result;
     }
