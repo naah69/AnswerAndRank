@@ -152,4 +152,10 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 		
 	}
 
+	@Override
+	public Boolean savaAnnualMeetingGameQuestion(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

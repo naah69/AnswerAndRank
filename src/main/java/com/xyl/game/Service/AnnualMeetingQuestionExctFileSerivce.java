@@ -1,7 +1,9 @@
 package com.xyl.game.Service;
 
 import java.io.InputStream;
+import java.util.List;
 
+import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 
 /**
@@ -18,6 +20,8 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	
 	public AnnualMeetingGameQuestionVo getAllGameQuestion();
 	
+	public Boolean savaAnnualMeetingGameQuestion(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions);
+	
 	/**
 	 * 修改问题数据的缓存
 	 * @param vo
@@ -28,5 +32,6 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	 * @throws Exception
 	 */
 	public Boolean updataData(AnnualMeetingGameQuestionVo vo,Integer id,String fieldValue,String fieldName) throws Exception;
+	
 	
 }

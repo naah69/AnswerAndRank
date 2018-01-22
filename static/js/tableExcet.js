@@ -4,7 +4,7 @@ layui.use('table', function(){
 	var $ = layui.$;
 	table.render({
 	 	elem: '#annualMeeting_question_table'
-	 	,url: '/demo/table/user/'
+	 	,url: '/userData'
 	 	,cols: [[
 	 	   {field:'id', title: 'id', width:'5%',sort: true}
 	 	   ,{field:'topic', title: '题目', width:'70%'}
