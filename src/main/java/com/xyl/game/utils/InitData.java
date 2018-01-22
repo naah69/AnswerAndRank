@@ -37,4 +37,13 @@ public class InitData {
         HeapVariable.questionsList=questionList;
         HeapVariable.questionDTOList = questionDTOList;
     }
+
+    public static void initTable(){
+         AnnualMeetingGameQuestionMapper mapper=HeapVariable.mapper;
+         mapper.copyTableStruct();
+         mapper.deleteTable();
+         mapper.renameTableName();
+         initVariable();
+         initQuestion();
+    }
 }

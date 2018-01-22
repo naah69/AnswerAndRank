@@ -26,10 +26,8 @@ public class GameApplication {
 
         ApplicationContext context = SpringApplication.run(GameApplication.class, args);
         AnnualMeetingGameQuestionMapper mapper = context.getBean(AnnualMeetingGameQuestionMapper.class);
-
         initLog4j();
         initData(mapper, context);
-
 
     }
 
