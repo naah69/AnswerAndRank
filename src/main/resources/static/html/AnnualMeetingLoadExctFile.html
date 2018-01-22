@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="../js/layui/css/layui.css" />
 </head>
 <body>
-
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
   <legend>上传年会游戏问题</legend>
 </fieldset> 
@@ -39,44 +38,11 @@
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript" src="../js/tableExcet.js"></script>
 <script type="text/javascript" src="../js/uploadExctFile.js"></script>
+<script type="text/javascript" src="../js/buttom.js"></script>
 <script type="text/javascript">
-	var layer = null,$ = null;
-	layui.use('layer', function(){
-	  layer = layui.layer;
-	  $ = layui.$;
-	  $("#testListAction").click(function(){
-		layer.confirm("确定数据无误？保存后将无法修改！", {icon: 3, title:'提示'}, function(index){
-			 $.post('/savaAnnualMeetingGameQuestion',function(data){
-				if(data == 'ok'){
-					layer.msg("插入成功")
-				}else{
-					layer.msg("插入失败")
-				}
-			}); 
-			
-			table.reload('annualMeeting_question_table_temporaryData',{
-				data:null
-			});
-			table.reload('annualMeeting_question_table');
-			$('#td_waitFor').html('上传成功！');
-			layer.close(index);
-		})
-	  });
-	  $("#dumpData").click(function(){
-	  	layer.confirm("确定要清除数据？清除后将无法恢复！", {icon: 3, title:'提示'}, function(index){
-			 $.post('/clearAllData',function(data){
-				if(data == 'ok'){
-					layer.msg("清除成功")
-				}else{
-					layer.msg("清除失败")
-				}
-			}); 
-			table.reload('annualMeeting_question_table');
-			layer.close(index);
-		})
-	  });
-	  
-	});              
-	
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+});
 </script>
 </html>

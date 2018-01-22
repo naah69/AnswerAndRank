@@ -100,12 +100,18 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			annualMeetingGameQuestion.setAnswerTwo(row.getCell(2).toString());
 			annualMeetingGameQuestion.setAnswerThree(row.getCell(3).toString());
 			annualMeetingGameQuestion.setAnswerFour(row.getCell(4).toString());
-			
-			annualMeetingGameQuestion.setRightAnswer((byte)(Float.valueOf(row.getCell(5).toString()).floatValue()));
-			annualMeetingGameQuestions.add(annualMeetingGameQuestion);
+			structureRightAnswer(annualMeetingGameQuestions, row, annualMeetingGameQuestion);
 		}
 		
 		return annualMeetingGameQuestions;
+	}
+
+	private void structureRightAnswer(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions, Row row,
+			AnnualMeetingGameQuestion annualMeetingGameQuestion) {
+		String rightAnswerStr = row.getCell(5).toString();
+		byte rightAnswer = (byte)(Float.valueOf(rightAnswerStr).floatValue());
+		annualMeetingGameQuestion.setRightAnswer(rightAnswer);
+		annualMeetingGameQuestions.add(annualMeetingGameQuestion);
 	}
 
 	@Override
