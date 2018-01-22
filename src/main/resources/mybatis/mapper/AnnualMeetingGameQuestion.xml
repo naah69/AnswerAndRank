@@ -4,7 +4,7 @@
 
     <insert id="insertQuestion" parameterType="list">
         insert into AnnualMeetingGameQuestion
-        (id,topic,answer_one,answer_twe,answer_three,answer_fore,right_answer,create_time)
+        (id,topic,answer_one,answer_two,answer_three,answer_four,right_answer,create_time)
         values
         <foreach collection="list" item="item" index="index"
                  separator=",">
@@ -15,6 +15,7 @@
     <select id="selectAll" parameterType="AnnualMeetingGameQuestion" resultType="AnnualMeetingGameQuestion">
 		select * FROM  AnnualMeetingGameQuestion
 	</select>
+	
 	
 	<select id="getAllConut" parameterType="AnnualMeetingGameQuestion" resultType="Integer">
 		select count() FROM  AnnualMeetingGameQuestion

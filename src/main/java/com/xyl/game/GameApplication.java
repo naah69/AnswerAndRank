@@ -60,10 +60,7 @@ public class GameApplication {
         HeapVariable.questionsList=questionList;
         HeapVariable.usersMap=new ConcurrentHashMap<>(1024);
         HeapVariable.questionDTOList = questionDTOList;
-        Map<String, AnnualMeetingGameQuestionVo> annualMeetingGameQuestionVos = HeapVariable.annualMeetingGameQuestionVos;
-        if(annualMeetingGameQuestionVos == null){
-        	annualMeetingGameQuestionVos = new HashMap<String, AnnualMeetingGameQuestionVo>();
-        }
+        HeapVariable.annualMeetingGameQuestionVos = new HashMap<String, AnnualMeetingGameQuestionVo>();
         
     }
 }

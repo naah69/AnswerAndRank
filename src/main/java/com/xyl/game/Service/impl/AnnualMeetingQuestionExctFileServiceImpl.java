@@ -145,6 +145,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			return new AnnualMeetingGameQuestionVo(selectAll, AnnualMeetingGameQuestionVo.STATE_NUM_SUCCESS, "success", allConut);
 		} catch (Exception e) {
 			logger.error("数据查询异常");
+			e.printStackTrace();
 			return new AnnualMeetingGameQuestionVo(null, AnnualMeetingGameQuestionVo.STATE_NUM_EXCEPTION, "数据查询异常" , 0);
 		}
 		
@@ -158,6 +159,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			return true;
 		} catch (Exception e) {
 			logger.error("插入失败！");
+			e.printStackTrace();
 			return false;
 		}
 	}
