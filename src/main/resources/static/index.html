@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>demo</title>
 </head>
-<link rel="stylesheet" href="../js/layui/css/layui.css" />
+<link rel="stylesheet" href="../js/layui/css/layui.css"/>
 <body>
 
 //用户信息初始化
@@ -17,6 +17,7 @@
 
 //答题
 <div id="div2" style="display: none">
+    <h1 id="timeViewer"></h1>
     <div id="question"></div>
     <div id="answers">
         <form id="form1">
@@ -32,13 +33,13 @@
 
 //排行榜
 <div id="div3" style="display: none">
-<table class="layui-hide" id="annualMeeting_question_table" lay-filter="annualMeeting_question_table"></table>
+    <table class="layui-hide" id="annualMeeting_question_table" lay-filter="annualMeeting_question_table"></table>
 
 </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script>
-	var table = null;
+    var table = null;
     $('#btn').on('click', function () {
         $.get("/initGame", {username: $('#username').val(), department: $('#department').val(), tel: $('#tel').val()},
             function (data) {
@@ -49,7 +50,7 @@
                     refreshForm(que);
                     $('#div2').css('display', 'block');
                 } else {
-                    alert(data.message());
+                    alert(data.message);
                     rank();
                 }
 
@@ -57,11 +58,13 @@
     });
 
     $('#comit').on('click', function () {
+        clearTime();
         $.post("/uploadScore", $('#form1').serialize(),
             function (data) {
                 console.log(data);
                 if (data.errorCode == 0) {
                     var que = data.rows[0];
+                    $("input[type='radio']").removeAttr('checked');
                     refreshForm(que);
 
                 } else {
@@ -77,12 +80,34 @@
         $('#div3').css('display', 'block');
         $.get("/rank", function (data) {
             console.log(data)
-            table.reload('annualMeeting_question_table',{
-            	data:data.rows
+            table.reload('annualMeeting_question_table', {
+                data: data.rows
             })
         });
 
     }
+
+    var timesRun = 0;
+    var interval;
+
+    function time() {
+        interval = setInterval(function () {
+            if (timesRun == 10) {
+                clearTime();
+                $('#comit').click();
+            }
+            $('#timeViewer').text(timesRun);
+            timesRun += 1;
+        }, 1000);
+    }
+
+    function clearTime() {
+        if (interval != null && interval != undefined) {
+            clearInterval(interval);
+            timesRun = 0;
+        }
+    }
+
 
     function refreshForm(que) {
         $('#question').text(que['question']);
@@ -94,21 +119,23 @@
         $('#a3r').val("3");
         $('#answer4').text(que['answerFour']);
         $('#a4r').val("4");
+        time();
     }
-    layui.use('table', function(){
-    	table = layui.table;
-    	table.render({
-    		elem: '#annualMeeting_question_table'
-    		,cols: [[
-	 	   {field:'username', title: 'username', width:'25%'}
-	 	   ,{field:'department', title: 'department', width:'25%'}
-	 	   ,{field:'score', title: 'score', width:'25%'}
-	 	   ,{field:'timesSecond', title: 'timesSecond', width:'25%'}
-	 		]]
-	 		,id:'annualMeeting_question_table'
-    	})
+
+    layui.use('table', function () {
+        table = layui.table;
+        table.render({
+            elem: '#annualMeeting_question_table'
+            , cols: [[
+                {field: 'username', title: 'username', width: '25%'}
+                , {field: 'department', title: 'department', width: '25%'}
+                , {field: 'score', title: 'score', width: '25%'}
+                , {field: 'timesSecond', title: 'timesSecond', width: '25%'}
+            ]]
+            , id: 'annualMeeting_question_table'
+        })
     });
-    
+
 </script>
 </body>
 
