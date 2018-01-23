@@ -36,7 +36,6 @@ public class HeapVariable {
     public static AtomicInteger atomic;
     public static String MD5DataChange = "";
     public static Timestamp beginTime;
-    public static Integer intervalTime = 12;
     public static QuestionDTO now;
     public static int intervalSecond;
     public static CopyOnWriteArrayList<Map<Integer,ConcurrentLinkedQueue<Answer>>> answerList;

@@ -29,23 +29,23 @@ import com.xyl.game.utils.StringUtil;
 import com.xyl.game.utils.TimeFormatUtil;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 /**
- * 
+ *
  * @author dazhi
  */
 @Service
 public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQuestionExctFileSerivce{
 
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionExctFileServiceImpl.class);
-	
+
 	@Autowired
 	private AnnualMeetingGameQuestionMapper annualMeetingGameQuestionMapper;
-	
+
 	@Override
 	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream){
 		//创建对Excel工作簿文件的引用
 		Workbook workbook = null;
 		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo= new AnnualMeetingGameQuestionVo();
-		
+
 		try {
 			try{
 				workbook = new XSSFWorkbook(exctFileStream);
@@ -55,12 +55,12 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 				workbook = new HSSFWorkbook(exctFileStream);
 			}
 			List<AnnualMeetingGameQuestion> analyzingExctData = analyzingExctData(workbook);
-			
+
 			//封装解析出来的所有exct数据
 			annualMeetingGameQuestionVo.setAllQuestions(analyzingExctData);
 			annualMeetingGameQuestionVo.setState(1);
 			annualMeetingGameQuestionVo.setStateInfo("success");
-			
+
 			return annualMeetingGameQuestionVo;
 		} catch (Exception e) {
 			logger.error("文件加载异常，"+e.getMessage());
@@ -77,7 +77,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			}
 		}
 	}
-	
+
 	/**
 	 * 解析Excel表格数据
 	 * @param workbook
@@ -87,9 +87,9 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	private List<AnnualMeetingGameQuestion> analyzingExctData(Workbook workbook) throws Exception{
 		//获得第一个sheet
 		Sheet sheetAt = workbook.getSheetAt(0);
-		
+
 		List<AnnualMeetingGameQuestion> questionsList = HeapVariable.questionsList;
-		int id = questionsList.size()+1 ; 
+		int id = questionsList.size()+1 ;
 		int lastRowNum = sheetAt.getLastRowNum();
 		HeapVariable.atomic.addAndGet(lastRowNum);
 		List<AnnualMeetingGameQuestion> annualMeetingGameQuestions = new ArrayList<AnnualMeetingGameQuestion>();
@@ -106,7 +106,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			annualMeetingGameQuestion.setAnswerFour(row.getCell(4).toString());
 			structureRightAnswer(annualMeetingGameQuestions, row, annualMeetingGameQuestion);
 		}
-		
+
 		return annualMeetingGameQuestions;
 	}
 
@@ -142,10 +142,10 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 
 	/**
 	 * 获得所有年会问题数据
@@ -160,7 +160,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			e.printStackTrace();
 			return new AnnualMeetingGameQuestionVo(null, AnnualMeetingGameQuestionVo.STATE_NUM_EXCEPTION, "数据查询异常" , 0);
 		}
-		
+
 	}
 
 	@Override
@@ -192,10 +192,10 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			param.setBeginTime(beginTime.getTime());
 			param.setBeginTimeStr(TimeFormatUtil.getTimeStr(new Date(beginTime.getTime())));
 		}else{
-			param.setBeginTime(0l);
+			param.setBeginTime(0L);
 			param.setBeginTimeStr("");
 		}
-		param.setIntervalTime(HeapVariable.intervalTime);
+		param.setIntervalTime(HeapVariable.intervalSecond);
 		return param;
 	}
 
