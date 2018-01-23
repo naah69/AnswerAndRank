@@ -1,4 +1,4 @@
-package com.xyl.game;
+package com.xyl.game.websocket;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

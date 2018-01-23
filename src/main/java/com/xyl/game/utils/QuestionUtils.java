@@ -2,9 +2,12 @@ package com.xyl.game.utils;
 
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.po.Answer;
 import com.xyl.game.po.Page;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * QuestionUtils
@@ -29,5 +32,9 @@ public class QuestionUtils {
 
     public static AnnualMeetingGameQuestion getQuestion(int id){
          return HeapVariable.questionsList.get(id - 1);
+    }
+
+    public static Map<Integer,ConcurrentLinkedQueue<Answer>> getAnswerMap(int id){
+        return HeapVariable.answerList.get(id-1);
     }
 }

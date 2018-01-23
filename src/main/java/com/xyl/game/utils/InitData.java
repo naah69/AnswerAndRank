@@ -3,6 +3,7 @@ package com.xyl.game.utils;
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.po.Answer;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 import org.apache.log4j.Logger;
 
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -41,6 +44,18 @@ public class InitData {
         HeapVariable.questionDTOList = questionDTOList;
         HeapVariable.atomic = new AtomicInteger();
         HeapVariable.atomic.set(questionList.size());;
+        HeapVariable.answerList=new CopyOnWriteArrayList<>();
+        for (int i = 0; i <  HeapVariable.questionsList.size(); i++) {
+            HashMap<Integer, ConcurrentLinkedQueue<Answer>> hashMap = new HashMap<>();
+            HeapVariable.answerList.add(hashMap);
+            hashMap.put(0,new ConcurrentLinkedQueue<Answer>() );
+            hashMap.put(1,new ConcurrentLinkedQueue<Answer>() );
+            hashMap.put(2,new ConcurrentLinkedQueue<Answer>() );
+            hashMap.put(3,new ConcurrentLinkedQueue<Answer>() );
+            hashMap.put(4,new ConcurrentLinkedQueue<Answer>() );
+
+        }
+
     }
 
     public static void initTable() {

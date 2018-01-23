@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * uploadSocreServiceImpl
@@ -24,6 +26,13 @@ public class UploadScoreServiceImpl implements UploadScoreService {
     @Override
     public GridPage<QuestionDTO> uploadScore(Integer id,Byte answer, Integer times, String sessionId, User user) {
         GridPage<QuestionDTO> grid = new GridPage<>();
+        Long time=HeapVariable.beginTime.getTime();
+        if (HeapVariable.beginTime==null||time>System.currentTimeMillis()) {
+            GridPage result = new GridPage();
+            result.setErrorCode("1");
+            result.setMessage(time+"");
+            return result;
+        }
         List<Answer> answers = user.getAnswers();
         if (times == null) {
             grid.setErrorCode("21");
@@ -55,15 +64,21 @@ public class UploadScoreServiceImpl implements UploadScoreService {
         }
 
 
-
+        if (!id.equals( HeapVariable.now.getId())) {
+            grid.setErrorCode("28");
+            grid.setMessage("different question");
+            return grid;
+        }
+        answer=answer!=null?answer:0;
         AnnualMeetingGameQuestion question=QuestionUtils.getQuestion(id);
-        Answer userAnswer = new Answer(id, question, answer!=null?answer:0, times,false,new Timestamp(System.currentTimeMillis()));
-        Long t=answers.size()>id?answers.get(answers.size() - 1).getCommitTime().getTime():0;
-        boolean overTime=answers.size()>id
-                ?userAnswer.getCommitTime().getTime()<t+20000
-                :times<20;
+        Answer userAnswer = new Answer(id, question, answer, times,false,new Timestamp(System.currentTimeMillis()));
         answers.add(userAnswer);
+        boolean overTime=times>0&&times<=HeapVariable.intervalSecond;
         user.setTimesSecond(user.getTimesSecond() + times);
+        Map<Integer, ConcurrentLinkedQueue<Answer>> answerMap = QuestionUtils.getAnswerMap(id);
+        ConcurrentLinkedQueue<Answer> answersList = answerMap.get(answer);
+        answersList.add(userAnswer);
+
 
         if (overTime&&answer != null&&question.getRightAnswer().equals(answer)) {
 
@@ -77,13 +92,12 @@ public class UploadScoreServiceImpl implements UploadScoreService {
 
                 grid.setErrorCode("0");
                 grid.setMessage("next question");
-                grid.setPageList(QuestionUtils.getNowQuestion());
             }
 
         }else if (!overTime) {
              user.setDieIndex(id);
              grid.setErrorCode("26");
-             grid.setMessage("time over 12 seconds");
+             grid.setMessage("time over "+HeapVariable.intervalSecond+" seconds");
         }else{
              user.setDieIndex(id);
              grid.setErrorCode("20");

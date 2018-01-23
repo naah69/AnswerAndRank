@@ -22,8 +22,9 @@ public class InitServiceImpl implements InitService {
     private final static Logger log = Logger.getLogger(InitServiceImpl.class);
 
     @Override
-    public GridPage initGame( String sessionId , User user) {
+    public GridPage initGame(String sessionId, User user) {
         GridPage result = new GridPage();
+
         log.info("初始化用户：" + user.getUsername() + " 开始");
         try {
             if (HeapVariable.usersMap.containsKey(sessionId)) {
@@ -43,7 +44,7 @@ public class InitServiceImpl implements InitService {
                     result.setMessage("you had won!");
                 }
                 return result;
-            } else if(HeapVariable.now.getId()==1) {
+            } else if (HeapVariable.now.getId() == 1) {
                 user.setSessionId(sessionId);
                 user.setScore(0);
                 user.setTimesSecond(0);
@@ -53,9 +54,9 @@ public class InitServiceImpl implements InitService {
                 result.setMessage("hello " + user.getUsername());
                 result.setPageList(QuestionUtils.getNowQuestion());
                 log.info("初始化用户：" + user.getUsername() + " 成功");
-            }else{
-                 result.setErrorCode("14");
-                 result.setMessage("sorry,you are late" );
+            } else {
+                result.setErrorCode("14");
+                result.setMessage("sorry,you are late");
             }
 
         } catch (Exception e) {

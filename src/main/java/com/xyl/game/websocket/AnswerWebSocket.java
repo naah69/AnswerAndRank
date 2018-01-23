@@ -80,13 +80,7 @@ public class AnswerWebSocket {
         String sessionId = session.getId();
         switch (req.getMethod()) {
             case "init":
-                  Long time= HeapVariable.beginTime.getTime();
-                    if (HeapVariable.beginTime==null||time>System.currentTimeMillis()) {
-                        result = new GridPage();
-                        result.setErrorCode("1");
-                        result.setMessage(time+"");
 
-                    }
                 result = initService.initGame(sessionId, req.getUser());
                 break;
             case "update":
