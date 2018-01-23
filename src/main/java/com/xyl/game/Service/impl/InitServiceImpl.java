@@ -4,6 +4,7 @@ import com.xyl.game.Service.InitService;
 import com.xyl.game.po.Answer;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.User;
+import com.xyl.game.utils.FinalVariable;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.QuestionUtils;
 import org.apache.log4j.Logger;
@@ -24,12 +25,12 @@ public class InitServiceImpl implements InitService {
     @Override
     public GridPage initGame(String sessionId, User user) {
         GridPage result = new GridPage();
-        result.setMethod("init");
+        result.setMethod(FinalVariable.INIT_METHOD);
         log.info("初始化用户：" + user.getUsername() + " 开始");
         try {
             if (HeapVariable.beginTime == null) {
-                 result.setErrorCode("11");
-                result.setMessage("没有游戏场次！");
+                result.setErrorCode(FinalVariable.NO_GAME_STATUS_CODE);
+                result.setMessage(FinalVariable.NO_GAME_MESSAGE);
                 return result;
             }
             if (HeapVariable.usersMap.containsKey(sessionId)) {
@@ -37,37 +38,37 @@ public class InitServiceImpl implements InitService {
 
                 User u = HeapVariable.usersMap.get(sessionId);
                 if (u.getDieIndex() != null) {
-                    result.setErrorCode("12");
-                    result.setMessage("游戏已经结束！最高分数：" + u.getScore() + "！");
+                    result.setErrorCode(FinalVariable.GAME_DONE_STATUS_CODE);
+                    result.setMessage(FinalVariable.GAME_DONE_MESSAGE+" 你的最高分数：" + u.getScore() + "！");
                     return result;
                 } else {
-                    result.setErrorCode("13");
-                    result.setMessage("你已经退出了");
+                    result.setErrorCode(FinalVariable.YOU_EXIT_STATUS_CODE);
+                    result.setMessage(FinalVariable.YOU_EXIT_MESSAGE);
                 }
                 if (u.getScore() == HeapVariable.questionsList.size()) {
-                    result.setErrorCode("-1");
-                    result.setMessage("你赢了!");
+                    result.setErrorCode(FinalVariable.YOU_WIN_STATUS_CODE);
+                    result.setMessage(FinalVariable.YOU_WIN_MESSAGE);
                 }
                 return result;
-            } else if (HeapVariable.now== null) {
+            } else if (HeapVariable.now == null) {
                 user.setSessionId(sessionId);
                 user.setScore(0);
                 user.setTimesSecond(0);
                 user.setAnswers(new ArrayList<Answer>(HeapVariable.questionsList.size()));
                 HeapVariable.usersMap.put(sessionId, user);
-                result.setErrorCode("0");
-                result.setMessage(HeapVariable.beginTime.getTime()+"");
-                result.setPageList(QuestionUtils.getNowQuestion());
+                result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
+                result.setMessage(HeapVariable.beginTime.getTime() + "");
+                result.setPageList(QuestionUtils.getNowQuestionDTOPage());
                 log.info("初始化用户：" + user.getUsername() + " 成功");
             } else {
-                result.setErrorCode("14");
-                result.setMessage("sorry,you are late");
+                result.setErrorCode(FinalVariable.GAME_HAS_STARTED_STATUS_CODE);
+                result.setMessage(FinalVariable.GAME_HAS_STARTED_MESSAGE);
             }
 
         } catch (Exception e) {
             log.info("初始化用户异常：" + user.getUsername());
-            result.setErrorCode("0");
-            result.setMessage("初始化异常");
+            result.setErrorCode(FinalVariable.INIT_ERROR_STATUS_CODE);
+            result.setMessage(FinalVariable.INIT_ERROR_MESSAGE);
             e.printStackTrace();
             return result;
         }

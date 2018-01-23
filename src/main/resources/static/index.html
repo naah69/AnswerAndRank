@@ -22,12 +22,11 @@
     <div id="question"></div>
     <div id="answers">
         <form id="form1">
-            <input type="hidden" id="times" name="times">
             <input type="hidden" id="id" name="id">
-            <p><input type="radio" id="a1r" name="answer"><span id="answer1"></span></p>
-            <p><input type="radio" id="a2r" name="answer"><span id="answer2"></span></p>
-            <p><input type="radio" id="a3r" name="answer"><span id="answer3"></span></p>
-            <p><input type="radio" id="a4r" name="answer"><span id="answer4"></span></p>
+            <p><input type="radio" id="a1r" name="answer" value="1"><span id="answer1"></span></p>
+            <p><input type="radio" id="a2r" name="answer" value="2"><span id="answer2"></span></p>
+            <p><input type="radio" id="a3r" name="answer" value="3"><span id="answer3"></span></p>
+            <p><input type="radio" id="a4r" name="answer" value="4"><span id="answer4"></span></p>
         </form>
         <input type="button" value="提交" id="comit">
     </div>
@@ -57,15 +56,16 @@
     });
     var isCommit = false;
     $('#comit').on('click', function () {
+        var time=intervalSecond-timesRun;
         var message = {
             "method": "updateScore",
             "id": $('#id').val(),
             "answer": $('input:radio:checked').val(),
-            "times": timesRun
+            "times": time
         };
         isCommit = true;
         $('#comit').css('display', 'none');
-        $('#userTime').text("本次用时：" + timesRun);
+        $('#userTime').text("本次用时：" + time);
         send(JSON.stringify(message));
         $("input[type='radio']").removeAttr('checked');
     });
@@ -83,13 +83,17 @@
 
     var timesRun = 0;
     var interval;
-
+    var intervalSecond=12;
+    $.get("/intervalSecond",
+          function(data){
+         intervalSecond=data;
+});
     function time() {
-        timesRun = 0;
+        timesRun = intervalSecond;
         interval = setInterval(function () {
-            timesRun += 1;
+            timesRun --;
             $('#timeViewer').text(timesRun);
-            if (timesRun >= 12) {
+            if (timesRun < 0) {
                 clearTime();
                 if (!isCommit&&inited) {
                     $('#comit').click();

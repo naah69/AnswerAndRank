@@ -36,4 +36,9 @@ public class InitController {
 
         return result;
     }
+
+    @GetMapping("intervalSecond")
+    public Integer getIntervalSecond(){
+        return HeapVariable.intervalSecond;
+    }
 }

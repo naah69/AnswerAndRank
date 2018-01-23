@@ -5,6 +5,7 @@ import com.xyl.game.Service.UploadScoreService;
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.dto.RequestDTO;
 import com.xyl.game.po.GridPage;
+import com.xyl.game.utils.FinalVariable;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.JSONUtils;
 import org.springframework.stereotype.Component;
@@ -83,8 +84,8 @@ public class AnswerWebSocket {
                 result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
                 break;
             default:
-                result.setErrorCode("250");
-                result.setMessage("can't find method");
+                result.setErrorCode(FinalVariable.NO_METHOD_ERROR_STATUS_CODE);
+                result.setMessage(FinalVariable.NO_METHOD_ERROR_MESSAGE);
                 break;
         }
         sendGridPage(result);
@@ -139,5 +140,8 @@ public class AnswerWebSocket {
         return onlineCount.decrementAndGet();
     }
 
+    public String getSessionId(){
+        return session.getId();
+    }
 
 }

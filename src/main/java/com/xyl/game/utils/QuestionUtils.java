@@ -2,12 +2,11 @@ package com.xyl.game.utils;
 
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
-import com.xyl.game.po.Answer;
 import com.xyl.game.po.Page;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * QuestionUtils
@@ -16,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @date 2018-01-22
  */
 public class QuestionUtils {
-    public static Page<QuestionDTO> getNextQuestion(int id) {
+    public static Page<QuestionDTO> getNextQuestionDTOPage(int id) {
         List<QuestionDTO> list = HeapVariable.questionDTOList;
         Page<QuestionDTO> page = new Page<>();
         if (list.size() >= id + 1) {
@@ -25,7 +24,7 @@ public class QuestionUtils {
         return page;
     }
 
-    public static Page<QuestionDTO> getNowQuestion() {
+    public static Page<QuestionDTO> getNowQuestionDTOPage() {
         Page<QuestionDTO> page = new Page<>();
         page.add(HeapVariable.now);
         return page;
@@ -35,25 +34,24 @@ public class QuestionUtils {
         return HeapVariable.questionsList.get(id - 1);
     }
 
-    public static String getAnswerNow() {
-        return HeapVariable.questionsList.get(HeapVariable.now.getId() - 1).getRightAnswer() + "";
-    }
 
-    public static Map<Integer, ConcurrentLinkedQueue<Answer>> getAnswerMap(int id) {
+    public static Map<Integer, AtomicInteger> getAnswerMap(int id) {
         return HeapVariable.answerList.get(id - 1);
     }
 
-    public static QuestionDTO nextQuestion() {
+    public static QuestionDTO getNextQuestionDTO() {
         QuestionDTO now = HeapVariable.now;
-            if (now == null) {
-                HeapVariable.now = HeapVariable.questionDTOList.get(0);
-            }else if (now.getId()==HeapVariable.questionsList.size()) {
-                HeapVariable.now=null;
-            } else {
-                HeapVariable.now = HeapVariable.questionDTOList.get(now.getId());
-            }
+        if (now == null) {
+            HeapVariable.now = HeapVariable.questionDTOList.get(0);
+        } else if (now.getId() == HeapVariable.questionsList.size()) {
+            HeapVariable.now = null;
+        } else {
+            HeapVariable.now = HeapVariable.questionDTOList.get(now.getId());
+        }
 
 
         return HeapVariable.now;
     }
+
+
 }
