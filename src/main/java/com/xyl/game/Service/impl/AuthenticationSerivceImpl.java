@@ -33,14 +33,17 @@ public class AuthenticationSerivceImpl implements AuthenticationSerivce{
 		return false;
 	}
 	@Override
-	public Admin admin(String adminId, String pwd) {
-		if(adminId == null ){
+	public Boolean admin(String adminId, String pwd) {
+		if(adminId == null || "".equals(adminId.trim())){
 			HeapVariable.pwd = new Admin();
 			HeapVariable.pwd.setId(adminId);
 			HeapVariable.pwd.setPwd(pwd);
 		}
-		Admin pwd2 = HeapVariable.pwd;
-		return null;
+		Admin admin = HeapVariable.pwd;
+		if(admin.getPwd().equals(pwd)){
+			return true;
+		}
+		return false;
 	}
 
 }

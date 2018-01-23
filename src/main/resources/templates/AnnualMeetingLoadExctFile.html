@@ -27,15 +27,17 @@
 	layui.use('form',function(){
 		var $ = layui.$;
 		$.post("/isFirstAdmin", function(data) {
-		var title = $('#title');
-		alert(data);
-		if(data == 'no'){
-			title.html('请输入密码！');
-		}else{
-			title.html('请设置密码!');
-			$('#adminId').val(data);
-		}
-	})
+			var title = $('#title');
+			alert(data);
+			if(data == 'no'){
+				title.html('请输入密码！');
+			}else{
+				title.html('请设置密码!');
+				$('#adminId').val(data);
+			}
+		})
+		
+		
 	})
 	
 </script>

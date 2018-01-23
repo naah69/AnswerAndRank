@@ -17,7 +17,7 @@
 	<input type="hidden" name="adminId" id="adminId"/>
 	<div class="layui-form-item">
 	    <div class="layui-input-block">
-	      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+	      <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
 	    </div>
 	</div>
 </form>
@@ -26,6 +26,7 @@
 <script type="text/javascript">
 	layui.use('form',function(){
 		var $ = layui.$;
+		var form = layui.form;
 		$.post("/isFirstAdmin", function(data) {
 			var title = $('#title');
 			if(data == 'no'){
@@ -36,7 +37,13 @@
 			}
 		})
 		
-		
+		//监听提交
+		form.on('submit(submit)', function(data){
+		   layer.alert(JSON.stringify(data.field), {
+		     title: '最终的提交信息'
+		   })
+		    return false;
+		});
 	})
 </script>
 </html>

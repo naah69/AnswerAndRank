@@ -28,6 +28,7 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
  *
  */
 @Controller
+@RequestMapping("/admin")
 public class AnnualMeetingQuestionFileLoadContraller {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionFileLoadContraller.class);

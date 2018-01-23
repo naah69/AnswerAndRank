@@ -24,6 +24,7 @@ import com.xyl.game.Service.AuthenticationSerivce;
  *
  */
 @Controller
+@RequestMapping("/admin")
 public class AdminPageContraller {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminPageContraller.class);
@@ -65,7 +66,9 @@ public class AdminPageContraller {
 	@ResponseBody
 	public String admin(String adminId,String pwd){
 		//登录操作
-		authenticationSerivce.admin(adminId,pwd);
-		return "admin";
+		if(authenticationSerivce.admin(adminId,pwd)){
+			return "ok";
+		}
+		return "no";
 	}
 }
