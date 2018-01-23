@@ -18,23 +18,53 @@
       </div>
       <button type="button" class="layui-btn" id="dumpData">确定</button>
 </div>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>倒计时</legend>
+</fieldset>
+<blockquote class="layui-elem-quote" style="margin-top: 10px;">
+  <div id="CountDown"></div>
+</blockquote>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript">
 layui.use('laydate', function(){
   var laydate = layui.laydate;
+  var $ = layui.$;
+  var time = null;
 
   //执行一个laydate实例
   laydate.render({
     elem: '#gameStarTime' //指定元素
     ,type: 'datetime'
+    ,done: function(value, date){
+      time = date;
+
+    }
   });
   $('#dumpData').click(function(data){
-  	$.get('/admin/time?time='+$('#gameStarTime').val(),function(data){
+  	$.get('/setTime?time='+$('#gameStarTime').val(),function(data){
   		alert(data);
+  		if(data == "ok"){
+	  		setCountdown(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds);
+  		}
   	})
   });
-});
+
+
+  var thisTimer, setCountdown = function(y, M, d, H, m, s){
+    var endTime = new Date(y, M||0, d||1, H||0, m||0, s||0) //结束日期
+    ,serverTime = new Date(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
+
+    clearTimeout(thisTimer);
+    util.countdown(endTime, serverTime, function(date, serverTime, timer){
+      var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
+      lay('#"CountDown"').html(str);
+      thisTimer = timer;
+    });
+  };
+
+ })
+
 </script>
 </html>
