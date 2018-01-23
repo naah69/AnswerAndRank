@@ -34,7 +34,22 @@ public class QuestionUtils {
          return HeapVariable.questionsList.get(id - 1);
     }
 
+    public static String getAnswerNow(){
+        return HeapVariable.questionsList.get(HeapVariable.now.getId()- 1).getRightAnswer()+"";
+    }
+
     public static Map<Integer,ConcurrentLinkedQueue<Answer>> getAnswerMap(int id){
         return HeapVariable.answerList.get(id-1);
+    }
+
+    public static QuestionDTO nextQuestion(){
+        QuestionDTO now = HeapVariable.now;
+        try {
+            HeapVariable.now=HeapVariable.questionDTOList.get(now.getId());
+        }catch (IndexOutOfBoundsException e){
+            return null;
+        }
+
+        return HeapVariable.now;
     }
 }

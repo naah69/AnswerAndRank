@@ -1,14 +1,11 @@
 package com.xyl.game.Service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.xyl.game.Service.AuthenticationSerivce;
 import com.xyl.game.po.Admin;
 import com.xyl.game.utils.HeapVariable;
-
-import scala.annotation.meta.setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * 后台登录认证
@@ -29,7 +26,7 @@ public class AuthenticationSerivceImpl implements AuthenticationSerivce{
 			logger.info("第一次登录");
 			return true;
 		}
-		
+
 		return false;
 	}
 	@Override
