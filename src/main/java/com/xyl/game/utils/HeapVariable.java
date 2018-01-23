@@ -2,6 +2,7 @@ package com.xyl.game.utils;
 
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
+import com.xyl.game.po.Admin;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.Answer;
 import com.xyl.game.po.User;
@@ -39,6 +40,6 @@ public class HeapVariable {
     public static int intervalSecond;
     public static ConcurrentLinkedQueue<QuestionDTO> questionQueue;
     public static CopyOnWriteArrayList<Map<Integer,ConcurrentLinkedQueue<Answer>>> answerList;
-    public static Boolean isFristAdmin = true;
+    public static Admin pwd;
 
 }

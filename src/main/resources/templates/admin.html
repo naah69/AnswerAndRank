@@ -3,26 +3,40 @@
 <head>
 <meta charset="UTF-8" />
 <title>登录</title>
+<link rel="stylesheet" href="../js/layui/css/layui.css" />
 </head>
 <body>
 <h1 id="title"></h1>
-<form action="">
+<form class="layui-form" action="">
+	<div class="layui-form-item">
+	    <label class="layui-form-label">请输入密码：</label>
+	    <div class="layui-input-block">
+	      <input type="password" name="pwd" lay-verify="title" autocomplete="off" placeholder="请输入密码" class="layui-input" />
+	    </div>
+	</div>
 	<input type="hidden" name="adminId" id="adminId"/>
-	<input type="password" name="pwd" />
-	<input type="submit" name="sbt" value="提交" />
+	<div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+	    </div>
+	</div>
 </form>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript">
-	$.post("/isFirstAdmin", function(data) {
-		var title = $('#title');
-		alert(data);
-		if(data == 'no'){
-			title.html('请输入密码！');
-		}else{
-			title.html('请设置密码!');
-			$('#adminId').val(data);
-		}
+	layui.use('form',function(){
+		var $ = layui.$;
+		$.post("/isFirstAdmin", function(data) {
+			var title = $('#title');
+			if(data == 'no'){
+				title.html('请输入密码！');
+			}else{
+				title.html('请设置密码!');
+				$('#adminId').val(data);
+			}
+		})
+		
+		
 	})
 </script>
 </html>

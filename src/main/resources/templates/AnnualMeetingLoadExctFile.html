@@ -2,44 +2,41 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>上传文件</title>
+<title>登录</title>
 <link rel="stylesheet" href="../js/layui/css/layui.css" />
-
 </head>
 <body>
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-  <legend>上传年会游戏问题</legend>
-</fieldset> 
-<div class="layui-upload">
-   <div class="layui-upload-drag" id="exctFileLoad">
-	  <i class="layui-icon"></i>
-	  <p>点击上传，或将文件拖拽到此处</p>
+<h1 id="title"></h1>
+<form class="layui-form" action="">
+	<div class="layui-form-item">
+	    <label class="layui-form-label">请输入密码：</label>
+	    <div class="layui-input-block">
+	      <input type="password" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+	    </div>
 	</div>
-  <div class="layui-upload-list">
-    <table class="layui-table" id="loadFile" lay-filter="loadFile">
-      <thead>
-        <th>文件名</th>
-        <th>大小</th>
-        <th>状态</th>
-      </thead>
-      <tbody id="demoList"></tbody>
-    </table>
-    
-    <table class="layui-hide" id="annualMeeting_question_table_temporaryData" lay-filter="annualMeeting_question_table_temporaryData"></table>
-  </div>
-  <button type="button" class="layui-btn" id="testListAction">确定保存</button>
-</div> 
-
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-  <legend>数据库数据</legend>
-</fieldset>
-<table class="layui-hide" id="annualMeeting_question_table" lay-filter="annualMeeting_question_table"></table>
-<button type="button" class="layui-btn" id="dumpData">清除数据</button>
+	<input type="hidden" name="adminId" id="adminId"/>
+	<div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+	    </div>
+	</div>
+</form>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
-<script type="text/javascript" src="../js/tableExcet.js"></script>
-<script type="text/javascript" src="../js/uploadExctFile.js"></script>
-<script type="text/javascript" src="../js/buttom.js"></script>
-
-
+<script type="text/javascript">
+	layui.use('form',function(){
+		var $ = layui.$;
+		$.post("/isFirstAdmin", function(data) {
+		var title = $('#title');
+		alert(data);
+		if(data == 'no'){
+			title.html('请输入密码！');
+		}else{
+			title.html('请设置密码!');
+			$('#adminId').val(data);
+		}
+	})
+	})
+	
+</script>
 </html>

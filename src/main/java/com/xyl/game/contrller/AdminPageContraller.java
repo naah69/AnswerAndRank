@@ -61,10 +61,11 @@ public class AdminPageContraller {
 	}
 	
 	
-	
 	@RequestMapping("/admin")
 	@ResponseBody
-	public String admin(HttpServletRequest request,HttpServletResponse response){
+	public String admin(String adminId,String pwd){
+		//登录操作
+		authenticationSerivce.admin(adminId,pwd);
 		return "admin";
 	}
 }

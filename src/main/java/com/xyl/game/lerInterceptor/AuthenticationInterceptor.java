@@ -40,7 +40,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
 			logger.error("配置文件未配置任何输入");
 		}else {
 			publicPath = publicPaths.split(",");
-			
 			for (String path : publicPath) {
 				System.out.println(path+"serlvet:"+request.getServletPath());
 				if(request.getServletPath().equals(path)){
@@ -55,7 +54,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
 		Object attribute = session.getAttribute("user");
 		if(attribute == null){
 			//跳转到登录页面
-			
+			request.getRequestDispatcher("/adminPage").forward(request, response);
 			//未授权，拦截
 			return false;
 		}else{
