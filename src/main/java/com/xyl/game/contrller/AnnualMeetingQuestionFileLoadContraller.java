@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.dto.TimeParamDTO;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.TimeParam;
 import com.xyl.game.utils.HeapVariable;
@@ -166,5 +167,14 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	@ResponseBody
 	public TimeParam getTime(){
 		return exctFileSerivce.getTimeParam();
+	}
+	
+	@RequestMapping("/setTimeInterval")
+	@ResponseBody
+	public String setTimeInterval(Integer gametime){
+		if(gametime != null){
+			HeapVariable.intervalSecond = gametime;
+		}
+		return "ok";
 	}
 }
