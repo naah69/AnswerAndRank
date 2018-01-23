@@ -30,7 +30,7 @@ layui.use('laydate', function(){
     ,type: 'datetime'
   });
   var $ = layui.$;
-  s('dumpData').click(function(data){
+  $('dumpData').click(function(data){
   	$.get('/setTime?time='+$('#gameStarTime').val(),function(data){
   		alert(data);
   	})
