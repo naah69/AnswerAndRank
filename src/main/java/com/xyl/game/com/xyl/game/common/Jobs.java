@@ -42,9 +42,9 @@ public class Jobs {
 
     private static final Logger logger = LoggerFactory.getLogger(Jobs.class);
 
-    @Scheduled(initialDelay=FIRST_DELAY,fixedDelay=ONE_MINUTE)
+    //@Scheduled(initialDelay=FIRST_DELAY,fixedDelay=ONE_MINUTE)
     public void fixedDelayJob(){
-    	File file = new File("E://"+USERDATA+FILESUFFIX);
+    	File file = new File(Thread.currentThread().getContextClassLoader().getResource("").getPath()+USERDATA+FILESUFFIX);
     	int count = 0;
     	Map<String, User> usersMap = HeapVariable.usersMap;
 		Collection<User> values = usersMap.values();
@@ -163,6 +163,5 @@ public class Jobs {
 			}
 		}
 	}
-
 
 }
