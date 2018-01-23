@@ -43,6 +43,7 @@ public class AnswerWebSocket {
 
     public static ConcurrentLinkedDeque<AnswerWebSocket> webSocketList = new ConcurrentLinkedDeque<>();
 
+
     /**
      * 与某个客户端的连接会话，需要通过它来给客户端发送数据
      */
@@ -120,11 +121,16 @@ public class AnswerWebSocket {
     /**
      * 群发自定义消息
      */
-    public static void sendInfo(String message) throws IOException {
+    public static void sendInfo(String message)  {
         for (AnswerWebSocket item : webSocketList) {
             item.sendMessage(message);
         }
     }
+
+        public static void sendGridPageToAll(GridPage result) {
+        sendInfo(JSONUtils.objectToJSON(result));
+    }
+
 
     public static synchronized int getOnlineCount() {
         return onlineCount.get();
@@ -137,5 +143,7 @@ public class AnswerWebSocket {
     private synchronized int subOnlineCount() {
         return onlineCount.decrementAndGet();
     }
+
+
 
 }

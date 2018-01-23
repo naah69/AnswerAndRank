@@ -38,7 +38,6 @@ public class HeapVariable {
     public static Timestamp beginTime;
     public static QuestionDTO now;
     public static int intervalSecond;
-    public static ConcurrentLinkedQueue<QuestionDTO> questionQueue;
     public static CopyOnWriteArrayList<Map<Integer,ConcurrentLinkedQueue<Answer>>> answerList;
     public static Admin pwd;
 
