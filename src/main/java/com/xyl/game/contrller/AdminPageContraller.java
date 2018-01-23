@@ -34,7 +34,7 @@ public class AdminPageContraller {
 	@Autowired
 	private AuthenticationSerivce authenticationSerivce;
 	
-	@RequestMapping("/")
+	@RequestMapping("")
 	public String getIndexPage(HttpServletRequest request,HttpServletResponse response){
 		return "main";
 	}
