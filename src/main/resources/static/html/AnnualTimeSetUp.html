@@ -22,19 +22,7 @@
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript">
 layui.use('laydate', function(){
-  var $ = layui.$;
-  var laydate = layui.laydate;
-  
-  //执行一个laydate实例
-  laydate.render({
-    elem: '#gameStarTime' //指定元素
-    ,type: 'datetime'
-  });
-  s('dumpData').click(function(data){
-  	$.get('/setTime?time='+$('#gameStarTime').val(),function(data){
-  		alert(data);
-  	})
-  });
+ 
 });
 </script>
 </html>

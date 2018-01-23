@@ -29,7 +29,12 @@ layui.use('laydate', function(){
     elem: '#gameStarTime' //指定元素
     ,type: 'datetime'
   });
-  
+  var $ = layui.$;
+  s('dumpData').click(function(data){
+  	$.get('/setTime?time='+$('#gameStarTime').val(),function(data){
+  		alert(data);
+  	})
+  });
 });
 </script>
 </html>

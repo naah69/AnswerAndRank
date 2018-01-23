@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1 id="title"></h1>
-<form class="layui-form" action="">
+<form class="layui-form" action="" id="form1">
 	<div class="layui-form-item">
 	    <label class="layui-form-label">请输入密码：</label>
 	    <div class="layui-input-block">
@@ -43,7 +43,7 @@
 		     title: '最终的提交信息'
 		   })
 		   alert("JSON.stringify(data.field)="+JSON.stringify(data.field))
-		  $.post("/admin/admin",JSON.stringify(data.field),function(data){
+		  $.post("/admin/admin",$('#form1').serialize(),function(data){
 			  	if(data=="ok"){
 			  		location.href="/admin/";
 			  	}
