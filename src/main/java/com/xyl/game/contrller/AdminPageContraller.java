@@ -41,7 +41,6 @@ public class AdminPageContraller {
 	
 	@RequestMapping("/loadPage")
 	public String getLoadPage(HttpServletRequest request,HttpServletResponse response){
-		System.out.println("111");
 		return "AnnualMeetingLoadExctFile";
 	}
 	
@@ -52,6 +51,11 @@ public class AdminPageContraller {
 	
 	@RequestMapping("/adminPage")
 	public String getAdminPage(HttpServletRequest request,HttpServletResponse response){
+		return "admin";
+	}
+	
+	@RequestMapping("/problemSwitchingPage")
+	public String getproblemSwitchingPage(HttpServletRequest request,HttpServletResponse response){
 		return "admin";
 	}
 	
