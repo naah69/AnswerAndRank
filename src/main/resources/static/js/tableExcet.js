@@ -4,7 +4,7 @@ layui.use('table', function(){
 	var $ = layui.$;
 	table.render({
 	 	elem: '#annualMeeting_question_table'
-	 	,url: '/userData'
+	 	,url: '/admin/userData'
 	 	,cols: [[
 	 	   {field:'id', title: 'id', width:'5%',sort: true}
 	 	   ,{field:'topic', title: '题目', width:'70%'}
@@ -51,6 +51,6 @@ layui.use('table', function(){
 	    var value = obj.value //得到修改后的值
 	    ,data = obj.data //得到所在行所有键值
 	    ,field = obj.field; //得到字段
-	    $.post('/updataQuestionData',{id:data.id,fieldName:field,fieldValue:value})
+	    $.post('/admin/updataQuestionData',{id:data.id,fieldName:field,fieldValue:value})
 	  });
 })

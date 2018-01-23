@@ -4,7 +4,7 @@ var layer = null,$ = null;
 	  $ = layui.$;
 	  $("#testListAction").click(function(){
 		layer.confirm("确定数据无误？保存后将无法修改！", {icon: 3, title:'提示'}, function(index){
-			 $.post('/savaAnnualMeetingGameQuestion',function(data){
+			 $.post('/admin/savaAnnualMeetingGameQuestion',function(data){
 				if(data == 'ok'){
 					layer.msg("插入成功")
 				}else{
@@ -22,7 +22,7 @@ var layer = null,$ = null;
 	  });
 	  $("#dumpData").click(function(){
 	  	layer.confirm("确定要清除数据？清除后将无法恢复！", {icon: 3, title:'提示'}, function(index){
-			 $.post('/clearAllData',function(data){
+			 $.post('/admin/clearAllData',function(data){
 				if(data == 'ok'){
 					layer.msg("清除成功")
 				}else{

@@ -9,6 +9,5 @@ import com.xyl.game.po.Admin;
  */
 public interface AuthenticationSerivce {
 	public boolean isFirstAdmin();
-
-	public Boolean admin(String adminId, String pwd);
+	public Boolean admin(String pwd);
 }

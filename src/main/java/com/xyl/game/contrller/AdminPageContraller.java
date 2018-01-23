@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xyl.game.Service.AuthenticationSerivce;
+import com.xyl.game.utils.HeapVariable;
 /**
  * 后台页面访问控制
  * @author dazhi
@@ -39,6 +41,7 @@ public class AdminPageContraller {
 	
 	@RequestMapping("/loadPage")
 	public String getLoadPage(HttpServletRequest request,HttpServletResponse response){
+		System.out.println("111");
 		return "AnnualMeetingLoadExctFile";
 	}
 	
@@ -62,11 +65,16 @@ public class AdminPageContraller {
 	}
 	
 	
+	
 	@RequestMapping("/admin")
 	@ResponseBody
-	public String admin(String adminId,String pwd){
+	public String admin(String pwd,HttpSession session){
+		System.out.println(pwd);
 		//登录操作
-		if(authenticationSerivce.admin(adminId,pwd)){
+		if(authenticationSerivce.admin(pwd)){
+			
+			logger.info("用户已经登录！");
+			session.setAttribute("user", HeapVariable.pwd);
 			return "ok";
 		}
 		return "no";

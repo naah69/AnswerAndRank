@@ -4,7 +4,7 @@ layui.use('upload', function(){
 	//拖拽上传
 	upload.render({
 	   elem: '#exctFileLoad'
-	   ,url: '/loadExctFile'
+	   ,url: '/admin/loadExctFile'
 	   ,method:'post'
 	   ,accept:'file'
 	   ,exts:'xls|xlsx|xlsm|xlsb'

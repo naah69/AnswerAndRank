@@ -27,7 +27,7 @@
 	layui.use('form',function(){
 		var $ = layui.$;
 		var form = layui.form;
-		$.post("/isFirstAdmin", function(data) {
+		$.post("/admin/isFirstAdmin", function(data) {
 			var title = $('#title');
 			if(data == 'no'){
 				title.html('请输入密码！');
@@ -42,9 +42,10 @@
 		   layer.alert(JSON.stringify(data.field), {
 		     title: '最终的提交信息'
 		   })
-		  $.post("/isFirstAdmin",JSON.stringify(data.field),function(data){
-			  	if(){
-			  	
+		   alert("JSON.stringify(data.field)="+JSON.stringify(data.field))
+		  $.post("/admin/admin",JSON.stringify(data.field),function(data){
+			  	if(data=="ok"){
+			  		location.href="/admin/";
 			  	}
 		  })
 		  return false;

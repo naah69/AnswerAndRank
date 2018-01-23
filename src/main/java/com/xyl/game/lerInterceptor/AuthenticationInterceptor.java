@@ -54,7 +54,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
 		Object attribute = session.getAttribute("user");
 		if(attribute == null){
 			//跳转到登录页面
-			request.getRequestDispatcher("/adminPage").forward(request, response);
+			request.getRequestDispatcher("/admin/adminPage").forward(request, response);
 			//未授权，拦截
 			return false;
 		}else{
