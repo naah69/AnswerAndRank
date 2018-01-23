@@ -1,17 +1,10 @@
 package com.xyl.game.contrller;
 
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.servlet.http.HttpSession;
-
+import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.po.TimeParam;
+import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
-import com.xyl.game.dto.TimeParamDTO;
-import com.xyl.game.po.AnnualMeetingGameQuestion;
-import com.xyl.game.po.TimeParam;
-import com.xyl.game.utils.HeapVariable;
-import com.xyl.game.utils.TimeFormatUtil;
-import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
-
-import scala.sys.process.ProcessBuilderImpl.Simple;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 接收Exct文件
@@ -39,12 +31,12 @@ import scala.sys.process.ProcessBuilderImpl.Simple;
 @Controller
 @RequestMapping("/admin")
 public class AnnualMeetingQuestionFileLoadContraller {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionFileLoadContraller.class);
 
-	@Autowired 
+	@Autowired
 	private AnnualMeetingQuestionExctFileSerivce exctFileSerivce;
-	
+
 	/**
 	 * 接收年会游戏上传的exct表格文件
 	 */
@@ -57,11 +49,11 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		} catch (IOException e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
-		
+
 		HeapVariable.annualMeetingGameQuestionVos.put(session.getId(), savaDataForExct);
 		return savaDataForExct;
 	}
-	
+
 	/**
 	 * 修改缓存数据
 	 * @param session
@@ -84,10 +76,10 @@ public class AnnualMeetingQuestionFileLoadContraller {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
 		HeapVariable.annualMeetingGameQuestionVos.put(session.getId(), attribute);
-		
+
 		return "OK";
 	}
-	
+
 	/**
 	 * 查询数据库以及存储的数据
 	 */
@@ -102,7 +94,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		return exctFileSerivce.getAllGameQuestion();
 		//return null;
 	}
-	
+
 	/**
 	 * 保存年会问题的数据
 	 * @return
@@ -116,23 +108,23 @@ public class AnnualMeetingQuestionFileLoadContraller {
 			return "ok";
 		}
 		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo = annualMeetingGameQuestionVos.remove(session.getId());
-		
+
 		if(annualMeetingGameQuestionVo ==null ){
 			return "ok";
 		}
-		
+
 		List<AnnualMeetingGameQuestion> allQuestions = annualMeetingGameQuestionVo.getAllQuestions();
 		if(allQuestions == null){
 			return "ok";
 		}
-		
+
 		if(exctFileSerivce.savaAnnualMeetingGameQuestion(allQuestions)){
 			return "ok";
 		}else{
 			return "fail";
 		}
 	}
-	
+
 	/**
 	 * 清除所有数据
 	 * @return
@@ -144,12 +136,12 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		exctFileSerivce.clearAllData();
 		return "ok";
 	}
-	
+
 	@RequestMapping("/time")
 	@ResponseBody
 	public String time(String time){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		
+
 		Date times = null;
 		try {
 			times = dateFormat.parse(time);
@@ -158,17 +150,17 @@ public class AnnualMeetingQuestionFileLoadContraller {
 			e.printStackTrace();
 			return "时间戳未设置！输入的格式有误";
 		}
-		
+
 		HeapVariable.beginTime = new Timestamp(times.getTime());
 		return "ok";
 	}
-	
+
 	@RequestMapping("/getTimeParam")
 	@ResponseBody
 	public TimeParam getTime(){
 		return exctFileSerivce.getTimeParam();
 	}
-	
+
 	@RequestMapping("/setTimeInterval")
 	@ResponseBody
 	public String setTimeInterval(Integer gametime){
