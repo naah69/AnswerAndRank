@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -20,9 +22,11 @@ import org.springframework.stereotype.Service;
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.po.TimeParam;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.InitData;
 import com.xyl.game.utils.StringUtil;
+import com.xyl.game.utils.TimeFormatUtil;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 /**
  * 
@@ -178,6 +182,21 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	public void clearAllData() {
 		InitData.initTable();
 		InitData.initQuestion();
+	}
+
+	@Override
+	public TimeParam getTimeParam() {
+		Timestamp beginTime = HeapVariable.beginTime;
+		TimeParam param = new TimeParam();
+		if(beginTime != null){
+			param.setBeginTime(beginTime.getTime());
+			param.setBeginTimeStr(TimeFormatUtil.getTimeStr(new Date(beginTime.getTime())));
+		}else{
+			param.setBeginTime(0l);
+			param.setBeginTimeStr("");
+		}
+		param.setIntervalTime(HeapVariable.intervalTime);
+		return param;
 	}
 
 }

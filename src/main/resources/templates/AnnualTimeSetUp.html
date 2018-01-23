@@ -12,42 +12,57 @@
   <legend>游戏设置开始时间：</legend>
 </fieldset>
 <div class="layui-inline">
-      <label class="layui-form-label">开始时间：</label>
-      <div class="layui-input-inline">
-        <input type="text" class="layui-input" id="gameStarTime" placeholder="yyyy-MM-dd hh:mm:ss" />
-      </div>
-      <button type="button" class="layui-btn" id="dumpData">确定</button>
+    <label class="layui-form-label">开始时间：</label>
+    <div class="layui-input-inline">
+      <input type="text" class="layui-input" id="gameStarTime" placeholder="yyyy-MM-dd hh:mm:ss" />
+    </div>
+    <button type="button" class="layui-btn" id="dumpData">确定</button>
+    <table class="layui-hide" id="time_param" lay-filter="annualMeeting_question_table"></table>
 </div>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
   <legend>倒计时</legend>
 </fieldset>
 <blockquote class="layui-elem-quote" style="margin-top: 10px;">
-  <div id="CountDown"></div>
+	<div id="startTime"></div>
+	<div id="CountDown"></div>
 </blockquote>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript">
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
-  var time = null;
-
+layui.use(['util','laydate','layer','table'], function(){
+  var laydate = layui.laydate,util = layui.util,layer = layui.layer,table = layui.table;
+  var times = null;
+  table.render({
+  	 elem: '#time_param'
+	 ,url: '/admin/getTimeParam'
+	 ,cols: [[
+	 	   {field:'beginTime', title: '时间秒数', width:'33%'}
+	 	   ,{field:'beginTimeStr', title: '开始时间', width:'33%'}
+	 	   ,{field:'intervalTime', title: '每个问题的时间间隔', width:'33%'}
+	 	]]
+	 ,id:'time_param'
+  })
   //执行一个laydate实例
   laydate.render({
     elem: '#gameStarTime' //指定元素
     ,type: 'datetime'
     ,done: function(value, date){
-      time = date;
-
+      times = date;
     }
   });
+  
   $('#dumpData').click(function(data){
-  	$.get('/admin/time?time='+$('#gameStarTime').val(),function(data){
-  		alert(data);
-  		if(data == "ok"){
-	  		setCountdown(time.year, time.month - 1, time.date, time.hours, time.minutes, time.seconds);
-  		}
-  	})
+  	var time = $('#gameStarTime').val();
+  	if(time.trim()==""){
+  		layer.alert("请选择时间！")
+  	}else{
+  		$.get('/admin/time?time='+time,function(data){
+	  		if(data == "ok"){
+		  		setCountdown(times.year, times - 1, times.date, times.hours, times.minutes, times.seconds);
+	  		}
+  		})
+  	}
   });
 
 
@@ -58,7 +73,7 @@ layui.use('laydate', function(){
     clearTimeout(thisTimer);
     util.countdown(endTime, serverTime, function(date, serverTime, timer){
       var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
-      lay('#"CountDown"').html(str);
+      lay('#CountDown').html(str);
       thisTimer = timer;
     });
   };

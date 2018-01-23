@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.po.TimeParam;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 
 /**
@@ -37,4 +38,6 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	 * 清除所有数据
 	 */
 	public void clearAllData();
+
+	public TimeParam getTimeParam();
 }

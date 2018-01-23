@@ -41,7 +41,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
 		}else {
 			publicPath = publicPaths.split(",");
 			for (String path : publicPath) {
-				System.out.println(path+"serlvet:"+request.getServletPath());
 				if(request.getServletPath().equals(path)){
 					//路径相等，放行
 					return true;

@@ -23,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.po.TimeParam;
 import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.utils.TimeFormatUtil;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 
 import scala.sys.process.ProcessBuilderImpl.Simple;
@@ -150,11 +152,19 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		Date times = null;
 		try {
 			times = dateFormat.parse(time);
-		} catch (ParseException e) {
+		} catch (Exception e) {
+			logger.info("时间戳未设置");
 			e.printStackTrace();
+			return "时间戳未设置！输入的格式有误";
 		}
 		
 		HeapVariable.beginTime = new Timestamp(times.getTime());
 		return "ok";
+	}
+	
+	@RequestMapping("/getTimeParam")
+	@ResponseBody
+	public TimeParam getTime(){
+		return exctFileSerivce.getTimeParam();
 	}
 }
