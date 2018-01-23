@@ -39,6 +39,6 @@ public class HeapVariable {
     public static int intervalSecond;
     public static ConcurrentLinkedQueue<QuestionDTO> questionQueue;
     public static CopyOnWriteArrayList<Map<Integer,ConcurrentLinkedQueue<Answer>>> answerList;
-
+    public static Boolean isFristAdmin = true;
 
 }

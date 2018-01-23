@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<link rel="stylesheet" href="../js/layui/css/layui.css" />
+
+
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>游戏设置开始时间：</legend>
+</fieldset>
+<div class="layui-inline">
+      <label class="layui-form-label">开始时间：</label>
+      <div class="layui-input-inline">
+        <input type="text" class="layui-input" id="gameStarTime" placeholder="yyyy-MM-dd hh:mm:ss">
+      </div>
+      <button type="button" class="layui-btn" id="dumpData">确定</button>
+</div>
+</body>
+<script type="text/javascript" src="../js/layui/layui.js"></script>
+<script type="text/javascript">
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#gameStarTime' //指定元素
+    ,type: 'datetime'
+  });
+  
+});
+</script>
+</html>

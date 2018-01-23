@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>登录</title>
+</head>
+<body>
+<h1 id="title"></h1>
+<form action="">
+	<input type="hidden" name="adminId" id="adminId"/>
+	<input type="password" name="pwd" />
+	<input type="submit" name="sbt" value="提交" />
+</form>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript">
+	$.post("/isFirstAdmin", function(data) {
+		var title = $('#title');
+		alert(data);
+		if(data == 'no'){
+			title.html('请输入密码！');
+		}else{
+			title.html('请设置密码!');
+			$('#adminId').val(data);
+		}
+	})
+</script>
+</html>

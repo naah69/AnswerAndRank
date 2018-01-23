@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>后台页面</title>
+<link rel="stylesheet" href="../js/layui/css/layui.css" />
+<style type="text/css">
+.leftMargin{
+  margin-left:10px;
+}
+</style>
+
+
+</head>
+<body>
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">游戏设置</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/AnnualMeetingLoadExctFile.html" target="demoAdmin">问题设置</a></dd>
+            <dd><a href="/AnnualTimeSetUp.html" target="demoAdmin">时间设置</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+</div>
+<div class="layui-body leftMargin">
+    <iframe src="/html/AnnualMeetingLoadExctFile.html" frameborder="0" name="demoAdmin" id="demoAdmin" style="width: 100%; height: 100%;"></iframe>
+</div>
+</body>
+<script type="text/javascript" src="../js/layui/layui.js"></script>
+<script type="text/javascript">
+//JavaScript代码区域
+layui.use(['element','layer'], function(){
+  var element = layui.element;
+});
+</script>
+</html>
