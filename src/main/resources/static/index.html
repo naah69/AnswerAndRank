@@ -40,28 +40,14 @@
 </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript" src="js/layui/layui.js"></script>
-<script type="text/javascripta" src="js/websocket.js"></script>
+<script src="js/websocket.js"></script>
 <script>
 
-    //判断当前浏览器是否支持WebSocket
-    if('WebSocket' in window){
-        websocket = new WebSocket("ws://localhost/answer");
-    }
-    else{
-        alert('Not support websocket')
-    }
-
     var table = null;
-    websocket.onmessage = function(event){
-        var a=JSON.parse(event.data);
-        alert(a.message);
-    }
+
     $('#initBtn').on('click', function () {
-        alert("init");
-
         var message={"method":"init","user":{"username":$('#username').val(),"department":$('#department').val(),"tel":$('#tel').val()}};
-        websocket.send(JSON.stringify(message));
-
+        send(JSON.stringify(message));
         /*$.get("/initGame", {username: $, department: $('#department').val(), tel: $('#tel').val()},
             function (data) {
                 console.log(data);
@@ -180,6 +166,7 @@
     });
 
 </script>
+
 </body>
 
 </html>

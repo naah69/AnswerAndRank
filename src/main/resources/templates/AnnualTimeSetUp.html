@@ -20,18 +20,18 @@
 </div>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript">
 layui.use('laydate', function(){
   var laydate = layui.laydate;
-  
+
   //执行一个laydate实例
   laydate.render({
     elem: '#gameStarTime' //指定元素
     ,type: 'datetime'
   });
-  var $ = layui.$;
-  $('dumpData').click(function(data){
-  	$.get('/setTime?time='+$('#gameStarTime').val(),function(data){
+  $('#dumpData').click(function(data){
+  	$.get('/admin/time?time='+$('#gameStarTime').val(),function(data){
   		alert(data);
   	})
   });

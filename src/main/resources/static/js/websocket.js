@@ -1,6 +1,12 @@
-var websocket = null;
 
-
+  var websocket;
+    //判断当前浏览器是否支持WebSocket
+    if('WebSocket' in window){
+        websocket = new WebSocket("ws://localhost/answer");
+    }
+    else{
+        alert('Not support websocket')
+    }
 
     //连接发生错误的回调方法
     websocket.onerror = function(){
@@ -14,7 +20,9 @@ var websocket = null;
 
     //接收到消息的回调方法
     websocket.onmessage = function(event){
-        setMessageInnerHTML(event.data);
+        console.log(event.data);
+        var json=JSON.parse(event.data);
+
     }
 
     //连接关闭的回调方法
