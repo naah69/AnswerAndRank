@@ -18,6 +18,7 @@ public class GridPage<T> implements Serializable {
 
 	private String message;
 
+	private String method;
 	private List<T> rows;
 	private Long total = 0L;
 	private Integer page = 1;
@@ -108,4 +109,12 @@ public class GridPage<T> implements Serializable {
 	public void setSize(Integer size) {
 		this.size = size;
 	}
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
 }

@@ -26,6 +26,7 @@ public class UploadScoreServiceImpl implements UploadScoreService {
     @Override
     public GridPage<QuestionDTO> uploadScore(Integer id,Byte answer, Integer times, String sessionId, User user) {
         GridPage<QuestionDTO> grid = new GridPage<>();
+        grid.setMethod("updateScore");
         Long time=HeapVariable.beginTime.getTime();
         if (HeapVariable.beginTime==null||time>System.currentTimeMillis()) {
             GridPage result = new GridPage();

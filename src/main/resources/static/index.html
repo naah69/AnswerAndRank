@@ -22,7 +22,8 @@
     <div id="question"></div>
     <div id="answers">
         <form id="form1">
-            <input type="hidden" id="times" name="times" value="1">
+            <input type="hidden" id="times" name="times">
+            <input type="hidden" id="id" name="id">
             <p><input type="radio" id="a1r" name="answer"><span id="answer1"></span></p>
             <p><input type="radio" id="a2r" name="answer"><span id="answer2"></span></p>
             <p><input type="radio" id="a3r" name="answer"><span id="answer3"></span></p>
@@ -37,6 +38,8 @@
 <div id="div3" style="display: none">
     <table class="layui-hide" id="annualMeeting_question_table" lay-filter="annualMeeting_question_table"></table>
 
+    <!--等待-->
+    <h1 id="wait" style="display: none"></h1>
 </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript" src="js/layui/layui.js"></script>
@@ -46,56 +49,25 @@
     var table = null;
 
     $('#initBtn').on('click', function () {
-        var message={"method":"init","user":{"username":$('#username').val(),"department":$('#department').val(),"tel":$('#tel').val()}};
+        var message = {
+            "method": "init",
+            "user": {"username": $('#username').val(), "department": $('#department').val(), "tel": $('#tel').val()}
+        };
         send(JSON.stringify(message));
-        /*$.get("/initGame", {username: $, department: $('#department').val(), tel: $('#tel').val()},
-            function (data) {
-                console.log(data);
-                $('#div1').css('display', 'none');
-                if (data.errorCode == 0) {
-                    var que = data.rows[0];
-                    refreshForm(que);
-                    $('#div2').css('display', 'block');
-                } else {
-                    alert(data.message);
-                    rank();
-                }
-
-            });*/
     });
-    var isCommit=false;
+    var isCommit = false;
     $('#comit').on('click', function () {
-        isCommit=true;
-        $('#times').val(timesRun);
-        $('#answers').css('display','none');
-        $('#userTime').text("本次用时："+timesRun);
-        var delay;
-        if (timesRun >= 12) {
-            delay = 0;
-        } else {
-            delay = 12 - timesRun;
-        }
-        setTimeout(function () {
-            $.post("/uploadScore", $('#form1').serialize(),
-                function (data) {
-                    console.log(data);
-                    if (data.errorCode == 0) {
-
-                        var que = data.rows[0];
-                        refreshForm(que);
-                        $("input[type='radio']").removeAttr('checked');
-                        $('#answers').css('display','block');
-                        isCommit=false;
-                    } else {
-                        alert(data.message);
-                        $('#div2').css('display', 'none');
-                        rank();
-                    }
-
-                });
-        }, delay * 1000);
-
-
+        var message = {
+            "method": "updateScore",
+            "id": $('#id').val(),
+            "answer": $('input:radio:checked').val(),
+            "times": timesRun
+        };
+        isCommit = true;
+        $('#comit').css('display', 'none');
+        $('#userTime').text("本次用时：" + timesRun);
+        send(JSON.stringify(message));
+        $("input[type='radio']").removeAttr('checked');
     });
 
     function rank() {
@@ -113,14 +85,14 @@
     var interval;
 
     function time() {
-        timesRun=0;
+        timesRun = 0;
         interval = setInterval(function () {
             timesRun += 1;
             $('#timeViewer').text(timesRun);
             if (timesRun >= 12) {
                 clearTime();
-                if(!isCommit){
-                $('#comit').click();
+                if (!isCommit&&inited) {
+                    $('#comit').click();
                 }
             }
 
@@ -138,7 +110,7 @@
     function refreshForm(que) {
 
         time();
-         $('#userTime').text("");
+        $('#userTime').text("");
         $('#question').text(que['question']);
         $('#answer1').text(que['answerOne']);
         $('#a1r').val("1");

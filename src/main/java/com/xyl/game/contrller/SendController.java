@@ -23,15 +23,16 @@ public class SendController {
     @PostMapping("/sendAnswer")
     public GridPage send() {
         GridPage result = new GridPage();
-         if (HeapVariable.beginTime == null) {
+        if (HeapVariable.beginTime == null||HeapVariable.now==null) {
             result.setErrorCode("8");
-            result.setMessage("no game");
+            result.setMessage("还没有题目！");
             return result;
         }
         result.setErrorCode("0");
         try {
             GridPage answer = new GridPage();
-            answer.setErrorCode("4");
+            answer.setMethod("answer");
+            answer.setErrorCode("0");
             answer.setMessage(QuestionUtils.getAnswerNow());
             AnswerWebSocket.sendGridPageToAll(answer);
         } catch (Exception e) {
@@ -42,27 +43,28 @@ public class SendController {
 
     @PostMapping("/sendQuestion")
     public GridPage sendQuestion() {
-         GridPage result = new GridPage();
+        GridPage result = new GridPage();
         if (HeapVariable.beginTime == null) {
             result.setErrorCode("8");
-            result.setMessage("no game");
+            result.setMessage("没有游戏场次");
             return result;
         }
 
         result.setErrorCode("0");
         GridPage question = new GridPage();
+        question.setMethod("question");
         QuestionDTO questionDTO = QuestionUtils.nextQuestion();
         if (questionDTO == null) {
             result.setErrorCode("5");
-            result.setMessage("done!");
-            question.setErrorCode("6");
-            question.setMessage("done");
+            result.setMessage("游戏结束!");
+            question.setErrorCode("5");
+            question.setMessage("游戏结束!");
         } else {
             Page<QuestionDTO> page = new Page<>();
             Page<AnnualMeetingGameQuestion> manage = new Page<>();
             manage.add(QuestionUtils.getQuestion(questionDTO.getId()));
             page.add(questionDTO);
-            question.setErrorCode("5");
+            question.setErrorCode("0");
             question.setMessage("next");
             question.setPageList(page);
             result.setPageList(manage);

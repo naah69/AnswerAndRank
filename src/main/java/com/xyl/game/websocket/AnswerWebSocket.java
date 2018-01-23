@@ -50,8 +50,7 @@ public class AnswerWebSocket {
     public void onOpen(Session session) {
         this.session = session;
         webSocketList.add(this);
-        System.out.println("有新连接加入！当前在线人数为" + addOnlineCount());
-        sendMessage("Naah");
+        sendMessage("连接成功！当前在线人数为" + addOnlineCount());
     }
 
     /**
@@ -70,6 +69,7 @@ public class AnswerWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
+        System.out.println("session:"+session.getId());
         RequestDTO req = JSONUtils.jsonToObject(message, RequestDTO.class);
         System.out.println(req);
         GridPage<QuestionDTO> result = new GridPage<>();
@@ -79,7 +79,7 @@ public class AnswerWebSocket {
 
                 result = HeapVariable.context.getBean(InitService.class).initGame(sessionId, req.getUser());
                 break;
-            case "update":
+            case "updateScore":
                 result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
                 break;
             default:

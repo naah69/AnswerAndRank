@@ -24,12 +24,12 @@ public class InitServiceImpl implements InitService {
     @Override
     public GridPage initGame(String sessionId, User user) {
         GridPage result = new GridPage();
-
+        result.setMethod("init");
         log.info("初始化用户：" + user.getUsername() + " 开始");
         try {
-            if (HeapVariable.beginTime == null||HeapVariable.now==null) {
+            if (HeapVariable.beginTime == null) {
                  result.setErrorCode("11");
-                result.setMessage("no Game");
+                result.setMessage("没有游戏场次！");
                 return result;
             }
             if (HeapVariable.usersMap.containsKey(sessionId)) {
@@ -42,21 +42,21 @@ public class InitServiceImpl implements InitService {
                     return result;
                 } else {
                     result.setErrorCode("13");
-                    result.setMessage("you had exit");
+                    result.setMessage("你已经退出了");
                 }
                 if (u.getScore() == HeapVariable.questionsList.size()) {
                     result.setErrorCode("-1");
-                    result.setMessage("you had won!");
+                    result.setMessage("你赢了!");
                 }
                 return result;
-            } else if (HeapVariable.now.getId() == 1) {
+            } else if (HeapVariable.now== null) {
                 user.setSessionId(sessionId);
                 user.setScore(0);
                 user.setTimesSecond(0);
                 user.setAnswers(new ArrayList<Answer>(HeapVariable.questionsList.size()));
                 HeapVariable.usersMap.put(sessionId, user);
                 result.setErrorCode("0");
-                result.setMessage("hello " + user.getUsername());
+                result.setMessage(HeapVariable.beginTime.getTime()+"");
                 result.setPageList(QuestionUtils.getNowQuestion());
                 log.info("初始化用户：" + user.getUsername() + " 成功");
             } else {
