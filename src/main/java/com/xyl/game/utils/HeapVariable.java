@@ -37,7 +37,7 @@ public class HeapVariable {
     public static String MD5DataChange = "";
     public static Timestamp beginTime;
     public static QuestionDTO now;
-    public static int intervalSecond;
+    public static int intervalSecond = 12;
     public static CopyOnWriteArrayList<Map<Integer,ConcurrentLinkedQueue<Answer>>> answerList;
     public static Admin pwd;
 

@@ -6,6 +6,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class TimeParam {
+	
 	private Long beginTime;
 	
 	private String beginTimeStr;
