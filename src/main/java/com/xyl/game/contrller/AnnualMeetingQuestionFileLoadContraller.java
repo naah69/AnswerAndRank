@@ -1,7 +1,11 @@
 package com.xyl.game.contrller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,6 +25,8 @@ import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
+
+import scala.sys.process.ProcessBuilderImpl.Simple;
 
 /**
  * 接收Exct文件
@@ -136,7 +142,20 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		return "ok";
 	}
 	
-	
-	
-	
+	@RequestMapping("/time")
+	@ResponseBody
+	public String time(String time){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		
+		Date times = null;
+		try {
+			times = dateFormat.parse(time);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		HeapVariable.beginTime = new Timestamp(times.getTime());
+		return "ok";
+	}
 }

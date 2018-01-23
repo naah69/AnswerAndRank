@@ -42,7 +42,12 @@
 		   layer.alert(JSON.stringify(data.field), {
 		     title: '最终的提交信息'
 		   })
-		    return false;
+		  $.post("/isFirstAdmin",JSON.stringify(data.field),function(data){
+			  	if(){
+			  	
+			  	}
+		  })
+		  return false;
 		});
 	})
 </script>
