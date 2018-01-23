@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
-import com.xyl.game.dto.TimeParamDTO;
 import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.TimeParam;
