@@ -30,7 +30,6 @@
 <script type="text/javascript">
 layui.use('laydate', function(){
   var laydate = layui.laydate;
-  var $ = layui.$;
   var time = null;
 
   //执行一个laydate实例
@@ -43,10 +42,10 @@ layui.use('laydate', function(){
     }
   });
   $('#dumpData').click(function(data){
-  	$.get('/setTime?time='+$('#gameStarTime').val(),function(data){
+  	$.get('/admin/time?time='+$('#gameStarTime').val(),function(data){
   		alert(data);
   		if(data == "ok"){
-	  		setCountdown(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds);
+	  		setCountdown(time.year, time.month - 1, time.date, time.hours, time.minutes, time.seconds);
   		}
   	})
   });
