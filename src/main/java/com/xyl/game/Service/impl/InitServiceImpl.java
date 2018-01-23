@@ -27,6 +27,11 @@ public class InitServiceImpl implements InitService {
 
         log.info("初始化用户：" + user.getUsername() + " 开始");
         try {
+            if (HeapVariable.now == null) {
+                 result.setErrorCode("11");
+                result.setMessage("no Game");
+                return result;
+            }
             if (HeapVariable.usersMap.containsKey(sessionId)) {
                 log.info("初始化用户：" + user.getUsername() + " 已存在");
 

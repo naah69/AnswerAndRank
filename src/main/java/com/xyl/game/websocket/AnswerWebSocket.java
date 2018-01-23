@@ -7,7 +7,6 @@ import com.xyl.game.dto.RequestDTO;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.JSONUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -26,11 +25,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 public class AnswerWebSocket {
 
-    @Autowired
-    private UploadScoreService uploadSocreService;
-
-    @Autowired
-    private InitService initService;
 
     /**
      * 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
@@ -77,15 +71,16 @@ public class AnswerWebSocket {
     @OnMessage
     public void onMessage(String message, Session session) {
         RequestDTO req = JSONUtils.jsonToObject(message, RequestDTO.class);
+        System.out.println(req);
         GridPage<QuestionDTO> result = new GridPage<>();
         String sessionId = session.getId();
         switch (req.getMethod()) {
             case "init":
 
-                result = initService.initGame(sessionId, req.getUser());
+                result = HeapVariable.context.getBean(InitService.class).initGame(sessionId, req.getUser());
                 break;
             case "update":
-                result = uploadSocreService.uploadScore(req.getId(), req.getAnswer(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
+                result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
                 break;
             default:
                 result.setErrorCode("250");
@@ -121,13 +116,13 @@ public class AnswerWebSocket {
     /**
      * 群发自定义消息
      */
-    public static void sendInfo(String message)  {
+    public static void sendInfo(String message) {
         for (AnswerWebSocket item : webSocketList) {
             item.sendMessage(message);
         }
     }
 
-        public static void sendGridPageToAll(GridPage result) {
+    public static void sendGridPageToAll(GridPage result) {
         sendInfo(JSONUtils.objectToJSON(result));
     }
 
@@ -143,7 +138,6 @@ public class AnswerWebSocket {
     private synchronized int subOnlineCount() {
         return onlineCount.decrementAndGet();
     }
-
 
 
 }

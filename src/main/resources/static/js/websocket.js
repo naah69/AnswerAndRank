@@ -1,12 +1,6 @@
 var websocket = null;
 
-    //判断当前浏览器是否支持WebSocket
-    if('WebSocket' in window){
-        websocket = new WebSocket("ws://localhost/answer");
-    }
-    else{
-        alert('Not support websocket')
-    }
+
 
     //连接发生错误的回调方法
     websocket.onerror = function(){
@@ -35,7 +29,8 @@ var websocket = null;
 
     //将消息显示在网页上
     function setMessageInnerHTML(innerHTML){
-        document.getElementById('message').innerHTML += innerHTML + '<br/>';
+        // document.getElementById('message').innerHTML += innerHTML + '<br/>';
+        alert(innerHTML);
     }
 
     //关闭连接
@@ -44,7 +39,6 @@ var websocket = null;
     }
 
     //发送消息
-    function send(){
-        var message = document.getElementById('text').value;
+    function send(message){
         websocket.send(message);
     }

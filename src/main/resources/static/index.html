@@ -12,7 +12,7 @@
     <p>用户名:<input type="text" id="username" name="username"></p>
     <p>部门:<input type="text" id="department" name="department"></p>
     <p>电话号码:<input type="text" id="tel" name="tel"></p>
-    <p><input type="button" value="开始游戏" id="btn"></p>
+    <p><input type="button" value="开始游戏" id="initBtn"></p>
 </div>
 
 <!--答题-->
@@ -42,9 +42,27 @@
 <script type="text/javascript" src="js/layui/layui.js"></script>
 <script type="text/javascripta" src="js/websocket.js"></script>
 <script>
+
+    //判断当前浏览器是否支持WebSocket
+    if('WebSocket' in window){
+        websocket = new WebSocket("ws://localhost/answer");
+    }
+    else{
+        alert('Not support websocket')
+    }
+
     var table = null;
-    $('#btn').on('click', function () {
-        $.get("/initGame", {username: $('#username').val(), department: $('#department').val(), tel: $('#tel').val()},
+    websocket.onmessage = function(event){
+        var a=JSON.parse(event.data);
+        alert(a.message);
+    }
+    $('#initBtn').on('click', function () {
+        alert("init");
+
+        var message={"method":"init","user":{"username":$('#username').val(),"department":$('#department').val(),"tel":$('#tel').val()}};
+        websocket.send(JSON.stringify(message));
+
+        /*$.get("/initGame", {username: $, department: $('#department').val(), tel: $('#tel').val()},
             function (data) {
                 console.log(data);
                 $('#div1').css('display', 'none');
@@ -57,7 +75,7 @@
                     rank();
                 }
 
-            });
+            });*/
     });
     var isCommit=false;
     $('#comit').on('click', function () {
