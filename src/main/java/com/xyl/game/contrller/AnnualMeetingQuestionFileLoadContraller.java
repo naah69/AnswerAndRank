@@ -151,7 +151,6 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		try {
 			times = dateFormat.parse(time);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
