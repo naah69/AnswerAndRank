@@ -1,8 +1,15 @@
 package com.xyl.game.contrller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xyl.game.Service.AnnualMeetingTimeSerivce;
 import com.xyl.game.po.TimeParam;
+import com.xyl.game.po.User;
+import com.xyl.game.utils.ExcelUtil;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.InitData;
 /**
@@ -80,7 +89,22 @@ public class AnnualMeetingTimeContreller {
 	public String clearData(){
 		InitData.initCount();
 		HeapVariable.beginTime = null;
+		ExcelUtil.savaUserData("clearUserData");
+		HeapVariable.usersMap = new HashMap<String, User>();
 		return "ok";
+	}
+	
+	@RequestMapping("/PrintData")
+	@ResponseBody
+	public void PrintData(HttpServletResponse response){
+		
+		try {
+			OutputStream outputStream = response.getOutputStream();
+		} catch (IOException e) {
+			logger.info("流获得失败");
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

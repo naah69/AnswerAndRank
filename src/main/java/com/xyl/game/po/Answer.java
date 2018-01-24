@@ -22,7 +22,7 @@ public class Answer {
     private Byte answer;
     private Integer time;
     private Boolean isRight;
-     private Timestamp commitTime;
+    private Timestamp commitTime;
     @Override
     public String toString() {
     	StringBuffer sb = new StringBuffer();
