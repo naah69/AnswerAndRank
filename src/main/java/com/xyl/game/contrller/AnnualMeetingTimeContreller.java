@@ -1,34 +1,42 @@
 package com.xyl.game.contrller;
 
-import com.xyl.game.Service.AnnualMeetingTimeSerivce;
-import com.xyl.game.po.TimeParam;
-import com.xyl.game.utils.HeapVariable;
-import com.xyl.game.utils.InitData;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.xyl.game.Service.AnnualMeetingTimeSerivce;
+import com.xyl.game.po.TimeParam;
+import com.xyl.game.po.User;
+import com.xyl.game.utils.ExcelUtil;
+import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.utils.InitData;
 /**
- *
+ * 
  * @author dazhi
  *
  */
 @Controller
-@CrossOrigin
 @RequestMapping("/admin")
 public class AnnualMeetingTimeContreller {
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingTimeContreller.class);
-
+	
 	@Autowired
 	private AnnualMeetingTimeSerivce timeSerivce;
-
+	
 	/**
 	 * 清除所有数据
 	 * @return
@@ -74,14 +82,29 @@ public class AnnualMeetingTimeContreller {
 		}
 		return "ok";
 	}
-
-
+	
+	
 	@RequestMapping("/clearData")
 	@ResponseBody
 	public String clearData(){
 		InitData.initCount();
 		HeapVariable.beginTime = null;
+		ExcelUtil.savaUserData("clearUserData");
+		HeapVariable.usersMap = new HashMap<String, User>();
 		return "ok";
 	}
-
+	
+	@RequestMapping("/PrintData")
+	@ResponseBody
+	public void PrintData(HttpServletResponse response){
+		
+		try {
+			OutputStream outputStream = response.getOutputStream();
+		} catch (IOException e) {
+			logger.info("流获得失败");
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

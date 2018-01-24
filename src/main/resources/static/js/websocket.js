@@ -1,7 +1,7 @@
 var websocket;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
-    websocket = new WebSocket("ws://192.168.78.46/answer");
+    websocket = new WebSocket("ws://localhost/answer");
 }
 else {
     alert('Not support websocket')

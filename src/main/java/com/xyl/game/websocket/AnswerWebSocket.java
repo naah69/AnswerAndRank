@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 public class AnswerWebSocket {
 
-
     /**
      * 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
      */
@@ -78,7 +77,6 @@ public class AnswerWebSocket {
         String sessionId = session.getId();
         switch (req.getMethod()) {
             case "init":
-
                 result = HeapVariable.context.getBean(InitService.class).initGame(sessionId, req.getUser());
                 break;
             case "updateScore":
@@ -142,7 +140,7 @@ public class AnswerWebSocket {
     }
 
     public String getSessionId(){
-        return session.getId();
+    	return session.getId();
     }
 
 }

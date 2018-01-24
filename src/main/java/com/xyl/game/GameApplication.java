@@ -31,7 +31,6 @@ public class GameApplication {
         initLog4j();
 
         initData(mapper, context);
-
     }
 
     private static void initLog4j() {
