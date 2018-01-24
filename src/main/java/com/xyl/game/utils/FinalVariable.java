@@ -63,6 +63,9 @@ public class FinalVariable {
     public static final String NO_SEND_ANSWER_ERROR_STATUS_CODE = "501";
     public static final String NO_SEND_ANSWER_ERROR_MESSAGE = "未发送答案！";
 
+    public static final String NO_SEND_QUESTION_ERROR_STATUS_CODE = "502";
+    public static final String NO_SEND_QUESTION_ERROR_MESSAGE = "未发送题目！";
+
     public static final String SEND_QUESTION_ERROR_STATUS_CODE = "6";
     public static final String SEND_QUESTION_ERROR_MESSAGE = "发送题目异常！";
 

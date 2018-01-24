@@ -28,6 +28,12 @@ public class SendController {
             result.setMessage(FinalVariable.NO_QUESTION_MESSAGE);
             return result;
         }
+         if (HeapVariable.isSendAnswer.get() == true) {
+                result.setErrorCode(FinalVariable.NO_SEND_QUESTION_ERROR_STATUS_CODE);
+                result.setMessage(FinalVariable.NO_SEND_QUESTION_ERROR_MESSAGE);
+            }
+
+
         result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
         Page<AnswerDTO> answerCount = AnswerUtils.getAnswerCount();
         result.setPageList(answerCount);
@@ -51,15 +57,13 @@ public class SendController {
             if (HeapVariable.beginTime == null) {
                 result.setErrorCode(FinalVariable.NO_GAME_STATUS_CODE);
                 result.setMessage(FinalVariable.NO_GAME_MESSAGE);
-
+                return result;
             }
             if (HeapVariable.isSendAnswer.get() == false) {
                 result.setErrorCode(FinalVariable.NO_SEND_ANSWER_ERROR_STATUS_CODE);
                 result.setMessage(FinalVariable.NO_SEND_ANSWER_ERROR_MESSAGE);
             }
-            if (result.getErrorCode() != null) {
-                return result;
-            }
+
             result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
             GridPage question = new GridPage();
             question.setMethod(FinalVariable.QUESTION_METHOD);
