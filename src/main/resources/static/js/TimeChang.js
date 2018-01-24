@@ -11,6 +11,19 @@ layui.use(['util','laydate','layer','table'], function(){
     }
   });
   
+  $('#clearData').click(function(data) {
+	  layer.confirm('是否清除开始时间！', function(index){
+		  $('#gameStarTime').val("");
+		  $.get('/admin/clearData',function(data){
+			  if(data=='ok'){
+				  layer.alert('清除成功！')
+				  
+			  }
+		  })
+		  layer.close(index);
+		});  
+  })
+  
   $('#dumpData').click(function(data){
   	var time = $('#gameStarTime').val();
   	if(time.trim()==""){
@@ -23,7 +36,7 @@ layui.use(['util','laydate','layer','table'], function(){
 			  		var demoList = $('#demoList');
 			  		demoList.empty();
 			  		var tr = $(['<tr>'
-				          ,'<td>'+ data.beginTimeStr +'</td>'
+				          ,'<td id="beginTimeStr">'+ data.beginTimeStr +'</td>'
 				          ,'<td id="intervalTime">'+ data.intervalTime +'秒</td>'
 				        ,'</tr>'].join(''));
 				        
@@ -43,7 +56,7 @@ layui.use(['util','laydate','layer','table'], function(){
 			  		var demoList = $('#demoList');
 			  		demoList.empty();
 			  		var tr = $(['<tr>'
-				          ,'<td>'+ data.beginTimeStr +'</td>'
+				          ,'<td id="beginTimeStr>'+ data.beginTimeStr +'</td>'
 				          ,'<td id="intervalTime">'+ data.intervalTime +'秒</td>'
 				          ,'</tr>'].join(''));
 				        
