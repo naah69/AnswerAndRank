@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>题目选择</title>
+<link rel="stylesheet" href="../js/layui/css/layui.css"/>
+</head>
+<body>
+<pre class="layui-code" id="questionShow">
+题目显示：
+</pre>
+<button class="layui-btn" id="sendAnswer">提交答案</button>
+<button class="layui-btn" id="sendQuestion">下一题</button>
+</body>
+<script type="text/javascript" src="../js/layui/layui.js"></script>
+<script type="text/javascript">
+layui.use(['util','laydate','layer','table'], function(){
+	var $ = layui.$;
+	$('#sendQuestion').click(function(){
+		$.post('/admin/sendQuestion', function(data) {
+			alert(JSON.stringify(data));
+		})
+	})
+	$('#sendAnswer').click(function(){
+		$.post('/admin/sendAnswer', function(data) {
+			
+		})
+	})
+	
+})
+</script>
+</html>

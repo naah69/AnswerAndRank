@@ -55,6 +55,7 @@ public class AnnualMeetingTimeContreller {
 		}
 
 		HeapVariable.beginTime = new Timestamp(times.getTime());
+		InitData.initCount();
 		return "ok";
 	}
 
@@ -69,7 +70,6 @@ public class AnnualMeetingTimeContreller {
 	public String setTimeInterval(Integer gametime){
 		if(gametime != null){
 			HeapVariable.intervalSecond = gametime;
-			InitData.initCount();
 		}
 		return "ok";
 	}
@@ -78,8 +78,9 @@ public class AnnualMeetingTimeContreller {
 	@RequestMapping("/clearData")
 	@ResponseBody
 	public String clearData(){
-		
-		return "";
+		InitData.initCount();
+		HeapVariable.beginTime = null;
+		return "ok";
 	}
 	
 }

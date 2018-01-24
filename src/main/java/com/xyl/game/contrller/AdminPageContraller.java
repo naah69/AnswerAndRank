@@ -36,7 +36,7 @@ public class AdminPageContraller {
 	
 	@RequestMapping("")
 	public String getIndexPage(HttpServletRequest request,HttpServletResponse response){
-		return "main";
+		return "Main";
 	}
 	
 	@RequestMapping("/loadPage")
@@ -51,12 +51,17 @@ public class AdminPageContraller {
 	
 	@RequestMapping("/adminPage")
 	public String getAdminPage(HttpServletRequest request,HttpServletResponse response){
-		return "admin";
+		return "Admin";
 	}
 	
 	@RequestMapping("/problemSwitchingPage")
 	public String getproblemSwitchingPage(HttpServletRequest request,HttpServletResponse response){
-		return "admin";
+		return "Admin";
+	}
+	
+	@RequestMapping("/selectPage")
+	public String getTopicSelection(){
+		return "TopicSelection";
 	}
 	
 	@RequestMapping("/isFirstAdmin")
@@ -75,7 +80,6 @@ public class AdminPageContraller {
 	public String admin(String pwd,HttpSession session){
 		//登录操作
 		if(authenticationSerivce.admin(pwd)){
-			
 			logger.info("用户已经登录！");
 			session.setAttribute("user", HeapVariable.pwd);
 			return "ok";
