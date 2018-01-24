@@ -56,7 +56,7 @@
     });
     var isCommit = false;
     $('#comit').on('click', function () {
-        var time=intervalSecond-timesRun;
+        var time = intervalSecond - timesRun;
         var message = {
             "method": "updateScore",
             "id": $('#id').val(),
@@ -84,21 +84,25 @@
 
     var timesRun = 0;
     var interval;
-    var intervalSecond=12;
+    var intervalSecond = 12;
     $.get("/intervalSecond",
-          function(data){
-         intervalSecond=data;
-});
+        function (data) {
+            intervalSecond = data;
+        });
+
     function time() {
         timesRun = intervalSecond;
         interval = setInterval(function () {
-            timesRun --;
-            $('#timeViewer').text(timesRun);
-            if (timesRun < 0) {
+
+
+            if (timesRun == 0) {
                 clearTime();
-                if (!isCommit&&inited) {
+                if (!isCommit && inited) {
                     $('#comit').click();
                 }
+            } else {
+                $('#timeViewer').text(timesRun);
+                timesRun--;
             }
 
 

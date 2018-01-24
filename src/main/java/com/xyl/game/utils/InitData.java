@@ -60,7 +60,7 @@ public class InitData {
             hashMap.put((byte)4,new AtomicInteger() );
         }
         HeapVariable.isSendAnswer=new AtomicBoolean();
-        HeapVariable.isSendAnswer.set(false);
+        HeapVariable.isSendAnswer.set(true);
 
 	}
 

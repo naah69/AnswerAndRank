@@ -46,7 +46,7 @@ public class FinalVariable {
     public static final  String DIFFERENT_QUESTION_MESSAGE="不同的问题ID！";
 
     public static final  String TIME_OVER_STATUS_CODE="206";
-    public static final  String TIME_OVER_MESSAGE="时间超限！";
+    public static final  String TIME_OVER_MESSAGE="时间超限！你的游戏已结束！请旁观！";
 
     public static final  String LOST_STATUS_CODE="207";
     public static final  String LOST_MESSAGE="答题错误！";

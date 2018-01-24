@@ -39,6 +39,7 @@ public class SendController {
             HeapVariable.isSendAnswer.set(true);
         } catch (Exception e) {
             result.setErrorCode(FinalVariable.SEND_ANSWER_ERROR_STATUS_CODE);
+            e.printStackTrace();
         }
         return result;
     }
@@ -56,7 +57,7 @@ public class SendController {
                 result.setErrorCode(FinalVariable.NO_SEND_ANSWER_ERROR_STATUS_CODE);
                 result.setMessage(FinalVariable.NO_SEND_ANSWER_ERROR_MESSAGE);
             }
-            if(result.getErrorCode()!=null){
+            if (result.getErrorCode() != null) {
                 return result;
             }
             result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
@@ -99,33 +100,39 @@ public class SendController {
             if (user == null) {
                 continue;
             }
-            Answer userAnswer = user.getAnswers().get(id - 1);
-            Integer times = userAnswer.getTime();
-            boolean overTime = times > 0 && times <= HeapVariable.intervalSecond;
-            if (overTime && userAnswer != null && userAnswer.getAnswer()==rightAnswer ) {
+            if (user.getDieIndex() == null) {
+                Answer userAnswer = user.getAnswers().get(id - 1);
+                Integer times = userAnswer.getTime();
+                boolean overTime = times > 0 && times <= HeapVariable.intervalSecond;
+                if (overTime && userAnswer != null && userAnswer.getAnswer() == rightAnswer) {
 
-                userAnswer.setIsRight(true);
-                user.setScore(user.getScore() + 1);
-                if (id == HeapVariable.questionsList.size()) {
-                    answer.setErrorCode(FinalVariable.YOU_WIN_STATUS_CODE);
-                    answer.setMessage(FinalVariable.YOU_WIN_MESSAGE);
+                    userAnswer.setIsRight(true);
+                    user.setScore(user.getScore() + 1);
+                    if (id == HeapVariable.questionsList.size()) {
+                        answer.setErrorCode(FinalVariable.YOU_WIN_STATUS_CODE);
+                        answer.setMessage(FinalVariable.YOU_WIN_MESSAGE);
 
+                    } else {
+
+                        answer.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
+                        answer.setMessage(FinalVariable.NORMAL_MESSAGE);
+
+                    }
+
+                } else if (!overTime) {
+                    user.setDieIndex(id);
+                    answer.setErrorCode(FinalVariable.TIME_OVER_STATUS_CODE);
+                    answer.setMessage(FinalVariable.TIME_OVER_MESSAGE + " " + HeapVariable.intervalSecond + " 秒");
                 } else {
-
-                    answer.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
-                    answer.setMessage(FinalVariable.NORMAL_MESSAGE);
-
+                    user.setDieIndex(id);
+                    answer.setErrorCode(FinalVariable.LOST_STATUS_CODE);
+                    answer.setMessage(FinalVariable.LOST_MESSAGE);
                 }
-
-            } else if (!overTime) {
-                user.setDieIndex(id);
-                answer.setErrorCode(FinalVariable.TIME_OVER_STATUS_CODE);
-                answer.setMessage(FinalVariable.TIME_OVER_STATUS_CODE + " " + HeapVariable.intervalSecond + " 秒");
-            } else {
-                user.setDieIndex(id);
-                answer.setErrorCode(FinalVariable.LOST_STATUS_CODE);
-                answer.setMessage(FinalVariable.LOST_MESSAGE);
+            }else{
+                  answer.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
+                  answer.setMessage(FinalVariable.NORMAL_MESSAGE);
             }
+
             session.sendGridPage(answer);
 
         }
