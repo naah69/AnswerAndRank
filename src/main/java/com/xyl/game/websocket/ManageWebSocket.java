@@ -1,12 +1,6 @@
 package com.xyl.game.websocket;
 
-import com.xyl.game.Service.InitService;
-import com.xyl.game.Service.UploadScoreService;
-import com.xyl.game.dto.QuestionDTO;
-import com.xyl.game.dto.RequestDTO;
 import com.xyl.game.po.GridPage;
-import com.xyl.game.utils.FinalVariable;
-import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.JSONUtils;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +16,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Naah
  * @date 2018-01-22
  */
-@ServerEndpoint(value = "/answer")
+@ServerEndpoint(value = "/count")
 @Component
-public class AnswerWebSocket {
+public class ManageWebSocket {
 
 
     /**
@@ -36,7 +30,7 @@ public class AnswerWebSocket {
      * concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
      */
 
-    public static ConcurrentLinkedDeque<AnswerWebSocket> webSocketList = new ConcurrentLinkedDeque<>();
+    public static ConcurrentLinkedDeque<ManageWebSocket> webSocketList = new ConcurrentLinkedDeque<>();
 
 
     /**
@@ -51,9 +45,7 @@ public class AnswerWebSocket {
     public void onOpen(Session session) {
         this.session = session;
         webSocketList.add(this);
-        System.out.println("连接成功！当前在线人数为" + addOnlineCount());
-        sendMessage("连接成功！当前在线人数为" + addOnlineCount());
-       ManageWebSocket.sendCount();
+        sendMessage("连接成功！");
     }
 
     /**
@@ -63,7 +55,6 @@ public class AnswerWebSocket {
     public void onClose() {
         webSocketList.remove(this);
         System.out.println("有一连接关闭！当前在线人数为" + subOnlineCount());
-        ManageWebSocket.sendCount();
     }
 
     /**
@@ -73,24 +64,11 @@ public class AnswerWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("session:"+session.getId());
-        RequestDTO req = JSONUtils.jsonToObject(message, RequestDTO.class);
-        GridPage<QuestionDTO> result = new GridPage<>();
-        String sessionId = session.getId();
-        switch (req.getMethod()) {
-            case "init":
+        sendCount();
+    }
 
-                result = HeapVariable.context.getBean(InitService.class).initGame(sessionId, req.getUser());
-                break;
-            case "updateScore":
-                result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer().byteValue(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
-                break;
-            default:
-                result.setErrorCode(FinalVariable.NO_METHOD_ERROR_STATUS_CODE);
-                result.setMessage(FinalVariable.NO_METHOD_ERROR_MESSAGE);
-                break;
-        }
-        sendGridPage(result);
+    public static void sendCount() {
+        sendInfo(AnswerWebSocket.webSocketList.size()+"");
     }
 
     /**
@@ -120,7 +98,7 @@ public class AnswerWebSocket {
      * 群发自定义消息
      */
     public static void sendInfo(String message) {
-        for (AnswerWebSocket item : webSocketList) {
+        for (ManageWebSocket item : webSocketList) {
             item.sendMessage(message);
         }
     }
