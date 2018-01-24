@@ -1,7 +1,5 @@
 package com.xyl.game.Service;
 
-import java.io.InputStream;
-import java.util.List;
 
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.TimeParam;

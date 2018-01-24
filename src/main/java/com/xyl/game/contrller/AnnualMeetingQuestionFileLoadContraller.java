@@ -33,12 +33,12 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 @Controller
 @RequestMapping("/admin")
 public class AnnualMeetingQuestionFileLoadContraller {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionFileLoadContraller.class);
 
-	@Autowired 
+	@Autowired
 	private AnnualMeetingQuestionExctFileSerivce exctFileSerivce;
-	
+
 	/**
 	 * 接收年会游戏上传的exct表格文件
 	 */
@@ -51,11 +51,11 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		} catch (IOException e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
-		
+
 		HeapVariable.annualMeetingGameQuestionVos.put(session.getId(), savaDataForExct);
 		return savaDataForExct;
 	}
-	
+
 	/**
 	 * 修改缓存数据
 	 * @param session
@@ -78,10 +78,10 @@ public class AnnualMeetingQuestionFileLoadContraller {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
 		HeapVariable.annualMeetingGameQuestionVos.put(session.getId(), attribute);
-		
+
 		return "OK";
 	}
-	
+
 	/**
 	 * 查询数据库以及存储的数据
 	 */
@@ -96,7 +96,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		return exctFileSerivce.getAllGameQuestion();
 		//return null;
 	}
-	
+
 	/**
 	 * 保存年会问题的数据
 	 * @return
@@ -110,23 +110,23 @@ public class AnnualMeetingQuestionFileLoadContraller {
 			return "ok";
 		}
 		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo = annualMeetingGameQuestionVos.remove(session.getId());
-		
+
 		if(annualMeetingGameQuestionVo ==null ){
 			return "ok";
 		}
-		
+
 		List<AnnualMeetingGameQuestion> allQuestions = annualMeetingGameQuestionVo.getAllQuestions();
 		if(allQuestions == null){
 			return "ok";
 		}
-		
+
 		if(exctFileSerivce.savaAnnualMeetingGameQuestion(allQuestions)){
 			return "ok";
 		}else{
 			return "fail";
 		}
 	}
-	
+
 	/**
 	 * 清除所有数据
 	 * @return
@@ -138,12 +138,12 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		exctFileSerivce.clearAllData();
 		return "ok";
 	}
-	
+
 	@RequestMapping("/time")
 	@ResponseBody
 	public String time(String time){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		
+
 		Date times = null;
 		try {
 			times = dateFormat.parse(time);
@@ -152,17 +152,17 @@ public class AnnualMeetingQuestionFileLoadContraller {
 			e.printStackTrace();
 			return "时间戳未设置！输入的格式有误";
 		}
-		
+
 		HeapVariable.beginTime = new Timestamp(times.getTime());
 		return "ok";
 	}
-	
+
 	@RequestMapping("/getTimeParam")
 	@ResponseBody
 	public TimeParam getTime(){
 		return exctFileSerivce.getTimeParam();
 	}
-	
+
 	@RequestMapping("/setTimeInterval")
 	@ResponseBody
 	public String setTimeInterval(Integer gametime){

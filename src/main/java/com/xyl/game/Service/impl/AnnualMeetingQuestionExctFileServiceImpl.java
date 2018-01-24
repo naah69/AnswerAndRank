@@ -66,6 +66,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			logger.error("文件加载异常，"+e.getMessage());
 			annualMeetingGameQuestionVo.setState(2);
 			annualMeetingGameQuestionVo.setStateInfo("文件加载异常"+e.getMessage());
+			e.printStackTrace();
 			return annualMeetingGameQuestionVo;
 		} finally {
 			if(workbook != null){
@@ -113,7 +114,13 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	private void structureRightAnswer(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions, Row row,
 			AnnualMeetingGameQuestion annualMeetingGameQuestion) {
 		String rightAnswerStr = row.getCell(5).toString();
-		byte rightAnswer = (byte)(Float.valueOf(rightAnswerStr).floatValue());
+		byte rightAnswer = -1;
+		try {
+			rightAnswer = (byte)(Float.valueOf(rightAnswerStr).floatValue());
+		} catch (Exception e) {
+			logger.info("有字母存在");
+			rightAnswer = RightAnswerjiexi(rightAnswerStr, annualMeetingGameQuestion);
+		}
 		annualMeetingGameQuestion.setRightAnswer(rightAnswer);
 		annualMeetingGameQuestions.add(annualMeetingGameQuestion);
 	}
@@ -131,10 +138,11 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 				for (int i = 0; i < fields.length; i++) {
 					if(fieldName.equals(fields[i].getName())){
 						Method method = clazz.getMethod("set"+StringUtil.initialsUpper(fieldName),fields[i].getType() );
-						if(!fieldValue.equals("rightAnswer")){
+						if(!fieldName.equals("rightAnswer")){
 							method.invoke(annualMeetingGameQuestion, fieldValue);
 						}else{
-							method.invoke(annualMeetingGameQuestion, (byte)(Float.valueOf(fieldValue).floatValue()));
+							byte rightAnswerjiexi = RightAnswerjiexi(fieldValue, annualMeetingGameQuestion);
+							method.invoke(annualMeetingGameQuestion, rightAnswerjiexi);
 						}
 						break;
 					}
@@ -144,6 +152,34 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 		}
 
 		return false;
+	}
+
+	private byte RightAnswerjiexi(String fieldValue, AnnualMeetingGameQuestion annualMeetingGameQuestion)
+			{
+		try {
+			return (byte)(Float.valueOf(fieldValue).floatValue());
+		} catch (Exception e) {
+			logger.info("excel表格正确答案可能传入的是字母");
+			String rightAnswer = "";
+			switch (fieldValue.toUpperCase()) {
+			case "A":
+				rightAnswer="1";
+				break;
+			case "B":
+				rightAnswer="2";
+				break;
+			case "C":
+				rightAnswer="3";
+				break;
+			case "D":
+				rightAnswer="4";
+				break;
+			default:
+				rightAnswer="-1";
+				break;
+			}
+			return (byte)(Float.valueOf(rightAnswer).floatValue());
+		}
 	}
 
 
@@ -193,10 +229,10 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			param.setBeginTimeStr(TimeFormatUtil.getTimeStr(new Date(beginTime.getTime())));
 		}else{
 			param.setBeginTime(0L);
-			param.setBeginTimeStr("");
+			param.setBeginTimeStr("未设置");
 		}
 		param.setIntervalTime(HeapVariable.intervalSecond);
-		
+
 		return param;
 	}
 

@@ -1,15 +1,17 @@
 package com.xyl.game.contrller;
 
+import com.xyl.game.dto.AnswerDTO;
 import com.xyl.game.dto.QuestionDTO;
-import com.xyl.game.po.AnnualMeetingGameQuestion;
-import com.xyl.game.po.GridPage;
-import com.xyl.game.po.Page;
-import com.xyl.game.utils.HeapVariable;
-import com.xyl.game.utils.QuestionUtils;
+import com.xyl.game.po.*;
+import com.xyl.game.utils.*;
 import com.xyl.game.websocket.AnswerWebSocket;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * sendAnswer
@@ -23,20 +25,21 @@ public class SendController {
     @PostMapping("/sendAnswer")
     public GridPage send() {
         GridPage result = new GridPage();
-        if (HeapVariable.beginTime == null||HeapVariable.now==null) {
-            result.setErrorCode("8");
-            result.setMessage("还没有题目！");
+        if (HeapVariable.beginTime == null || HeapVariable.now == null) {
+            result.setErrorCode(FinalVariable.NO_QUESTION_STATUS_CODE);
+            result.setMessage(FinalVariable.NO_QUESTION_MESSAGE);
             return result;
         }
-        result.setErrorCode("0");
+        result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
+        Page<AnswerDTO> answerCount = AnswerUtils.getAnswerCount();
+        result.setPageList(answerCount);
         try {
             GridPage answer = new GridPage();
-            answer.setMethod("answer");
-            answer.setErrorCode("0");
-            answer.setMessage(QuestionUtils.getAnswerNow());
-            AnswerWebSocket.sendGridPageToAll(answer);
+            answer.setMethod(FinalVariable.ANSWER_METHOD);
+            answer.setPageList(answerCount);
+            sendAnswerMessage(answer);
         } catch (Exception e) {
-            result.setErrorCode("500");
+            result.setErrorCode(FinalVariable.SEND_ANSWER_ERROR_STATUS_CODE);
         }
         return result;
     }
@@ -44,34 +47,83 @@ public class SendController {
     @PostMapping("/sendQuestion")
     public GridPage sendQuestion() {
         GridPage result = new GridPage();
-        if (HeapVariable.beginTime == null) {
-            result.setErrorCode("8");
-            result.setMessage("没有游戏场次");
-            return result;
-        }
+        try {
+            if (HeapVariable.beginTime == null) {
+                result.setErrorCode(FinalVariable.NO_GAME_STATUS_CODE);
+                result.setMessage(FinalVariable.NO_GAME_MESSAGE);
+                return result;
+            }
 
-        result.setErrorCode("0");
-        GridPage question = new GridPage();
-        question.setMethod("question");
-        QuestionDTO questionDTO = QuestionUtils.nextQuestion();
-        if (questionDTO == null) {
-            result.setErrorCode("5");
-            result.setMessage("游戏结束!");
-            question.setErrorCode("5");
-            question.setMessage("游戏结束!");
-        } else {
-            Page<QuestionDTO> page = new Page<>();
-            Page<AnnualMeetingGameQuestion> manage = new Page<>();
-            manage.add(QuestionUtils.getQuestion(questionDTO.getId()));
-            page.add(questionDTO);
-            question.setErrorCode("0");
-            question.setMessage("next");
-            question.setPageList(page);
-            result.setPageList(manage);
-        }
+            result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
+            GridPage question = new GridPage();
+            question.setMethod(FinalVariable.QUESTION_METHOD);
+            QuestionDTO questionDTO = QuestionUtils.getNextQuestionDTO();
+            if (questionDTO == null) {
+                result.setErrorCode(FinalVariable.GAME_DONE_STATUS_CODE);
+                result.setMessage(FinalVariable.GAME_DONE_MESSAGE);
+                question.setErrorCode(FinalVariable.GAME_DONE_STATUS_CODE);
+                question.setMessage(FinalVariable.GAME_DONE_MESSAGE);
+            } else {
+                Page<QuestionDTO> page = new Page<>();
+                Page<AnnualMeetingGameQuestion> manage = new Page<>();
+                manage.add(QuestionUtils.getQuestion(questionDTO.getId()));
+                page.add(questionDTO);
+                question.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
+                question.setPageList(page);
+                result.setPageList(manage);
+            }
 
-        AnswerWebSocket.sendGridPageToAll(question);
+            AnswerWebSocket.sendGridPageToAll(question);
+
+
+        } catch (Exception e) {
+            result.setErrorCode(FinalVariable.SEND_QUESTION_ERROR_STATUS_CODE);
+        }
 
         return result;
     }
+
+
+    private void sendAnswerMessage(GridPage answer) {
+        int id = HeapVariable.now.getId();
+        int rightAnswer = AnswerUtils.getAnswerNow();
+
+        ConcurrentLinkedDeque<AnswerWebSocket> sessionList = AnswerWebSocket.webSocketList;
+        for (AnswerWebSocket session : sessionList) {
+            User user = UserUtils.getUser(session);
+            if (user == null) {
+                continue;
+            }
+            Answer userAnswer = user.getAnswers().get(id - 1);
+            Integer times = userAnswer.getTime();
+            boolean overTime = times > 0 && times <= HeapVariable.intervalSecond;
+            if (overTime && userAnswer != null && userAnswer.getAnswer()==rightAnswer ) {
+
+                userAnswer.setIsRight(true);
+                user.setScore(user.getScore() + 1);
+                if (id == HeapVariable.questionsList.size()) {
+                    answer.setErrorCode(FinalVariable.YOU_WIN_STATUS_CODE);
+                    answer.setMessage(FinalVariable.YOU_WIN_MESSAGE);
+
+                } else {
+
+                    answer.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
+                    answer.setMessage(FinalVariable.NORMAL_MESSAGE);
+
+                }
+
+            } else if (!overTime) {
+                user.setDieIndex(id);
+                answer.setErrorCode(FinalVariable.TIME_OVER_STATUS_CODE);
+                answer.setMessage(FinalVariable.TIME_OVER_STATUS_CODE + " " + HeapVariable.intervalSecond + " 秒");
+            } else {
+                user.setDieIndex(id);
+                answer.setErrorCode(FinalVariable.LOST_STATUS_CODE);
+                answer.setMessage(FinalVariable.LOST_MESSAGE);
+            }
+            session.sendGridPage(answer);
+
+        }
+    }
+
 }

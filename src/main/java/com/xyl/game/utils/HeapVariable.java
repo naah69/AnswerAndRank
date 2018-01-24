@@ -4,7 +4,6 @@ import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.Admin;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
-import com.xyl.game.po.Answer;
 import com.xyl.game.po.User;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 import org.springframework.context.ApplicationContext;
@@ -12,7 +11,6 @@ import org.springframework.context.ApplicationContext;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -37,8 +35,8 @@ public class HeapVariable {
     public static String MD5DataChange = "";
     public static Timestamp beginTime;
     public static QuestionDTO now;
-    public static int intervalSecond = 12;
-    public static CopyOnWriteArrayList<Map<Integer,ConcurrentLinkedQueue<Answer>>> answerList;
+    public static int intervalSecond=12;
+    public static CopyOnWriteArrayList<Map<Integer,AtomicInteger>> answerList;
     public static Admin pwd;
 
 }

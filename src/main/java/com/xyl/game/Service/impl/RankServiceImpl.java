@@ -5,6 +5,7 @@ import com.xyl.game.dto.UserDTO;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.Page;
 import com.xyl.game.po.User;
+import com.xyl.game.utils.FinalVariable;
 import com.xyl.game.utils.HeapVariable;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class RankServiceImpl implements RankService {
         Collections.sort(userDTO);
 
         GridPage<UserDTO> result=new GridPage<>(userDTO);
-        result.setErrorCode("0");
+        result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
 
 
         return result;
