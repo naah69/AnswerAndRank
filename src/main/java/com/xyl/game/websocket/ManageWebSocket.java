@@ -48,6 +48,7 @@ public class ManageWebSocket {
     public void onOpen(Session session) {
         this.session = session;
         webSocketList.add(this);
+        System.out.println("连接Manage成功！当前在线人数为" + addOnlineCount());
         sendMessage("连接成功！");
     }
 
@@ -57,7 +58,7 @@ public class ManageWebSocket {
     @OnClose
     public void onClose() {
         webSocketList.remove(this);
-        System.out.println("有一连接关闭！当前在线人数为" + subOnlineCount());
+        System.out.println("有一连接Manage关闭！当前在线人数为" + subOnlineCount());
     }
 
     /**
@@ -74,7 +75,7 @@ public class ManageWebSocket {
     public static void sendCount() {
         GridPage page = new GridPage();
         page.setMethod("count");
-        page.setMessage(AnswerWebSocket.webSocketList.size() + "");
+        page.setMessage(AnswerWebSocket.getOnlineCount()+ "");
         sendGridPageToAll(page);
     }
 

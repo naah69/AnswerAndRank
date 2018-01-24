@@ -20,6 +20,7 @@ websocket.onopen = function (event) {
 var inited = false;
 //接收到消息的回调方法
 websocket.onmessage = function (event) {
+    
     console.log(event.data);
     var json = JSON.parse(event.data);
     if (json.method == 'init') {

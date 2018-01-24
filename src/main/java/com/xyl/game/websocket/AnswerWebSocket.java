@@ -51,7 +51,7 @@ public class AnswerWebSocket {
     public void onOpen(Session session) {
         this.session = session;
         webSocketList.add(this);
-        System.out.println("连接成功！当前在线人数为" + addOnlineCount());
+        System.out.println("连接Answer成功！当前在线人数为" + addOnlineCount());
         sendMessage("连接成功！当前在线人数为" + addOnlineCount());
         ManageWebSocket.sendCount();
     }
@@ -62,7 +62,7 @@ public class AnswerWebSocket {
     @OnClose
     public void onClose() {
         webSocketList.remove(this);
-        System.out.println("有一连接关闭！当前在线人数为" + subOnlineCount());
+        System.out.println("有一连接Answer关闭！当前在线人数为" + subOnlineCount());
         ManageWebSocket.sendCount();
     }
 
