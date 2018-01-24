@@ -35,6 +35,7 @@ public class SendController {
          if (HeapVariable.isSendAnswer.get() == true) {
                 result.setErrorCode(FinalVariable.NO_SEND_QUESTION_ERROR_STATUS_CODE);
                 result.setMessage(FinalVariable.NO_SEND_QUESTION_ERROR_MESSAGE);
+                return result;
             }
 
 
@@ -67,6 +68,7 @@ public class SendController {
             if (HeapVariable.isSendAnswer.get() == false) {
                 result.setErrorCode(FinalVariable.NO_SEND_ANSWER_ERROR_STATUS_CODE);
                 result.setMessage(FinalVariable.NO_SEND_ANSWER_ERROR_MESSAGE);
+                return result;
             }
 
             result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
