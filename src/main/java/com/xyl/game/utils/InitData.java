@@ -25,6 +25,8 @@ public class InitData {
 
     public static void initVariable() {
         log.info("初始化用户Map。。。");
+        HeapVariable.beginTime = null;
+        HeapVariable.now=null;
         HeapVariable.usersMap = new ConcurrentHashMap<>(1024);
         HeapVariable.annualMeetingGameQuestionVos = new HashMap<String, AnnualMeetingGameQuestionVo>();
     }
@@ -69,5 +71,11 @@ public class InitData {
         mapper.copyTableStruct();
         mapper.deleteTable();
         mapper.renameTableName();
+    }
+
+    public static void initGame(){
+        initVariable();
+        initCount();
+		ExcelUtil.savaUserData("clearUserData");
     }
 }
