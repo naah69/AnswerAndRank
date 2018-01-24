@@ -73,7 +73,6 @@ layui.use(['util','laydate','layer','table'], function(){
 	})
 	$('#sendAnswer').click(function(){
 		$.post('/admin/sendAnswer', function(data) {
-			console.log(JSON.stringify(data))
 			var rightAnswer = data.rows[0].rightAnswer;
 			var rightAnswerStr = '';
 			switch(rightAnswer){
@@ -95,9 +94,10 @@ layui.use(['util','laydate','layer','table'], function(){
 			$('#answer').html(rightAnswerStr);
 		})
 	})
+	var host = window.location.hostname;
 	var websocket = null;
 	if ('WebSocket' in window) {
-   		 websocket = new WebSocket("ws://localhost/Manage");
+   		 websocket = new WebSocket("ws://"+host+"/Manage");
 	}
 	
 	websocket.onmessage = function(event){
