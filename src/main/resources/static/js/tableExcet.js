@@ -14,6 +14,10 @@ layui.use('table', function(){
 	 	   ,{field:'answerFour', title: '答案四', width:'5%'}
 	 	   ,{field:'rightAnswer', title: '正确答案', width:'5%'}
 	 	]]
+		,initSort:{
+			field: 'id'
+			,type: 'asc'
+		}
 	 	,id:'annualMeeting_question_table'
 	 	,loading:true
 	 	,response:{
