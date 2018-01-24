@@ -1,33 +1,34 @@
 package com.xyl.game.contrller;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.xyl.game.Service.AnnualMeetingTimeSerivce;
 import com.xyl.game.po.TimeParam;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.InitData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
- * 
+ *
  * @author dazhi
  *
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/admin")
 public class AnnualMeetingTimeContreller {
 	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingTimeContreller.class);
-	
+
 	@Autowired
 	private AnnualMeetingTimeSerivce timeSerivce;
-	
+
 	/**
 	 * 清除所有数据
 	 * @return
@@ -73,8 +74,8 @@ public class AnnualMeetingTimeContreller {
 		}
 		return "ok";
 	}
-	
-	
+
+
 	@RequestMapping("/clearData")
 	@ResponseBody
 	public String clearData(){
@@ -82,5 +83,5 @@ public class AnnualMeetingTimeContreller {
 		HeapVariable.beginTime = null;
 		return "ok";
 	}
-	
+
 }

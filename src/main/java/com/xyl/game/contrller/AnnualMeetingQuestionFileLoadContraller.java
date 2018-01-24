@@ -1,29 +1,24 @@
 package com.xyl.game.contrller;
 
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
-import com.xyl.game.po.AnnualMeetingGameQuestion;
-import com.xyl.game.po.TimeParam;
-import com.xyl.game.utils.HeapVariable;
-import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 接收Exct文件
@@ -31,6 +26,7 @@ import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
  *
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/admin")
 public class AnnualMeetingQuestionFileLoadContraller {
 

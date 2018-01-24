@@ -37,22 +37,26 @@ public class UploadScoreServiceImpl implements UploadScoreService {
         if (times == null) {
             result.setErrorCode(FinalVariable.NO_TIME_STATUS_CODE);
             result.setMessage(FinalVariable.NO_TIME_MESSAGE);
+            return result;
         }
 
         if (sessionId == null) {
             result.setMessage(FinalVariable.NO_SESSION_STATUS_CODE);
             result.setMessage(FinalVariable.NO_SESSION_MESSAGE);
+            return result;
         }
 
         if (user == null) {
             result.setErrorCode(FinalVariable.NO_USER_STATUS_CODE);
             result.setMessage(FinalVariable.NO_USER_MESSAGE);
+            return result;
         }
 
 
         if (user.getDieIndex() != null) {
             result.setErrorCode(FinalVariable.YOU_HAD_DIED_STATUS_CODE);
             result.setMessage(FinalVariable.YOU_HAD_DIED_MESSAGE);
+            return result;
         }
 
 
