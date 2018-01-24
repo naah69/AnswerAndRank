@@ -40,5 +40,4 @@ public class HeapVariable {
     public static CopyOnWriteArrayList<Map<Byte,AtomicInteger>> answerList;
     public static Admin pwd;
     public static AtomicBoolean isSendAnswer;
-
 }

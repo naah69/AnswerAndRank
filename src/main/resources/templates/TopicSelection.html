@@ -42,11 +42,15 @@
 </table>
 <button class="layui-btn" id="sendAnswer">提交答案</button>
 <button class="layui-btn" id="sendQuestion">下一题</button>
+<pre class="layui-code" id="questionShow">
+答案显示：<span id="takePartNum"></span>
+</pre>
+<table class="layui-table" id="ConnectNum" lay-filter="ConnectNum"></table>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript">
 layui.use(['util','laydate','layer','table'], function(){
-	var $ = layui.$ ,layer = layui.layer;
+	var $ = layui.$ ,layer = layui.layer,table=layui.table;
 	$('#sendQuestion').click(function(){
 		$.post('/admin/sendQuestion', function(data) {
 			if(data.errorCode!='0'){
@@ -88,6 +92,21 @@ layui.use(['util','laydate','layer','table'], function(){
 			}
 			$('#answer').html(rightAnswerStr);
 		})
+	})
+	var websocket = null;
+	if ('WebSocket' in window) {
+   		 websocket = new WebSocket("ws://localhost/count");
+	}
+	websocket.send()
+	table.render({
+		elem: '#ConnectNum'
+		,data:[]
+	 	,cols: [[
+	 		 {field: 'username', title: '名称', width: '25%'}
+             , {field: 'department', title: '部门', width: '25%'}
+             , {field: 'score', title: '分数', width: '25%'}
+             , {field: 'timesSecond', title: '用时', width: '25%'}
+	 	]]
 	})
 	
 })
