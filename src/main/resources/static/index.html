@@ -64,6 +64,7 @@
             "times": time
         };
         isCommit = true;
+        clearTime();
         $('#comit').css('display', 'none');
         $('#userTime').text("本次用时：" + time);
         send(JSON.stringify(message));
@@ -115,15 +116,17 @@
 
         time();
         $('#userTime').text("");
+        $('#id').val(que['id']);
+        console.log($('#id').val())
         $('#question').text(que['question']);
         $('#answer1').text(que['answerOne']);
-        $('#a1r').val("1");
+        $('#answer1').css('color', 'black');
         $('#answer2').text(que['answerTwo']);
-        $('#a2r').val("2");
+        $('#answer2').css('color', 'black');
         $('#answer3').text(que['answerThree']);
-        $('#a3r').val("3");
+        $('#answer3').css('color', 'black');
         $('#answer4').text(que['answerFour']);
-        $('#a4r').val("4");
+        $('#answer4').css('color', 'black');
 
     }
 

@@ -10,7 +10,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * SpringBOOT 启动类
@@ -30,6 +29,7 @@ public class GameApplication {
         ApplicationContext context = SpringApplication.run(GameApplication.class, args);
         AnnualMeetingGameQuestionMapper mapper = context.getBean(AnnualMeetingGameQuestionMapper.class);
         initLog4j();
+
         initData(mapper, context);
 
     }

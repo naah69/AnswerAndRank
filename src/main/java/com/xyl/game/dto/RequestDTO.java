@@ -15,7 +15,7 @@ import lombok.Setter;
 public class RequestDTO {
     private String method;
     private Integer id;
-    private Byte answer;
+    private Integer answer;
     private Integer times;
     private User user;
 }

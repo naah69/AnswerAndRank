@@ -71,9 +71,10 @@ public class UploadScoreServiceImpl implements UploadScoreService {
         Answer userAnswer = new Answer(id, question, answer, times, false, new Timestamp(System.currentTimeMillis()));
         user.getAnswers().add(userAnswer);
         user.setTimesSecond(user.getTimesSecond() + times);
-        Map<Integer, AtomicInteger> answerMap = QuestionUtils.getAnswerMap(id);
+        Map<Byte, AtomicInteger> answerMap = QuestionUtils.getAnswerMap(id);
         AtomicInteger count = answerMap.get(answer);
         count.incrementAndGet();
+
 
         result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
         result.setMessage(FinalVariable.NORMAL_MESSAGE);

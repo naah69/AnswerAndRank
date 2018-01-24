@@ -44,13 +44,13 @@ public class InitData {
         HeapVariable.atomic.set(questionList.size());;
         HeapVariable.answerList=new CopyOnWriteArrayList<>();
         for (int i = 0; i <  HeapVariable.questionsList.size(); i++) {
-            ConcurrentHashMap<Integer, AtomicInteger> hashMap = new ConcurrentHashMap<>();
+            ConcurrentHashMap<Byte, AtomicInteger> hashMap = new ConcurrentHashMap<>();
             HeapVariable.answerList.add(hashMap);
-            hashMap.put(0,new AtomicInteger() );
-            hashMap.put(1,new AtomicInteger() );
-            hashMap.put(2,new AtomicInteger() );
-            hashMap.put(3,new AtomicInteger() );
-            hashMap.put(4,new AtomicInteger() );
+            hashMap.put((byte)0,new AtomicInteger() );
+            hashMap.put((byte)1,new AtomicInteger() );
+            hashMap.put((byte)2,new AtomicInteger() );
+            hashMap.put((byte)3,new AtomicInteger() );
+            hashMap.put((byte)4,new AtomicInteger() );
 
         }
 

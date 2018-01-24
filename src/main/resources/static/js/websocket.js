@@ -33,7 +33,7 @@ websocket.onmessage = function (event) {
         } else {
             alert(json.message);
         }
-    } else if (json.method = 'question') {
+    } else if (json.method == 'question') {
         if (json.errorCode == 0) {
             isCommit = false;
             $('#div1').css('display', 'none');
@@ -53,25 +53,26 @@ websocket.onmessage = function (event) {
             rank();
         }
 
-    } else if (json.method = 'answer') {
-        if (json.errorCode == 0) {
-            var que = json.rows[0];
-            $('#answer1').text($('#answer1').text() + ' ' + que['answerOne']);
-            $('#answer2').text($('#answer2').text() + ' ' + que['answerTwo']);
-            $('#answer3').text($('#answer3').text() + ' ' + que['answerThree']);
-            $('#answer4').text($('#answer4').text() + ' ' + que['answerFour']);
-            $('#answer' + que.rightAnswer).css('color', 'green');
-        } else {
-            alert(json.message);
-            // rank();
+    } else if (json.method == 'answer') {
+        var que = json.rows[0];
+        $('#answer1').text($('#answer1').text() + ' ' + que['answerOne']+'个人');
+        $('#answer2').text($('#answer2').text() + ' ' + que['answerTwo']+'个人');
+        $('#answer3').text($('#answer3').text() + ' ' + que['answerThree']+'个人');
+        $('#answer4').text($('#answer4').text() + ' ' + que['answerFour']+'个人');
+        $('#answer' + que.rightAnswer).css('color', 'green');
+
+        alert(json.message);
+        if(json.errorCode!=0){
+            inited=false;
         }
-    } else if (json.method = 'updateScore') {
+            // rank();
+    } else if (json.method == 'updateScore') {
         $('#comit').css('display', 'none');
         if (json.errorCode == 0) {
 
         } else {
             alert(json.message);
-            inited=false;
+            inited = false;
         }
 
     } else {

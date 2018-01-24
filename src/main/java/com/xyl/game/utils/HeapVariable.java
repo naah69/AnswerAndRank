@@ -36,7 +36,7 @@ public class HeapVariable {
     public static Timestamp beginTime;
     public static QuestionDTO now;
     public static int intervalSecond=12;
-    public static CopyOnWriteArrayList<Map<Integer,AtomicInteger>> answerList;
+    public static CopyOnWriteArrayList<Map<Byte,AtomicInteger>> answerList;
     public static Admin pwd;
 
 }

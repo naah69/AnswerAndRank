@@ -35,7 +35,7 @@ public class QuestionUtils {
     }
 
 
-    public static Map<Integer, AtomicInteger> getAnswerMap(int id) {
+    public static Map<Byte, AtomicInteger> getAnswerMap(int id) {
         return HeapVariable.answerList.get(id - 1);
     }
 

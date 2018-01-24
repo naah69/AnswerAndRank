@@ -51,6 +51,7 @@ public class AnswerWebSocket {
     public void onOpen(Session session) {
         this.session = session;
         webSocketList.add(this);
+        System.out.println("连接成功！当前在线人数为" + addOnlineCount());
         sendMessage("连接成功！当前在线人数为" + addOnlineCount());
     }
 
@@ -72,7 +73,6 @@ public class AnswerWebSocket {
     public void onMessage(String message, Session session) {
         System.out.println("session:"+session.getId());
         RequestDTO req = JSONUtils.jsonToObject(message, RequestDTO.class);
-        System.out.println(req);
         GridPage<QuestionDTO> result = new GridPage<>();
         String sessionId = session.getId();
         switch (req.getMethod()) {
@@ -81,7 +81,7 @@ public class AnswerWebSocket {
                 result = HeapVariable.context.getBean(InitService.class).initGame(sessionId, req.getUser());
                 break;
             case "updateScore":
-                result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
+                result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer().byteValue(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
                 break;
             default:
                 result.setErrorCode(FinalVariable.NO_METHOD_ERROR_STATUS_CODE);
