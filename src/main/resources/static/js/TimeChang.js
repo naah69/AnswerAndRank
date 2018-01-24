@@ -75,8 +75,8 @@ layui.use(['util','laydate','layer','table'], function(){
 	  		var demoList = $('#demoList');
 	  		demoList.empty();
 	  		var tr = $(['<tr>'
-		          ,'<td>'+ data.beginTimeStr +'</td>'
-		          ,'<td>'+ data.intervalTime +'秒</td>'
+		          ,'<td id="beginTimeStr">'+ data.beginTimeStr +'</td>'
+		          ,'<td id="intervalTime">'+ data.intervalTime +'秒</td>'
 		        ,'</tr>'].join('')); 
 		    demoList.append(tr);
 			clearTimeout(thisTimer);
