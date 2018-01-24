@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -38,5 +39,6 @@ public class HeapVariable {
     public static int intervalSecond=12;
     public static CopyOnWriteArrayList<Map<Byte,AtomicInteger>> answerList;
     public static Admin pwd;
+    public static AtomicBoolean isSendAnswer;
 
 }

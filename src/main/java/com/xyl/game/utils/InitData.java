@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -57,8 +58,10 @@ public class InitData {
             hashMap.put((byte)2,new AtomicInteger() );
             hashMap.put((byte)3,new AtomicInteger() );
             hashMap.put((byte)4,new AtomicInteger() );
-
         }
+        HeapVariable.isSendAnswer=new AtomicBoolean();
+        HeapVariable.isSendAnswer.set(false);
+
 	}
 
     public static void initTable() {

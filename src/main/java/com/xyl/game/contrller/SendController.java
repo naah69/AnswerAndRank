@@ -5,8 +5,6 @@ import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.po.*;
 import com.xyl.game.utils.*;
 import com.xyl.game.websocket.AnswerWebSocket;
-
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +36,7 @@ public class SendController {
             answer.setMethod(FinalVariable.ANSWER_METHOD);
             answer.setPageList(answerCount);
             sendAnswerMessage(answer);
+            HeapVariable.isSendAnswer.set(true);
         } catch (Exception e) {
             result.setErrorCode(FinalVariable.SEND_ANSWER_ERROR_STATUS_CODE);
         }
@@ -51,9 +50,15 @@ public class SendController {
             if (HeapVariable.beginTime == null) {
                 result.setErrorCode(FinalVariable.NO_GAME_STATUS_CODE);
                 result.setMessage(FinalVariable.NO_GAME_MESSAGE);
+
+            }
+            if (HeapVariable.isSendAnswer.get() == false) {
+                result.setErrorCode(FinalVariable.NO_SEND_ANSWER_ERROR_STATUS_CODE);
+                result.setMessage(FinalVariable.NO_SEND_ANSWER_ERROR_MESSAGE);
+            }
+            if(result.getErrorCode()!=null){
                 return result;
             }
-
             result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
             GridPage question = new GridPage();
             question.setMethod(FinalVariable.QUESTION_METHOD);
@@ -74,7 +79,7 @@ public class SendController {
             }
 
             AnswerWebSocket.sendGridPageToAll(question);
-
+            HeapVariable.isSendAnswer.set(false);
 
         } catch (Exception e) {
             result.setErrorCode(FinalVariable.SEND_QUESTION_ERROR_STATUS_CODE);
