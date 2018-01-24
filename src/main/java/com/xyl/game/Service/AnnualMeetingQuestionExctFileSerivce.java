@@ -1,12 +1,12 @@
 package com.xyl.game.Service;
 
 
+import java.io.InputStream;
+import java.util.List;
+
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.TimeParam;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * 用解析exct表格
@@ -19,11 +19,11 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	 * @return
 	 */
 	public AnnualMeetingGameQuestionVo savaDataForExct(InputStream exctFileStream);
-
+	
 	public AnnualMeetingGameQuestionVo getAllGameQuestion();
-
+	
 	public Boolean savaAnnualMeetingGameQuestion(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions);
-
+	
 	/**
 	 * 修改问题数据的缓存
 	 * @param vo
@@ -34,11 +34,6 @@ public interface AnnualMeetingQuestionExctFileSerivce {
 	 * @throws Exception
 	 */
 	public Boolean updataData(AnnualMeetingGameQuestionVo vo,Integer id,String fieldValue,String fieldName) throws Exception;
-
-	/**
-	 * 清除所有数据
-	 */
-	public void clearAllData();
-
-	public TimeParam getTimeParam();
+	
+	
 }

@@ -214,26 +214,5 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 		}
 	}
 
-	@Override
-	public void clearAllData() {
-		InitData.initTable();
-		InitData.initQuestion();
-	}
-
-	@Override
-	public TimeParam getTimeParam() {
-		Timestamp beginTime = HeapVariable.beginTime;
-		TimeParam param = new TimeParam();
-		if(beginTime != null){
-			param.setBeginTime(beginTime.getTime());
-			param.setBeginTimeStr(TimeFormatUtil.getTimeStr(new Date(beginTime.getTime())));
-		}else{
-			param.setBeginTime(0L);
-			param.setBeginTimeStr("未设置");
-		}
-		param.setIntervalTime(HeapVariable.intervalSecond);
-
-		return param;
-	}
 
 }
