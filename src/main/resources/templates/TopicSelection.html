@@ -7,23 +7,86 @@
 </head>
 <body>
 <pre class="layui-code" id="questionShow">
-题目显示：
+答案显示：<span id="answer"></span>
 </pre>
+
+<table class="layui-table" id="loadFile" lay-filter="loadFile">
+	 <colgroup>
+	    <col width="5%" />
+	    <col width="95%" />
+	  </colgroup>
+      <thead>
+        <tr>
+	        <th>题目</th>
+	        <th id="topic"></th>
+        </tr>
+      </thead>
+      <tbody id="demoList">
+      	<tr>
+	        <th>A</th>
+	        <th id="answerOne"></th>
+        </tr>
+        <tr>
+	        <th>B</th>
+	        <th id="answerTwo"></th>
+        </tr>
+        <tr>
+	        <th>C</th>
+	        <th id="answerThree"></th>
+        </tr>
+        <tr>
+	        <th>D</th>
+	        <th id="answerFour"></th>
+        </tr>
+      </tbody>
+</table>
 <button class="layui-btn" id="sendAnswer">提交答案</button>
 <button class="layui-btn" id="sendQuestion">下一题</button>
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript">
 layui.use(['util','laydate','layer','table'], function(){
-	var $ = layui.$;
+	var $ = layui.$ ,layer = layui.layer;
 	$('#sendQuestion').click(function(){
 		$.post('/admin/sendQuestion', function(data) {
-			alert(JSON.stringify(data));
+			if(data.errorCode!='0'){
+				layer.alert(data.message);
+			}else {
+				var str = "";
+				var rows = data.rows;
+				console.log(rows.id)
+				str = '第'+JSON.stringify(rows[0].id)+'题：'+rows[0].topic+';\n';
+				$('#topic').html(str);
+				$('#answerOne').html(rows[0].answerOne);
+				$('#answerTwo').html(rows[0].answerTwo);
+				$('#answerThree').html(rows[0].answerThree);
+				$('#answerFour').html(rows[0].answerFour);
+				$('#answer').html('');
+			}
 		})
 	})
 	$('#sendAnswer').click(function(){
 		$.post('/admin/sendAnswer', function(data) {
-			
+			console.log(JSON.stringify(data))
+			var rightAnswer = data.rows[0].rightAnswer;
+			var rightAnswerStr = '';
+			switch(rightAnswer){
+				case 1 :
+				  rightAnswerStr = 'A';
+				  break;
+			    case 2 :
+			      rightAnswerStr = 'B';
+			      break;
+			    case 3 :
+			      rightAnswerStr = 'C';
+			      break;
+			    case 4 :
+			      rightAnswerStr = 'D';
+			      break;
+			    default:
+			      rightAnswerStr = ''; 
+			}
+			$('#answer').html(rightAnswerStr);
 		})
 	})
 	

@@ -3,6 +3,10 @@ package com.xyl.game.Service.impl;
 import com.xyl.game.Service.AuthenticationSerivce;
 import com.xyl.game.po.Admin;
 import com.xyl.game.utils.HeapVariable;
+import com.xyl.game.utils.PropertiesUtils;
+
+import java.util.Properties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,6 +38,8 @@ public class AuthenticationSerivceImpl implements AuthenticationSerivce{
 		if(HeapVariable.pwd == null){
 			HeapVariable.pwd = new Admin();
 			HeapVariable.pwd.setPwd(pwd);
+			Properties initProperties = PropertiesUtils.initProperties("game.properties");
+			initProperties.setProperty("adminPwd", pwd);
 			return true;
 		}
 		Admin admin = HeapVariable.pwd;
