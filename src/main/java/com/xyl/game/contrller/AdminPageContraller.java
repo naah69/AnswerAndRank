@@ -73,7 +73,6 @@ public class AdminPageContraller {
 	@RequestMapping("/admin")
 	@ResponseBody
 	public String admin(String pwd,HttpSession session){
-		System.out.println(pwd);
 		//登录操作
 		if(authenticationSerivce.admin(pwd)){
 			

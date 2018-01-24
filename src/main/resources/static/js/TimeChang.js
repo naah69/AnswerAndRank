@@ -45,7 +45,7 @@ layui.use(['util','laydate','layer','table'], function(){
 			  		var tr = $(['<tr>'
 				          ,'<td>'+ data.beginTimeStr +'</td>'
 				          ,'<td id="intervalTime">'+ data.intervalTime +'秒</td>'
-				        ,'</tr>'].join(''));
+				          ,'</tr>'].join(''));
 				        
 				    demoList.append(tr);
 			  })
@@ -77,10 +77,8 @@ layui.use(['util','laydate','layer','table'], function(){
 		          ,'<td>'+ data.intervalTime +'秒</td>'
 		        ,'</tr>'].join('')); 
 		    demoList.append(tr);
-			data.beginTimeStr = data.beginTimeStr.replace(/-/g,"/");
-			var endTime = new Date(data.beginTimeStr).getTime();
 			clearTimeout(thisTimer);
-			util.countdown(endTime, new Date().getTime(), function(date, serverTime, timer){
+			util.countdown(data.beginTime, new Date().getTime(), function(date, serverTime, timer){
 			    var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
 			    lay('#CountDown').html(str);
 			    thisTimer = timer;

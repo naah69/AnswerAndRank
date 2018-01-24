@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../js/layui/css/layui.css"/>
+</head>
+<body>
+<button class="layui-btn" id="sendAnswer">提交答案</button>
+<button class="layui-btn" id="sendQuestion">提交题目</button>
+</body>
+<script type="text/javascript" src="js/layui/layui.js"></script>
+<script type="text/javascript">
+layui.use(['util','laydate','layer','table'], function(){
+	var $ = layui.$;
+	$('#sendAnswer').click(function(){
+		$.post('/admin/sendAnswer', function(data) {
+			
+		})
+	})
+	$('#sendQuestion').click(function(){
+		$.post('/admin/sendQuestion', function(data) {
+			
+		})
+	})
+})
+</script>
+</html>

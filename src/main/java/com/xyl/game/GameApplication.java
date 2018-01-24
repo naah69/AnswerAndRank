@@ -20,7 +20,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("com.xyl.game.mapper")
-@EnableScheduling
+//@EnableScheduling
 //@EnableWebSocket
 public class GameApplication {
     private static Logger log = null;

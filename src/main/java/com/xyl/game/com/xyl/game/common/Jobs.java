@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -42,22 +43,14 @@ public class Jobs {
 
     private static final Logger logger = LoggerFactory.getLogger(Jobs.class);
 
-    //@Scheduled(initialDelay=FIRST_DELAY,fixedDelay=ONE_MINUTE)
+    @Scheduled(initialDelay=FIRST_DELAY,fixedDelay=ONE_MINUTE)
     public void fixedDelayJob(){
     	File file = new File(Thread.currentThread().getContextClassLoader().getResource("").getPath()+USERDATA+FILESUFFIX);
     	int count = 0;
     	Map<String, User> usersMap = HeapVariable.usersMap;
 		Collection<User> values = usersMap.values();
-
-    	if(file.exists()){
-    		try {
-				file.createNewFile();
-			} catch (IOException e) {
-				logger.error("文件未建立！");
-				e.printStackTrace();
-				return;
-			}
-    	}
+		Workbook workbook = null;
+    	
     	System.out.println("data:"+MD5Util.MD5(values.toString())+"--------"+HeapVariable.MD5DataChange);
     	//文件没有改变
     	if(HeapVariable.MD5DataChange.equals(MD5Util.MD5(values.toString()))){
@@ -68,9 +61,15 @@ public class Jobs {
     		logger.info("数据修改，执行写入操作！");
     	}
 
-    	Workbook workbook = null;
+    	
 		try {
-			workbook = new XSSFWorkbook(new FileInputStream(file));
+			workbook = new XSSFWorkbook();
+			
+			if(!file.exists()){
+				workbook.createSheet();
+	    	}else{
+	    		workbook = new XSSFWorkbook(new FileInputStream(file));
+	    	}
 			//读写原来的数据
 			Sheet sheetAt = workbook.getSheetAt(0);
 			count = sheetAt.getLastRowNum()+1;
