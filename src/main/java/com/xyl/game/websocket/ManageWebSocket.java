@@ -1,7 +1,10 @@
 package com.xyl.game.websocket;
 
+import com.xyl.game.dto.UserDTO;
 import com.xyl.game.po.GridPage;
+import com.xyl.game.po.Page;
 import com.xyl.game.utils.JSONUtils;
+import com.xyl.game.utils.UserUtils;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -16,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Naah
  * @date 2018-01-22
  */
-@ServerEndpoint(value = "/count")
+@ServerEndpoint(value = "/Manage")
 @Component
 public class ManageWebSocket {
 
@@ -64,11 +67,28 @@ public class ManageWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        sendCount();
+        sendUserInfo();
+
     }
 
     public static void sendCount() {
-        sendInfo(AnswerWebSocket.webSocketList.size()+"");
+        GridPage page = new GridPage();
+        page.setMethod("count");
+        page.setMessage(AnswerWebSocket.webSocketList.size() + "");
+        sendGridPageToAll(page);
+    }
+
+    public static void sendRank() {
+        GridPage page = new GridPage();
+        page.setMethod("rank");
+        Page<UserDTO> userDTO = UserUtils.getRank();
+        page.setPageList(userDTO);
+        sendGridPageToAll(page);
+    }
+
+    public static void sendUserInfo() {
+        sendCount();
+        sendRank();
     }
 
     /**
@@ -120,7 +140,7 @@ public class ManageWebSocket {
         return onlineCount.decrementAndGet();
     }
 
-    public String getSessionId(){
+    public String getSessionId() {
         return session.getId();
     }
 

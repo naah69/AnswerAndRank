@@ -5,6 +5,7 @@ import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.po.*;
 import com.xyl.game.utils.*;
 import com.xyl.game.websocket.AnswerWebSocket;
+import com.xyl.game.websocket.ManageWebSocket;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +43,7 @@ public class SendController {
             answer.setMethod(FinalVariable.ANSWER_METHOD);
             answer.setPageList(answerCount);
             sendAnswerMessage(answer);
+            ManageWebSocket.sendRank();
             HeapVariable.isSendAnswer.set(true);
         } catch (Exception e) {
             result.setErrorCode(FinalVariable.SEND_ANSWER_ERROR_STATUS_CODE);

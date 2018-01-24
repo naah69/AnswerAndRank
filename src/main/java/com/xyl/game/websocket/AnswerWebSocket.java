@@ -53,7 +53,7 @@ public class AnswerWebSocket {
         webSocketList.add(this);
         System.out.println("连接成功！当前在线人数为" + addOnlineCount());
         sendMessage("连接成功！当前在线人数为" + addOnlineCount());
-       ManageWebSocket.sendCount();
+        ManageWebSocket.sendCount();
     }
 
     /**
