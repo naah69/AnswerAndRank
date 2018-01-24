@@ -40,7 +40,13 @@ public class InitData {
         }
         HeapVariable.questionsList = questionList;
         HeapVariable.questionDTOList = questionDTOList;
-        HeapVariable.atomic = new AtomicInteger();
+        initCount();
+
+    }
+
+	public static void initCount() {
+		List<AnnualMeetingGameQuestion> questionList = HeapVariable.questionsList;
+		HeapVariable.atomic = new AtomicInteger();
         HeapVariable.atomic.set(questionList.size());;
         HeapVariable.answerList=new CopyOnWriteArrayList<>();
         for (int i = 0; i <  HeapVariable.questionsList.size(); i++) {
@@ -53,8 +59,7 @@ public class InitData {
             hashMap.put(4,new AtomicInteger() );
 
         }
-
-    }
+	}
 
     public static void initTable() {
         AnnualMeetingGameQuestionMapper mapper = HeapVariable.mapper;

@@ -127,48 +127,4 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		}
 	}
 
-	/**
-	 * 清除所有数据
-	 * @return
-	 */
-	@RequestMapping("/clearAllData")
-	@ResponseBody
-	public String clearAllData(){
-		HeapVariable.atomic.set(0);
-		exctFileSerivce.clearAllData();
-		return "ok";
-	}
-
-	@RequestMapping("/time")
-	@ResponseBody
-	public String time(String time){
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-		Date times = null;
-		try {
-			times = dateFormat.parse(time);
-		} catch (Exception e) {
-			logger.info("时间戳未设置");
-			e.printStackTrace();
-			return "时间戳未设置！输入的格式有误";
-		}
-
-		HeapVariable.beginTime = new Timestamp(times.getTime());
-		return "ok";
-	}
-
-	@RequestMapping("/getTimeParam")
-	@ResponseBody
-	public TimeParam getTime(){
-		return exctFileSerivce.getTimeParam();
-	}
-
-	@RequestMapping("/setTimeInterval")
-	@ResponseBody
-	public String setTimeInterval(Integer gametime){
-		if(gametime != null){
-			HeapVariable.intervalSecond = gametime;
-		}
-		return "ok";
-	}
 }

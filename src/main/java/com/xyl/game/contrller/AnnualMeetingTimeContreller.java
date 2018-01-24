@@ -79,7 +79,7 @@ public class AnnualMeetingTimeContreller {
 	@ResponseBody
 	public String clearData(){
 		
-		
+		return "";
 	}
 	
 }
