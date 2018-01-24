@@ -13,7 +13,7 @@
 
     </insert>
     <select id="selectAll" parameterType="AnnualMeetingGameQuestion" resultType="AnnualMeetingGameQuestion">
-		select * FROM  AnnualMeetingGameQuestion
+		select * FROM  AnnualMeetingGameQuestion order by id ASC
 	</select>
 
     <update id="copyTableStruct">
