@@ -3,6 +3,7 @@ package com.xyl.game.dto;
 import com.xyl.game.po.User;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * RequestDTO
@@ -12,6 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ToString
 public class RequestDTO {
     private String method;
     private Integer id;
