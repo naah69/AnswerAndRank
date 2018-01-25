@@ -27,7 +27,13 @@ public class UserDTO implements Comparable {
             else if (o1.score<this.score) {
                 return -1;
             }else {
-                return 0;
+                if(o1.timesSecond<this.timesSecond){
+                    return 1;
+                }else if(o1.timesSecond>this.timesSecond){
+                    return -1;
+                }else{
+                    return 0;
+                }
             }
 
         }

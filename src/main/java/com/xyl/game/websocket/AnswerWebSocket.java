@@ -82,7 +82,7 @@ public class AnswerWebSocket {
                 ManageWebSocket.sendUserInfo();
                 break;
             case "updateScore":
-                result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer().byteValue(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
+                result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer()!=null?req.getAnswer().byteValue():(byte)0, req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
                 break;
             default:
                 result.setErrorCode(FinalVariable.NO_METHOD_ERROR_STATUS_CODE);
