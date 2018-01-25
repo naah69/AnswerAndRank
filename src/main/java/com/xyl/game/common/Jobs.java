@@ -1,31 +1,12 @@
-package com.xyl.game.com.xyl.game.common;
+package com.xyl.game.common;
 
-import com.xyl.game.po.User;
 import com.xyl.game.utils.ExcelUtil;
-import com.xyl.game.utils.HeapVariable;
-import com.xyl.game.utils.MD5Util;
-import com.xyl.game.utils.StringUtil;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 
 
 /**
@@ -50,6 +31,6 @@ public class Jobs {
     	ExcelUtil.savaUserData(file);
     }
 
-   
+
 
 }
