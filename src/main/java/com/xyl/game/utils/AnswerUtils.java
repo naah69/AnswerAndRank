@@ -20,12 +20,12 @@ public class AnswerUtils {
         int id=HeapVariable.now.getId();
         int rightAnswer = AnswerUtils.getAnswerNow();
         Map<Byte, AtomicInteger> resultMap = HeapVariable.answerList.get(id-1);
-        int A=resultMap.get((byte)1).get();
-        int B=resultMap.get((byte)2).get();
-        int C=resultMap.get((byte)3).get();
-        int D=resultMap.get((byte)4).get();
-        int NULL=resultMap.get((byte)0).get();
-         AnswerDTO count=new AnswerDTO(id,rightAnswer,A,B,C,D,NULL);
+        int a=resultMap.get((byte)1).get();
+        int b=resultMap.get((byte)2).get();
+        int c=resultMap.get((byte)3).get();
+        int d=resultMap.get((byte)4).get();
+        int nulls=resultMap.get((byte)0).get();
+         AnswerDTO count=new AnswerDTO(id,rightAnswer,a,b,c,d,nulls);
          Page<AnswerDTO> page=new Page<>();
          page.add(count);
          return  page;

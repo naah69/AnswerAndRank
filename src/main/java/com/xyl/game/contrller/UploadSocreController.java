@@ -1,6 +1,6 @@
 package com.xyl.game.contrller;
 
-import com.xyl.game.Service.UploadScoreService;
+import com.xyl.game.service.UploadScoreService;
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.Page;

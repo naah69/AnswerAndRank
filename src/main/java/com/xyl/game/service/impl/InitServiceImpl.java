@@ -1,6 +1,6 @@
-package com.xyl.game.Service.impl;
+package com.xyl.game.service.impl;
 
-import com.xyl.game.Service.InitService;
+import com.xyl.game.service.InitService;
 import com.xyl.game.po.Answer;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.User;

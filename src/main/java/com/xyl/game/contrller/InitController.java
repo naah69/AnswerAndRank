@@ -1,6 +1,6 @@
 package com.xyl.game.contrller;
 
-import com.xyl.game.Service.InitService;
+import com.xyl.game.service.InitService;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.User;
 import com.xyl.game.utils.HeapVariable;

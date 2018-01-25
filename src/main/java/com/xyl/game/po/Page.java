@@ -32,6 +32,7 @@ import java.util.List;
  * Mybatis - 分页对象
  * @author xyl
  */
+@SuppressWarnings("AlibabaAvoidComplexCondition")
 public class Page<E> extends ArrayList<E> implements Serializable{
     private static final long serialVersionUID = 1L;
 
@@ -118,6 +119,7 @@ public class Page<E> extends ArrayList<E> implements Serializable{
         return pageNum;
     }
 
+    @SuppressWarnings("AlibabaAvoidComplexCondition")
     public void setPageNum(int pageNum) {
         //分页合理化，针对不合理的页码自动处理
         this.pageNum = ((reasonable != null && reasonable) && pageNum <= 0) ? 1 : pageNum;

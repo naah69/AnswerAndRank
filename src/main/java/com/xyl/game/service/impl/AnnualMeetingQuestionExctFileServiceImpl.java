@@ -1,12 +1,10 @@
-package com.xyl.game.Service.impl;
+package com.xyl.game.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -19,14 +17,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
-import com.xyl.game.po.TimeParam;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.InitData;
 import com.xyl.game.utils.StringUtil;
-import com.xyl.game.utils.TimeFormatUtil;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 /**
  *
@@ -119,7 +115,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 			rightAnswer = (byte)(Float.valueOf(rightAnswerStr).floatValue());
 		} catch (Exception e) {
 			logger.info("有字母存在");
-			rightAnswer = RightAnswerjiexi(rightAnswerStr, annualMeetingGameQuestion);
+			rightAnswer = rightanswerjiexi(rightAnswerStr, annualMeetingGameQuestion);
 		}
 		annualMeetingGameQuestion.setRightAnswer(rightAnswer);
 		annualMeetingGameQuestions.add(annualMeetingGameQuestion);
@@ -131,17 +127,17 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 		List<AnnualMeetingGameQuestion> allQuestions = vo.getAllQuestions();
 		//遍历数据，查找需要修改的字段
 		for (AnnualMeetingGameQuestion annualMeetingGameQuestion : allQuestions) {
-			if(annualMeetingGameQuestion.getId() == id){
+			if(annualMeetingGameQuestion.getId().equals(id)){
 				Class<? extends AnnualMeetingGameQuestion> clazz = annualMeetingGameQuestion.getClass();
 				//查找字段
 				Field[] fields = clazz.getDeclaredFields();
 				for (int i = 0; i < fields.length; i++) {
 					if(fieldName.equals(fields[i].getName())){
 						Method method = clazz.getMethod("set"+StringUtil.initialsUpper(fieldName),fields[i].getType() );
-						if(!fieldName.equals("rightAnswer")){
+						if(!"rightAnswer".equals(fieldName)){
 							method.invoke(annualMeetingGameQuestion, fieldValue);
 						}else{
-							byte rightAnswerjiexi = RightAnswerjiexi(fieldValue, annualMeetingGameQuestion);
+							byte rightAnswerjiexi = rightanswerjiexi(fieldValue, annualMeetingGameQuestion);
 							method.invoke(annualMeetingGameQuestion, rightAnswerjiexi);
 						}
 						break;
@@ -154,7 +150,7 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 		return false;
 	}
 
-	private byte RightAnswerjiexi(String fieldValue, AnnualMeetingGameQuestion annualMeetingGameQuestion)
+	private byte rightanswerjiexi(String fieldValue, AnnualMeetingGameQuestion annualMeetingGameQuestion)
 			{
 		try {
 			return (byte)(Float.valueOf(fieldValue).floatValue());
@@ -202,7 +198,6 @@ public class AnnualMeetingQuestionExctFileServiceImpl implements AnnualMeetingQu
 	@Override
 	public Boolean savaAnnualMeetingGameQuestion(List<AnnualMeetingGameQuestion> annualMeetingGameQuestions) {
 		try {
-			//InitData.initTable();
 			annualMeetingGameQuestionMapper.insertQuestion(annualMeetingGameQuestions);
 			InitData.initQuestion();
 			logger.info("插入成功！");

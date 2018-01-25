@@ -1,6 +1,6 @@
-package com.xyl.game.Service.impl;
+package com.xyl.game.service.impl;
 
-import com.xyl.game.Service.RankService;
+import com.xyl.game.service.RankService;
 import com.xyl.game.dto.UserDTO;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.Page;

@@ -1,13 +1,13 @@
 package com.xyl.game.websocket;
 
-import com.xyl.game.Service.InitService;
-import com.xyl.game.Service.UploadScoreService;
+import com.xyl.game.service.InitService;
+import com.xyl.game.service.UploadScoreService;
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.dto.RequestDTO;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.utils.FinalVariable;
 import com.xyl.game.utils.HeapVariable;
-import com.xyl.game.utils.JSONUtils;
+import com.xyl.game.utils.JsonUtils;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -73,7 +73,7 @@ public class AnswerWebSocket {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("session:"+session.getId());
-        RequestDTO req = JSONUtils.jsonToObject(message, RequestDTO.class);
+        RequestDTO req = JsonUtils.jsonToObject(message, RequestDTO.class);
         GridPage<QuestionDTO> result = new GridPage<>();
         String sessionId = session.getId();
         switch (req.getMethod()) {
@@ -112,7 +112,7 @@ public class AnswerWebSocket {
     }
 
     public void sendGridPage(GridPage result) {
-        sendMessage(JSONUtils.objectToJSON(result));
+        sendMessage(JsonUtils.objectToJSON(result));
     }
 
     /**
@@ -125,7 +125,7 @@ public class AnswerWebSocket {
     }
 
     public static void sendGridPageToAll(GridPage result) {
-        sendInfo(JSONUtils.objectToJSON(result));
+        sendInfo(JsonUtils.objectToJSON(result));
     }
 
 

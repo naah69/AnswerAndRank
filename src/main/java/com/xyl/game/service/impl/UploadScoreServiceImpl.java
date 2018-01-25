@@ -1,6 +1,6 @@
-package com.xyl.game.Service.impl;
+package com.xyl.game.service.impl;
 
-import com.xyl.game.Service.UploadScoreService;
+import com.xyl.game.service.UploadScoreService;
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.Answer;

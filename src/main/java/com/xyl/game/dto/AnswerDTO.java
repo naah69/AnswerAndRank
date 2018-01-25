@@ -19,4 +19,9 @@ public class AnswerDTO {
     private Integer answerThree;
     private Integer answerFour;
     private Integer nullAnswer;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

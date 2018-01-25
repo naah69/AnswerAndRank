@@ -3,7 +3,7 @@ package com.xyl.game.websocket;
 import com.xyl.game.dto.UserDTO;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.Page;
-import com.xyl.game.utils.JSONUtils;
+import com.xyl.game.utils.JsonUtils;
 import com.xyl.game.utils.UserUtils;
 import org.springframework.stereotype.Component;
 
@@ -112,7 +112,7 @@ public class ManageWebSocket {
     }
 
     public void sendGridPage(GridPage result) {
-        sendMessage(JSONUtils.objectToJSON(result));
+        sendMessage(JsonUtils.objectToJSON(result));
     }
 
     /**
@@ -125,7 +125,7 @@ public class ManageWebSocket {
     }
 
     public static void sendGridPageToAll(GridPage result) {
-        sendInfo(JSONUtils.objectToJSON(result));
+        sendInfo(JsonUtils.objectToJSON(result));
     }
 
 

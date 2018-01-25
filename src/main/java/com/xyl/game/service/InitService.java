@@ -1,9 +1,7 @@
-package com.xyl.game.Service;
+package com.xyl.game.service;
 
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.User;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * InitService
@@ -14,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface InitService {
     /**
      * 初始化游戏
-     * @param request
+     * @param sessionId
      * @param user
      * @return
      */

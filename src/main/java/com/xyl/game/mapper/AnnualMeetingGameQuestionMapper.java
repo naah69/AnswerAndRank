@@ -29,9 +29,18 @@ public interface AnnualMeetingGameQuestionMapper {
      */
     public Integer getAllConut();
 
+    /**
+     * 复制表结构
+     */
     public void copyTableStruct();
 
+    /**
+     * 删除表
+     */
     public void deleteTable();
 
+    /**
+     * 表改名
+     */
     public void renameTableName();
 }

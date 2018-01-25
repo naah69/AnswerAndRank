@@ -1,6 +1,6 @@
 package com.xyl.game.contrller;
 
-import com.xyl.game.Service.AuthenticationSerivce;
+import com.xyl.game.service.AuthenticationSerivce;
 import com.xyl.game.utils.HeapVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class AdminPageContraller {
 
 	@RequestMapping("/isFirstAdmin")
 	@ResponseBody
-	public String IsAdmin(){
+	public String isadmin(){
 		if(authenticationSerivce.isFirstAdmin()){
 			return UUID.randomUUID().toString();
 		}

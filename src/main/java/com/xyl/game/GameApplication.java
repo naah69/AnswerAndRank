@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 @MapperScan("com.xyl.game.mapper")
 //@EnableScheduling
+
 public class GameApplication {
     private static Logger log = null;
 

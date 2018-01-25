@@ -28,7 +28,7 @@ public class InitData {
         HeapVariable.beginTime = null;
         HeapVariable.now=null;
         HeapVariable.usersMap = new ConcurrentHashMap<>(1024);
-        HeapVariable.annualMeetingGameQuestionVos = new HashMap<String, AnnualMeetingGameQuestionVo>();
+        HeapVariable.annualMeetingGameQuestionVos = new HashMap<String, AnnualMeetingGameQuestionVo>(64);
     }
 
     public static void initQuestion() {
@@ -53,7 +53,7 @@ public class InitData {
         HeapVariable.atomic.set(questionList.size());;
         HeapVariable.answerList=new CopyOnWriteArrayList<>();
         for (int i = 0; i <  HeapVariable.questionsList.size(); i++) {
-            ConcurrentHashMap<Byte, AtomicInteger> hashMap = new ConcurrentHashMap<>();
+            ConcurrentHashMap<Byte, AtomicInteger> hashMap = new ConcurrentHashMap<>(5);
             HeapVariable.answerList.add(hashMap);
             hashMap.put((byte)0,new AtomicInteger() );
             hashMap.put((byte)1,new AtomicInteger() );

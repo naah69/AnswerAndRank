@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * JSONUtils
+ * JsonUtils
  *
  * @author Naah
  * @date 2017年11月20日
  *
  */
-public class JSONUtils {
+public class JsonUtils {
     private static Gson gson = new Gson();
 	public static <T> T jsonToObject(String json, Class<T> clazz) {
 

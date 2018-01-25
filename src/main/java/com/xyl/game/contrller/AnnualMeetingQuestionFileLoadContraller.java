@@ -1,6 +1,6 @@
 package com.xyl.game.contrller;
 
-import com.xyl.game.Service.AnnualMeetingQuestionExctFileSerivce;
+import com.xyl.game.service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;

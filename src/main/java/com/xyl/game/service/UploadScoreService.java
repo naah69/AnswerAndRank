@@ -1,4 +1,4 @@
-package com.xyl.game.Service;
+package com.xyl.game.service;
 
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.po.GridPage;

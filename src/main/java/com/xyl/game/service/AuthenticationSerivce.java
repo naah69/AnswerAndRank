@@ -1,6 +1,4 @@
-package com.xyl.game.Service;
-
-import com.xyl.game.po.Admin;
+package com.xyl.game.service;
 
 /**
  * 后台认证接口
@@ -8,6 +6,16 @@ import com.xyl.game.po.Admin;
  *
  */
 public interface AuthenticationSerivce {
+    /**
+     *
+     * @return
+     */
 	public boolean isFirstAdmin();
+
+    /**
+     *
+     * @param pwd
+     * @return
+     */
 	public Boolean admin(String pwd);
 }

@@ -19,5 +19,8 @@ public class QuestionDTO {
     private String answerThree;
     private String answerFour;
 
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

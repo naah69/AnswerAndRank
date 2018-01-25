@@ -1,19 +1,6 @@
 package com.xyl.game.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
-
+import com.xyl.game.po.User;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -23,7 +10,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xyl.game.po.User;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class ExcelUtil {
 	private static final Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
@@ -31,13 +22,13 @@ public class ExcelUtil {
 	public static void savaUserData(String path) {
 		savaUserData(new File(path));
 	}
-	
+
 	public static void savaUserDataForRoot(String path) {
 		savaUserData(new File(Thread.currentThread().getContextClassLoader().getResource("").getPath()+"/"+path));
 	}
-	
-	public static void PrintData(OutputStream outputStream){
-		
+
+	public static void printdata(OutputStream outputStream){
+
 	}
 
 	public static void savaUserData(File file) {
@@ -47,10 +38,10 @@ public class ExcelUtil {
 		Workbook workbook = null;
 
 		// 文件没有改变
-		if (HeapVariable.MD5DataChange.equals(MD5Util.MD5(values.toString()))) {
+		if (HeapVariable.MD5DataChange.equals(MD5Util.md5(values.toString()))) {
 			return;
 		} else {
-			String md5 = MD5Util.MD5(values.toString());
+			String md5 = MD5Util.md5(values.toString());
 			HeapVariable.MD5DataChange = md5;
 			logger.info("数据修改，执行写入操作！");
 		}
@@ -86,7 +77,7 @@ public class ExcelUtil {
 
 	/**
 	 * 把数据写到新增数据写到excel表中
-	 * 
+	 *
 	 * @param count
 	 * @return
 	 * @throws Exception
@@ -119,7 +110,7 @@ public class ExcelUtil {
 
 	/**
 	 * 遍历数据
-	 * 
+	 *
 	 * @param createSheet
 	 * @param createRow
 	 * @param clazz
@@ -155,6 +146,6 @@ public class ExcelUtil {
 			}
 		}
 	}
-	
-	
+
+
 }

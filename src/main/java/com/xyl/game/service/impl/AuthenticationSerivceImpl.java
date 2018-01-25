@@ -1,6 +1,6 @@
-package com.xyl.game.Service.impl;
+package com.xyl.game.service.impl;
 
-import com.xyl.game.Service.AuthenticationSerivce;
+import com.xyl.game.service.AuthenticationSerivce;
 import com.xyl.game.po.Admin;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.PropertiesUtils;

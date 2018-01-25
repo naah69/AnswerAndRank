@@ -1,6 +1,6 @@
 package com.xyl.game.contrller;
 
-import com.xyl.game.Service.AnnualMeetingTimeSerivce;
+import com.xyl.game.service.AnnualMeetingTimeSerivce;
 import com.xyl.game.po.TimeParam;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.InitData;
@@ -86,7 +86,7 @@ public class AnnualMeetingTimeContreller {
 
 	@RequestMapping("/PrintData")
 	@ResponseBody
-	public void PrintData(HttpServletResponse response){
+	public void printdata(HttpServletResponse response){
 
 		try {
 			OutputStream outputStream = response.getOutputStream();
