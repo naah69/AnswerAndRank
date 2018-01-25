@@ -47,7 +47,6 @@
 </pre>
 <table class="layui-table" id="ConnectNum" lay-filter="ConnectNum"></table>
 <a class="layui-btn" href="/admin/PrintData" id="PrintData">打印数据</a>
-
 </body>
 <script type="text/javascript" src="../js/layui/layui.js"></script>
 <script type="text/javascript">
@@ -60,7 +59,6 @@ layui.use(['util','laydate','layer','table'], function(){
 			}else {
 				var str = "";
 				var rows = data.rows;
-				console.log(rows.id)
 				str = '第'+JSON.stringify(rows[0].id)+'题：'+rows[0].topic+';\n';
 				$('#topic').html(str);
 				$('#answerOne').html(rows[0].answerOne);
@@ -86,6 +84,7 @@ layui.use(['util','laydate','layer','table'], function(){
 				      rightAnswerStr = ''; 
 				}
 				$('#answer').html(rightAnswerStr);
+				layer.msg('题目已经发送！');
 			}
 		})
 	})
