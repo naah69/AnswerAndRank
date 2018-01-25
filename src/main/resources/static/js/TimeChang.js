@@ -28,8 +28,8 @@ layui.use(['util','laydate','layer','table'], function(){
 					          ,'<td id="beginTimeStr">'+ data.beginTimeStr +'</td>'
 					          ,'<td id="intervalTime">'+ data.intervalTime +'秒</td>'
 					        ,'</tr>'].join(''));
-						        
-						    demoList.append(tr);
+						 layer.msg("开始时间已经改变");       
+						demoList.append(tr);
 					  })
 			  		}
 		  		})
@@ -45,11 +45,11 @@ layui.use(['util','laydate','layer','table'], function(){
 				  		var demoList = $('#demoList');
 				  		demoList.empty();
 				  		var tr = $(['<tr>'
-					          ,'<td id="beginTimeStr>'+ data.beginTimeStr +'</td>'
+					          ,'<td id="beginTimeStr">'+ data.beginTimeStr +'</td>'
 					          ,'<td id="intervalTime">'+ data.intervalTime +'秒</td>'
 					          ,'</tr>'].join(''));
-					        
 					    demoList.append(tr);
+					    layer.msg("游戏间隔时间已经改变");    
 				  })
 		  		}
 			})
