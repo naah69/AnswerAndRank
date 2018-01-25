@@ -13,7 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xyl.game.contrller.AnnualMeetingQuestionFileLoadContraller;
 import com.xyl.game.utils.PropertiesUtils;
-
+/**
+ * 拦截器
+ * @author dazhi
+ *
+ */
 
 public class AuthenticationInterceptor implements HandlerInterceptor{
 

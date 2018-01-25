@@ -6,7 +6,6 @@ import java.util.Date;
 /**
  * 时间工具类
  * @author dazhi
- *
  */
 public class TimeFormatUtil {
 	

@@ -19,7 +19,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
- *
  * @author dazhi
  *
  */
@@ -38,6 +37,7 @@ public class AnnualMeetingTimeContreller {
 	@RequestMapping("/clearAllData")
 	@ResponseBody
 	public String clearAllData(){
+		logger.info("清除游戏数据");
 		HeapVariable.atomic.set(0);
 		timeSerivce.clearAllData();
 		return "ok";
@@ -46,8 +46,8 @@ public class AnnualMeetingTimeContreller {
 	@RequestMapping("/time")
 	@ResponseBody
 	public String time(String time){
+		logger.info("初始化游戏开始时间");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
 		Date times = null;
 		try {
 			times = dateFormat.parse(time);
@@ -58,6 +58,7 @@ public class AnnualMeetingTimeContreller {
 		}
 
 		HeapVariable.beginTime = new Timestamp(times.getTime());
+		logger.info("游戏开始时间初始化成功！");
 		InitData.initCount();
 		return "ok";
 	}
@@ -71,8 +72,10 @@ public class AnnualMeetingTimeContreller {
 	@RequestMapping("/setTimeInterval")
 	@ResponseBody
 	public String setTimeInterval(Integer gametime){
+		logger.info("设置游戏间隔时间！");
 		if(gametime != null){
 			HeapVariable.intervalSecond = gametime;
+			logger.info("游戏间隔时间设置成功！");
 		}
 		return "ok";
 	}
@@ -88,6 +91,7 @@ public class AnnualMeetingTimeContreller {
 	@RequestMapping("/PrintData")
 	@ResponseBody
 	public void printdata(HttpServletResponse response){
+		logger.info("打印一场游戏的数据");
 		OutputStream outputStream = null;
 		response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment;filename="+"printUserData.xlsx");

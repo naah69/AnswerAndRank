@@ -33,14 +33,15 @@ public class AnnualMeetingTimeSerivceImpl implements AnnualMeetingTimeSerivce {
 		Timestamp beginTime = HeapVariable.beginTime;
 		TimeParam param = new TimeParam();
 		if(beginTime != null){
+			logger.info("游戏开始时间修改成功！");
 			param.setBeginTime(beginTime.getTime());
 			param.setBeginTimeStr(TimeFormatUtil.getTimeStr(new Date(beginTime.getTime())));
 		}else{
+			logger.info("游戏开始时间修未传入，未设置游戏开始时间！");
 			param.setBeginTime(0L);
 			param.setBeginTimeStr("未设置");
 		}
 		param.setIntervalTime(HeapVariable.intervalSecond);
-
 		return param;
 	}
 

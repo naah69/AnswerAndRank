@@ -6,7 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
-
+/**
+ * 页面vo
+ * @author dazhi
+ *
+ */
 @Setter
 @Getter
 @ToString

@@ -41,14 +41,16 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	@RequestMapping("/loadExctFile")
 	@ResponseBody
 	public AnnualMeetingGameQuestionVo uploadExct(@RequestParam(value="exctFile")MultipartFile multipartFile,HttpSession session){
+		logger.info("excel文件上传");
 		AnnualMeetingGameQuestionVo savaDataForExct = null;
 		try {
 			savaDataForExct = exctFileSerivce.savaDataForExct(multipartFile.getInputStream());
+			logger.info("excel文件解析成功");
 		} catch (IOException e) {
 			logger.error(Arrays.toString(e.getStackTrace()));
 		}
-
 		HeapVariable.annualMeetingGameQuestionVos.put(session.getId(), savaDataForExct);
+		logger.info("excel文件数据保存内存");
 		return savaDataForExct;
 	}
 
@@ -63,6 +65,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	@RequestMapping("/updataQuestionData")
 	@ResponseBody
 	public String updataQuestionData(HttpSession session,Integer id,String fieldValue,String fieldName){
+		logger.info("修改问题的缓存数据");
 		AnnualMeetingGameQuestionVo attribute = HeapVariable.annualMeetingGameQuestionVos.get(session.getId());
 		try {
 			if(exctFileSerivce.updataData(attribute, id, fieldValue, fieldName)){
@@ -89,6 +92,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		logger.info("查询缓存数据");
 		return exctFileSerivce.getAllGameQuestion();
 		//return null;
 	}
@@ -100,25 +104,31 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	@RequestMapping("/savaAnnualMeetingGameQuestion")
 	@ResponseBody
 	public String savaAnnualMeetingGameQuestion(HttpSession session){
+		
 		//获得数据
 		Map<String, AnnualMeetingGameQuestionVo> annualMeetingGameQuestionVos = HeapVariable.annualMeetingGameQuestionVos;
 		if(annualMeetingGameQuestionVos == null){
+			logger.info("缓存没有数据");
 			return "ok";
 		}
 		AnnualMeetingGameQuestionVo annualMeetingGameQuestionVo = annualMeetingGameQuestionVos.remove(session.getId());
 
 		if(annualMeetingGameQuestionVo ==null ){
+			logger.info("缓存没有数据");
 			return "ok";
 		}
 
 		List<AnnualMeetingGameQuestion> allQuestions = annualMeetingGameQuestionVo.getAllQuestions();
 		if(allQuestions == null){
+			logger.info("缓存没有数据");
 			return "ok";
 		}
 
 		if(exctFileSerivce.savaAnnualMeetingGameQuestion(allQuestions)){
+			logger.info("存储成功");
 			return "ok";
 		}else{
+			logger.info("存储失败");
 			return "fail";
 		}
 	}
