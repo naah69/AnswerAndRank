@@ -52,6 +52,7 @@ public class AnswerWebSocket {
         webSocketList.add(this);
         System.out.println("连接Answer成功！当前在线人数为" + addOnlineCount());
         ManageWebSocket.sendCount();
+
     }
 
     /**
@@ -78,6 +79,7 @@ public class AnswerWebSocket {
         switch (req.getMethod()) {
             case "init":
                 result = HeapVariable.context.getBean(InitService.class).initGame(sessionId, req.getUser());
+                ManageWebSocket.sendUserInfo();
                 break;
             case "updateScore":
                 result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer().byteValue(), req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
