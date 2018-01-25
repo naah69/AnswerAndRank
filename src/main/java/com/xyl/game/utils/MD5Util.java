@@ -1,7 +1,11 @@
 package com.xyl.game.utils;
 
 import java.security.MessageDigest;
-
+/**
+ * md5加密
+ * @author dazhi
+ *
+ */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class MD5Util {
 	public static String md5(String key) {

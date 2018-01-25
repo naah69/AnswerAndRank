@@ -47,9 +47,9 @@ public class Answer {
     	}
     	}
 
-    	sb.append("题号:"+indexc[0]+";");
-    	sb.append("用户回答"+indexc[1]+";");
-    	sb.append("使用答题时间："+time+";");
+    	sb.append("----{第"+index+"题");
+    	sb.append("，用户提交答案是："+indexc[1]+";");
+    	sb.append("，用户使用时间是："+time+";");
     	String isRightStr = "";
     	if(isRight){
     		isRightStr="是";
@@ -57,7 +57,7 @@ public class Answer {
     		isRightStr="否";
     	}
 
-    	sb.append("是否答对："+isRightStr+";");
+    	sb.append("是否答对："+isRightStr+";}");
 
     	return sb.toString();
     }

@@ -15,7 +15,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+/**
+ * excel表格工具类
+ * @author dazhi
+ *
+ */
 public class ExcelUtil {
 	private static final Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
 
@@ -28,7 +32,23 @@ public class ExcelUtil {
 	}
 
 	public static void printdata(OutputStream outputStream){
-
+		Collection<User> values = HeapVariable.usersMap.values();
+		Workbook workbook = new XSSFWorkbook();
+		try {
+			analyticData(0, workbook.createSheet(), values);
+			workbook.write(outputStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				if(workbook != null){
+					workbook.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
 	public static void savaUserData(File file) {

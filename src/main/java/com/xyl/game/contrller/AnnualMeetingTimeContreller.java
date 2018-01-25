@@ -2,6 +2,7 @@ package com.xyl.game.contrller;
 
 import com.xyl.game.service.AnnualMeetingTimeSerivce;
 import com.xyl.game.po.TimeParam;
+import com.xyl.game.utils.ExcelUtil;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.InitData;
 import org.slf4j.Logger;
@@ -87,12 +88,24 @@ public class AnnualMeetingTimeContreller {
 	@RequestMapping("/PrintData")
 	@ResponseBody
 	public void printdata(HttpServletResponse response){
-
+		OutputStream outputStream = null;
+		response.setContentType("application/x-download");
+        response.setHeader("Content-Disposition", "attachment;filename="+"printUserData.xlsx");
 		try {
-			OutputStream outputStream = response.getOutputStream();
+			
+			outputStream = response.getOutputStream();
+			ExcelUtil.printdata(outputStream);
 		} catch (IOException e) {
 			logger.info("流获得失败");
 			e.printStackTrace();
+		}finally {
+			try {
+				if(outputStream != null){
+					outputStream.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

@@ -1,5 +1,8 @@
 package com.xyl.game.utils;
-
+/**
+ * 字符工具类
+ * @author dazhi
+ */
 public class StringUtil {
 
 	public static String initialsUpper(String str){
