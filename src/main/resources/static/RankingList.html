@@ -90,5 +90,34 @@ var host = window.location.hostname;
 			}
 		}
 	}
+    var websocketChat;
+    //判断当前浏览器是否支持WebSocket
+        if ('websocketChat' in window) {
+            websocketChat = new WebSocket("ws://"+host+":8080/chat");
+        }
+        else {
+            alert('Not support websocketChat')
+        }
+
+        //接收到消息的回调方法
+        websocketChat.onmessage = function (event) {
+            console.log(event.data);
+            var i = Math.round(Math.random() * 7);
+            var item = {
+                info: event.data, //文字
+                href: '', //链接
+                close: true, //显示关闭按钮
+                speed: 5, //延迟,单位秒,默认6
+                top: i, //距离底部高度,单位px,默认随机
+                color: '#ffffff', //颜色,默认白色
+                old_ie_color: '#ffffff' //ie低版兼容色,不能与网页背景相同,默认黑色
+            }
+            $('body').barrager(item);
+        }
+
+        websocketChat.onerror = function () {
+            websocketChat = new WebSocket("ws://"+host+":8080/chat");
+
+}
 </script>
 </html>

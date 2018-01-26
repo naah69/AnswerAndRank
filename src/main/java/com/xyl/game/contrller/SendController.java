@@ -8,6 +8,7 @@ import com.xyl.game.websocket.AnswerWebSocket;
 import com.xyl.game.websocket.ManageWebSocket;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -29,11 +30,11 @@ public class SendController {
             result.setMessage(FinalVariable.NO_QUESTION_MESSAGE);
             return result;
         }
-         if (HeapVariable.isSendAnswer.get() == true) {
-                result.setErrorCode(FinalVariable.NO_SEND_QUESTION_ERROR_STATUS_CODE);
-                result.setMessage(FinalVariable.NO_SEND_QUESTION_ERROR_MESSAGE);
-                return result;
-            }
+        if (HeapVariable.isSendAnswer.get() == true) {
+            result.setErrorCode(FinalVariable.NO_SEND_QUESTION_ERROR_STATUS_CODE);
+            result.setMessage(FinalVariable.NO_SEND_QUESTION_ERROR_MESSAGE);
+            return result;
+        }
 
 
         result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
@@ -106,10 +107,16 @@ public class SendController {
         for (AnswerWebSocket session : sessionList) {
             User user = UserUtils.getUser(session);
 
-            if (user!=null&&user.getDieIndex() == null) {
+            if (user != null && user.getDieIndex() == null) {
 
-                Answer userAnswer = user.getAnswers().get(id - 1);
-                Integer times = userAnswer.getTime();
+                List<Answer> answersList = user.getAnswers();
+
+                Answer userAnswer = null;
+                Integer times =-1;
+                if (answersList.size() > id - 1) {
+                    userAnswer = answersList.get(id - 1);
+                     times = userAnswer.getTime();
+                }
                 boolean overTime = times > 0 && times <= HeapVariable.intervalSecond;
                 if (overTime && userAnswer != null && userAnswer.getAnswer() == rightAnswer) {
 
@@ -135,9 +142,9 @@ public class SendController {
                     answer.setErrorCode(FinalVariable.LOST_STATUS_CODE);
                     answer.setMessage(FinalVariable.LOST_MESSAGE);
                 }
-            }else{
-                  answer.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
-                  answer.setMessage(FinalVariable.NORMAL_MESSAGE);
+            } else {
+                answer.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
+                answer.setMessage(FinalVariable.NORMAL_MESSAGE);
             }
 
             session.sendGridPage(answer);
