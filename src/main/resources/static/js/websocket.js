@@ -1,7 +1,8 @@
 var websocket;
+var host = window.location.hostname;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
-    websocket = new WebSocket("ws://192.168.78.46/answer");
+    websocket = new WebSocket("ws://"+host+"/answer");
 }
 else {
     alert('该设备不支持答题！')
