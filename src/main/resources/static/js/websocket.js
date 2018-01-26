@@ -41,7 +41,7 @@ websocket.onmessage = function (event) {
 
         } else if (json.errorCode == 104) {
              inited = false;
-            $.get("http://192.168.78.46/getQuestion", function (msg) {
+            $.get("http://"+host+"/getQuestion", function (msg) {
                 var que = msg.rows[0];
                 refreshForm(que);
             });
@@ -175,7 +175,7 @@ $('#commitBtn').on('click', function () {
 
 $('#rankBtn').on('click', function () {
     $('#rankDiv').toggle();
-    $.get("http://192.168.78.46/rank", function (msg) {
+    $.get("http://"+host+"/rank", function (msg) {
         console.log(msg.rows)
 //            table.reload('annualMeeting_question_table', {
 //                data: data.rows
@@ -200,7 +200,7 @@ var tbody = window.document.getElementById("tbody-result");
 var timesRun = 0;
 var interval;
 var intervalSecond = 12;
-$.get("http://192.168.78.46/intervalSecond",
+$.get("http://"+host+"/intervalSecond",
     function (data) {
         intervalSecond = data;
     });
@@ -273,7 +273,7 @@ function initChat() {
     //判断当前浏览器是否支持WebSocket
     if (websocketChart == null) {
         if ('websocketChart' in window) {
-            websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+            websocketChart = new WebSocket("ws://"+host+":8080/chat");
             $('#chatDiv').css('display', 'block');
         }
         else {
@@ -297,8 +297,64 @@ function initChat() {
         }
 
         websocketChart.onerror = function () {
-            websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+            websocketChart = new WebSocket("ws://"+host+":8080/chat");
         };
 
     }
 }
+
+
+(function () {
+
+
+	'use strict';
+
+	// Placeholder
+	var placeholderFunction = function() {
+		$('input, textarea').placeholder({ customClass: 'my-placeholder' });
+	}
+
+	// Placeholder
+	var contentWayPoint = function() {
+		var i = 0;
+		$('.animate-box').waypoint( function( direction ) {
+
+			if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
+
+				i++;
+
+				$(this.element).addClass('item-animate');
+				setTimeout(function(){
+
+					$('body .animate-box.item-animate').each(function(k){
+						var el = $(this);
+						setTimeout( function () {
+							var effect = el.data('animate-effect');
+							if ( effect === 'fadeIn') {
+								el.addClass('fadeIn animated-fast');
+							} else if ( effect === 'fadeInLeft') {
+								el.addClass('fadeInLeft animated-fast');
+							} else if ( effect === 'fadeInRight') {
+								el.addClass('fadeInRight animated-fast');
+							} else {
+								el.addClass('fadeInUp animated-fast');
+							}
+
+							el.removeClass('item-animate');
+						},  k * 200, 'easeInOutExpo' );
+					});
+
+				}, 100);
+
+			}
+
+		} , { offset: '85%' } );
+	};
+	// On load
+	$(function(){
+		placeholderFunction();
+		contentWayPoint();
+
+	});
+
+}());
