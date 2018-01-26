@@ -47,12 +47,11 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.barrager.js"></script>
 <!-- websocket -->
-<script src="js/websocket.js"></script>
 <script type="text/javascript">
 var host = window.location.hostname;
 	var websocket = null;
 	if ('WebSocket' in window) {
-   		 websocket = new WebSocket("ws://127.0.0.1:8080/Manage");
+   		 websocket = new WebSocket("ws://dazhi123.free.ngrok.cc/Manage");
 	}
 
 	websocket.onmessage = function(event){
@@ -96,7 +95,7 @@ var host = window.location.hostname;
     var websocketChat;
     //判断当前浏览器是否支持WebSocket
         if ('websocketChat' in window) {
-            websocketChat = new WebSocket("ws://127.0.0.1:8080/chat");
+            websocketChat = new WebSocket("ws://dazhizhi.free.ngrok.cc/chat");
         }
         else {
             alert('Not support websocketChat')
@@ -119,7 +118,7 @@ var host = window.location.hostname;
         }
 
         websocketChat.onerror = function () {
-            websocketChat = new WebSocket("ws://127.0.0.1:8080/chat");
+            websocketChat = new WebSocket("ws://dazhizhi.free.ngrok.cc/chat");
 
 }
 </script>
