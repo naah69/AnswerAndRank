@@ -101,9 +101,9 @@ public class AnswerWebSocket {
     }
 
     public void sendMessage(String message) {
-            this.session.getAsyncRemote().sendText(message);
+            //this.session.getAsyncRemote().sendText(message);
 
-        //this.session.getAsyncRemote().sendText(message);
+        this.session.getAsyncRemote().sendText(message);
     }
 
     public void sendGridPage(GridPage result) {
