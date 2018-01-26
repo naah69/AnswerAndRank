@@ -10,6 +10,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/animate.css/3.5.1/animate.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/phone.css" media="(max-width:600px)">
 </head>
 <body class="style-2">
 <div id='chatDiv' class="form-inline" style="position: fixed;bottom: 0px;z-index: 999;display: none;
@@ -55,37 +56,37 @@
 
     <form style="padding-left: 10%;padding-bottom: 6rem;" id="form1" action="#" class="fh5co-form animate-box"
           data-animate-effect="fadeInLeft">
-        <h1 style="font-size: 35px;color: #0c6db7;font-weight: bold;letter-spacing: 4px">年会答题竞赛</h1>
+        <h1 class="answer" style="font-size: 35px;color: #0c6db7;font-weight: bold;letter-spacing: 4px">年会答题竞赛</h1>
         <div>
-            <span style="font-size: 25px;color: #333333">倒计时：</span>
+            <span class="time" style="font-size: 25px;color: #333333">倒计时：</span>
             <h1 style="color: #ffffff;font-size: 20px;width: 30px;height: 30px;border-radius: 15px;text-align: center;display: inline-block;line-height: 30px;background: #0e6db7;display: inline-block"
                 id="timeViewer"></h1>
         </div>
         <h1 style="font-size: 20px;color: #333333" id="userTime"></h1>
-        <div id="obj"><!--style="width: 80%"-->
+        <div id="obj">
             <span id="question" style="font-size: 28px;color: #0c6db7;word-wrap: break-word;"></span>
-            <span style="font-size: 28px;color: #0c6db7">&nbsp;?</span>
+            <span class="space" style="font-size: 28px;color: #0c6db7">&nbsp;?</span>
         </div>
         <div id="answers" class="radio">
             <input type="hidden" id="id" name="id">
             <p class="pa1r"><input type="radio" id="a1r" name="answer" value="1">
                 <label for="a1r"
-                       style="color: #333333;word-wrap: break-word;"
+                       style="color: #333333;word-wrap: break-word;width: 80%"
                        id="answer1"></label>
             </p>
             <p class="pa2r"><input type="radio" id="a2r" name="answer" value="2">
                 <label for="a2r"
-                       style="color: #333333;word-wrap: break-word;"
+                       style="color: #333333;word-wrap: break-word;width: 80%"
                        id="answer2"></label>
             </p>
             <p class="pa3r"><input type="radio" id="a3r" name="answer" value="3">
                 <label for="a3r"
-                       style="color: #333333;word-wrap: break-word;"
+                       style="color: #333333;word-wrap: break-word;width: 80%"
                        id="answer3"></label>
             </p>
             <p class="pa4r"><input type="radio" id="a4r" name="answer" value="4">
                 <label for="a4r"
-                       style="color: #333333;word-wrap: break-word;"
+                       style="color: #333333;word-wrap: break-word;width: 80%"
                        id="answer4"></label>
             </p>
             <div class="form-group">

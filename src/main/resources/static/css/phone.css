@@ -1,0 +1,62 @@
+.answer {
+    font-size: 24px !important;
+}
+
+.time {
+    font-size: 18px !important;
+}
+
+#timeViewer {
+    font-size: 18px !important;
+}
+
+#userTime {
+    font-size: 18px !important;
+}
+
+#question {
+    font-size: 22px !important;
+}
+
+.space {
+    font-size: 22px !important;
+}
+
+#timeViewer {
+    font-size: 14px !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 10px !important;
+    line-height: 20px !important;
+}
+
+#answer1, #answer2, #answer3, #answer4 {
+    font-size: 20px !important;
+    width: 100% !important;
+}
+
+#tHead {
+    font-size: 18px !important;
+}
+
+label:before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    top: 6px !important;
+    background-color: #0f6db7;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+
+#commitBtn, #rankBtn {
+    height: 36px !important;
+}
+
+#questionDiv {
+    width: 80% !important;
+    margin: 0 auto
+}
