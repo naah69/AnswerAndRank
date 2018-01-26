@@ -240,7 +240,7 @@ input[type=checkbox]:checked + label:before {
 .barrage_box{background-color: rgba(0,0,0,.5);padding-right: 8px; height: 40px;display: inline-block;border-radius: 25px;transition: all .3s;}
 .barrage_box .portrait{ display: inline-block;margin-top: 4px; margin-left: 4px; width: 32px;height: 32px;border-radius: 50%;overflow: hidden;}
 .barrage_box .portrait img{width: 100%;height: 100%;}
-.barrage_box div.p span{ margin: 10px 0 0 10px; font-size: 14px;color: #fff;}/*line-height: 40px;*/
+.barrage_box div.p span{  margin-right: 2px;font-size: 14px;color: #fff;}/*line-height: 40px;*/
 .barrage_box .close{visibility: hidden;opacity: 0; text-align: center; margin-left: 20px;border-radius: 50%;background:rgba(255,255,255,.1);margin-top:8px; background-image: url(close.png);}/*width:25px;*/
 .barrage_box:hover .close{visibility:visible;opacity: 1;}
 .barrage_box .close a{display:block;}
