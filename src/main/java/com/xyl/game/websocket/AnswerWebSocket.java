@@ -48,6 +48,7 @@ public class AnswerWebSocket {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
+        session.setMaxIdleTimeout(1000*60*30);
         webSocketList.add(this);
         System.out.println("连接Answer成功！当前在线人数为" + addOnlineCount());
         ManageWebSocket.sendCount();

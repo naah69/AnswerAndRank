@@ -1,8 +1,9 @@
 var websocket;
+var websocketChart = null;
 var host = window.location.hostname;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
-    websocket = new WebSocket("ws://"+host+"/answer");
+    websocket = new WebSocket("ws://" + host + "/answer");
 }
 else {
     alert('该设备不支持答题！')
@@ -10,29 +11,22 @@ else {
 
 //连接发生错误的回调方法
 websocket.onerror = function () {
-    showMessage("错误！");
+    showMessage("连接服务器出现错误！");
 };
 
 //连接成功建立的回调方法
 websocket.onopen = function (event) {
-    showMessage("初始化成功！");
+    showMessage("连接服务器成功！");
 }
 
-var inited = false;
+var inited = null;
 //接收到消息的回调方法
 websocket.onmessage = function (event) {
+    console.log(event.data);
     var json = JSON.parse(event.data);
     if (json.method == 'init') {
-        $('#initDiv').css('display', 'none');
-        //判断当前浏览器是否支持WebSocket
-        if (websocketChart == null) {
-            if ('websocketChart' in window) {
-                websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
-            }
-            else {
-                alert('Not support websocketChart')
-            }
-        }
+
+
         if (json.errorCode == 0) {
             inited = true;
             var time = json.message;
@@ -40,52 +34,61 @@ websocket.onmessage = function (event) {
                 $('#wait').css('display', 'block');
                 beginTimeCountDown(time);
             }
+            $('#initDiv').css('display', 'none');
             $('#waitDiv').css('display', 'block');
             $('#commitBtn').css('display', 'none');
+            initChat();
+
         } else if (json.errorCode == 104) {
+             inited = false;
             $.get("http://192.168.78.46/getQuestion", function (msg) {
                 var que = msg.rows[0];
                 refreshForm(que);
             });
+            $('#initDiv').css('display', 'none');
             $('#questionDiv').css('display', 'block');
             $('#commitBtn').css('display', 'none');
+            initChat();
         } else {
+             inited = false;
             showMessage(json.message);
         }
     } else if (json.method == 'question') {
-        if (json.errorCode == 0) {
-            isCommit = false;
-            $("input[type='radio']").removeAttr('checked');
-            var que = json.rows[0];
-            refreshForm(que);
-            $('#questionDiv').css('display', 'block');
-            if (inited) {
-                $('#commitBtn').css('display', 'block');
-            } else {
-                $('#commitBtn').css('display', 'none');
+        if (inited != null) {
+            if (json.errorCode == 0) {
+                isCommit = false;
+                $("input[type='radio']").removeAttr('checked');
+                var que = json.rows[0];
+                refreshForm(que);
+                $('#questionDiv').css('display', 'block');
+                if (inited != null && inited) {
+                    $('#commitBtn').css('display', 'block');
+                } else {
+                    $('#commitBtn').css('display', 'none');
 
+                }
+                $('#initDiv').css('display', 'none');
+                $('#waitDiv').css('display', 'none');
+                $('#wait').css('display', 'none');
+            } else {
+                // alert(json.message);
+                showMessage(json.message);
+                $('#rankBtn').click();
+                $('#rankDiv').css('display', 'block');
             }
-            $('#initDiv').css('display', 'none');
-            $('#waitDiv').css('display', 'none');
-            $('#wait').css('display', 'none');
-        } else {
-            // alert(json.message);
-            showMessage(json.message);
-            $('#rankBtn').click();
-            $('#rankDiv').css('display', 'block');
         }
 
     } else if (json.method == 'answer') {
+        clearTime();
         var que = json.rows[0];
-        $('#answer1').text($('#answer1').text() + ' ' + que['answerOne'] + '个人');
-        $('#answer2').text($('#answer2').text() + ' ' + que['answerTwo'] + '个人');
-        $('#answer3').text($('#answer3').text() + ' ' + que['answerThree'] + '个人');
-        $('#answer4').text($('#answer4').text() + ' ' + que['answerFour'] + '个人');
+        $('#answer1').text($('#answer1').text() + '    ' + que['answerOne'] + '个人');
+        $('#answer2').text($('#answer2').text() + '    ' + que['answerTwo'] + '个人');
+        $('#answer3').text($('#answer3').text() + '    ' + que['answerThree'] + '个人');
+        $('#answer4').text($('#answer4').text() + '    ' + que['answerFour'] + '个人');
         $('#answer' + que.rightAnswer).css('color', '#009688');
         showMessage(json.message);
         if (json.errorCode != 0) {
             inited = false;
-            $("input[type='radio']").css('display', 'none');
         }
     } else if (json.method == 'updateScore') {
         $('#commitBtn').css('display', 'none');
@@ -116,44 +119,6 @@ function send(message) {
     websocket.send(message);
 }
 
-var isChat = false;
-
-function chat() {
-    if (!isChat) {
-        websocketChart.send($('#commentValue').val());
-        $('#commentValue').val('');
-        isChat = true;
-        setTimeout(function () {
-            isChat = false;
-        }, 2000);
-    } else {
-        showMessage("歇一会吧！2秒后再说！")
-    }
-}
-
-var websocketChart = null;
-
-
-//接收到消息的回调方法
-websocketChart.onmessage = function (event) {
-    console.log(event.data);
-    var i = Math.round(Math.random() * 8);
-    var item = {
-        info: event.data, //文字
-        href: '', //链接
-        close: true, //显示关闭按钮
-        speed: 5, //延迟,单位秒,默认6
-        top: i, //距离底部高度,单位px,默认随机
-        color: '#ffffff', //颜色,默认白色
-        old_ie_color: '#ffffff' //ie低版兼容色,不能与网页背景相同,默认黑色
-    }
-    $('body').barrager(item);
-}
-
-websocketChart.onerror = function () {
-    websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
-};
-
 function showMessage(message) {
     $("#tooltip").html(message).css('display', 'block').delay(3000).hide(0);
 }
@@ -177,12 +142,10 @@ function beginTimeCountDown(enddate) {
 var table = null;
 
 $('#initBtn').on('click', function () {
-
     if ($('#username').val() == "" || $('#department').val() == "" || $('#tel').val() == "") {
         alert("请填写本人姓名部门和电话！");
         return false; //如果验证不通过，则不执行后面
     } else {
-        $('#chatDiv').css('display', 'block')
         var message = {
             "method": "init",
             "user": {"username": $('#username').val(), "department": $('#department').val(), "tel": $('#tel').val()}
@@ -245,14 +208,15 @@ $.get("http://192.168.78.46/intervalSecond",
 function time() {
     timesRun = intervalSecond;
     interval = setInterval(function () {
+        $('#timeViewer').text(timesRun);
         if (timesRun === 0) {
             clearTime();
             interval = null;
-            if (!isCommit && inited) {
+            if (!isCommit && inited != null && inited) {
                 $('#commitBtn').click();
             }
         } else {
-            $('#timeViewer').text(timesRun);
+
             timesRun--;
         }
 
@@ -268,11 +232,12 @@ function clearTime() {
 
 
 function refreshForm(que) {
+    clearTime();
     time();
     $('#userTime').text("");
     $('#id').val(que['id']);
     console.log($('#id').val())
-    $('#question').text(que['question']);
+    $('#question').html('第' + que['id'] + '题：<br>' + que['question']);
     $('#answer1').text(que['answerOne']);
     $('#answer1').css({"font-size": "25px", "color": "#333"});
     $('#answer2').text(que['answerTwo']);
@@ -282,4 +247,58 @@ function refreshForm(que) {
     $('#answer4').text(que['answerFour']);
     $('#answer4').css({"font-size": "25px", "color": "#333333"});
 
+}
+
+var isChat = false;
+
+function chat() {
+    if (!isChat) {
+        if ($('#commentValue').val() != '' && $('#commentValue').val() != null && $('#commentValue').val() != undefined) {
+            websocketChart.send($('#commentValue').val());
+            $('#commentValue').val('');
+            isChat = true;
+            setTimeout(function () {
+                isChat = false;
+            }, 2000);
+        } else {
+            showMessage("说点什么吧！")
+        }
+
+    } else {
+        showMessage("歇一会吧！2秒后再说！")
+    }
+}
+
+function initChat() {
+    //判断当前浏览器是否支持WebSocket
+    if (websocketChart == null) {
+        if ('websocketChart' in window) {
+            websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+            $('#chatDiv').css('display', 'block');
+        }
+        else {
+            alert('Not support websocketChart')
+        }
+
+        //接收到消息的回调方法
+        websocketChart.onmessage = function (event) {
+            console.log(event.data);
+            var i = Math.round(Math.random() * 7);
+            var item = {
+                info: event.data, //文字
+                href: '', //链接
+                close: true, //显示关闭按钮
+                speed: 5, //延迟,单位秒,默认6
+                top: i, //距离底部高度,单位px,默认随机
+                color: '#ffffff', //颜色,默认白色
+                old_ie_color: '#ffffff' //ie低版兼容色,不能与网页背景相同,默认黑色
+            }
+            $('body').barrager(item);
+        }
+
+        websocketChart.onerror = function () {
+            websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+        };
+
+    }
 }

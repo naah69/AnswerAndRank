@@ -105,10 +105,9 @@ public class SendController {
         ConcurrentLinkedDeque<AnswerWebSocket> sessionList = AnswerWebSocket.webSocketList;
         for (AnswerWebSocket session : sessionList) {
             User user = UserUtils.getUser(session);
-            if (user == null) {
-                continue;
-            }
-            if (user.getDieIndex() == null) {
+
+            if (user!=null&&user.getDieIndex() == null) {
+
                 Answer userAnswer = user.getAnswers().get(id - 1);
                 Integer times = userAnswer.getTime();
                 boolean overTime = times > 0 && times <= HeapVariable.intervalSecond;
