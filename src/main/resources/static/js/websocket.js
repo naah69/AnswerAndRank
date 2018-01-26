@@ -27,7 +27,7 @@ websocket.onmessage = function (event) {
         //判断当前浏览器是否支持WebSocket
         if (websocketChart == null) {
             if ('websocketChart' in window) {
-                websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+                websocketChart = new WebSocket("ws://"+host+":8080/chat");
             }
             else {
                 alert('Not support websocketChart')
@@ -43,7 +43,7 @@ websocket.onmessage = function (event) {
             $('#waitDiv').css('display', 'block');
             $('#commitBtn').css('display', 'none');
         } else if (json.errorCode == 104) {
-            $.get("http://192.168.78.46/getQuestion", function (msg) {
+            $.get("http://"+host+"/getQuestion", function (msg) {
                 var que = msg.rows[0];
                 refreshForm(que);
             });
@@ -132,7 +132,12 @@ function chat() {
 }
 
 var websocketChart = null;
-
+if ('WebSocket' in window) {
+	websocketChart = new WebSocket("ws://"+host+":8080/chat");
+}
+else {
+    alert('该设备不支持答题！')
+}
 
 //接收到消息的回调方法
 websocketChart.onmessage = function (event) {
@@ -151,7 +156,7 @@ websocketChart.onmessage = function (event) {
 }
 
 websocketChart.onerror = function () {
-    websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+    websocketChart = new WebSocket("ws://"+host+":8080/chat");
 };
 
 function showMessage(message) {
@@ -212,7 +217,7 @@ $('#commitBtn').on('click', function () {
 
 $('#rankBtn').on('click', function () {
     $('#rankDiv').toggle();
-    $.get("http://192.168.78.46/rank", function (msg) {
+    $.get("http://"+host+"/rank", function (msg) {
         console.log(msg.rows)
 //            table.reload('annualMeeting_question_table', {
 //                data: data.rows
@@ -237,7 +242,7 @@ var tbody = window.document.getElementById("tbody-result");
 var timesRun = 0;
 var interval;
 var intervalSecond = 12;
-$.get("http://192.168.78.46/intervalSecond",
+$.get("http://"+host+"/intervalSecond",
     function (data) {
         intervalSecond = data;
     });
