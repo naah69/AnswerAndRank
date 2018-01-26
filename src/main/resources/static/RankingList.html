@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>排行榜</title>
-<link rel="stylesheet" href="css/style.css">
 <style type="text/css">
 .fh5co-form {
   padding: 30px;
@@ -19,20 +18,22 @@
 </head>
 <body>
 <!--排行榜-->
+<h1 style="text-align: center; font-size: 50px; color:#638ECE;">年会答题排行榜</h1>
 <div id="div3">
     <div class="col">
         <!-- Start Sign In Form -->
         <form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
             <table style="width:100%" id="table-result">
                 <thead>
-                <tr style="font-size: 20px;color: #333;">
-                    <th style="width:25%">用户名</th>
-                    <th style="width:25%">部门</th>
-                    <th style="width:25%">用时</th>
-                    <th style="width:25%">分数</th>
+                <tr style="font-size: 30px;color: #333;">
+                	<th style="width:20%;background-color: #599BD5; color: #EEFEFF;">排名</th>
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">用户名</th>
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">部门</th>
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">用时</th>
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">分数</th>
                 </tr>
                 </thead>
-                <tbody id="tbody-result">
+                <tbody id="tbody-result" style="text-align: center;">
                 </tbody>
             </table>
         </form>
@@ -41,6 +42,9 @@
 </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.barrager.js"></script>
+<!-- websocket -->
+<script src="js/websocket.js"></script>
 <script type="text/javascript">
 var host = window.location.hostname;
 	var websocket = null;
@@ -56,7 +60,6 @@ var host = window.location.hostname;
 		}
 		catch(e){
 		}
-
 		if(json!=null){
 			if(json.method=='rank'){
 				var user = json.rows;
@@ -64,12 +67,23 @@ var host = window.location.hostname;
 				if(user!=null){
 					var str = "";
 		            for (i in user) {
-		                str += "<tr style=\"font-size: 18px;color: #333;\">" +
-		                    "<td>" + user[i].username + "</td>" +
-		                    "<td>" + user[i].department + "</td>" +
-		                    "<td>" + user[i].timesSecond + "</td>" +
-		                    "<td>" + user[i].score + "</td>" +
+		            	if(i%2!=0){
+		            		str += "<tr style=\"font-size: 30px;color: #000005;\">" +
+		                	"<td style='background-color:#EBEEF7;'>" + (parseInt(i)+1) + "</td>" +
+		                    "<td style='background-color:#EBEEF7;'>" + user[i].username + "</td>" +
+		                    "<td style='background-color:#EBEEF7;'>" + user[i].department + "</td>" +
+		                    "<td style='background-color:#EBEEF7;'>" + user[i].timesSecond + "</td>" +
+		                    "<td style='background-color:#EBEEF7;'>" + user[i].score + "</td>" +
 		                    "</tr>";
+		            	}else{
+		            		str += "<tr style=\"font-size: 30px;color: #000005;\">" +
+		                	"<td style='background-color:#D2DDEF;'>" + (parseInt(i)+1) + "</td>" +
+		                    "<td style='background-color:#D2DDEF;'>" + user[i].username + "</td>" +
+		                    "<td style='background-color:#D2DDEF;'>" + user[i].department + "</td>" +
+		                    "<td style='background-color:#D2DDEF;'>" + user[i].timesSecond + "</td>" +
+		                    "<td style='background-color:#D2DDEF;'>" + user[i].score + "</td>" +
+		                    "</tr>";
+		            	}
 		            }
 		            $('#tbody-result').html(str);
 				}
