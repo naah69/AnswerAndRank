@@ -1,18 +1,14 @@
 package com.xyl.game.lerInterceptor;
 
-import java.util.Properties;
+import com.xyl.game.utils.PropertiesUtils;
+import org.apache.log4j.Logger;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.xyl.game.contrller.AnnualMeetingQuestionFileLoadContraller;
-import com.xyl.game.utils.PropertiesUtils;
+import java.util.Properties;
 /**
  * 拦截器
  * @author dazhi
@@ -21,12 +17,12 @@ import com.xyl.game.utils.PropertiesUtils;
 
 public class AuthenticationInterceptor implements HandlerInterceptor{
 
-	private static final Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
-	
+	private static final Logger logger = Logger.getLogger(AuthenticationInterceptor.class);
+
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 			throws Exception {
-		
+
 	}
 
 	@Override
@@ -39,7 +35,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
 		//检查访问路径是否是公共路径
 		Properties initProperties = PropertiesUtils.initProperties("game.properties");
 		String publicPaths = initProperties.get("publicPath").toString();
-		String[] publicPath = null; 
+		String[] publicPath = null;
 		if(publicPaths == null){
 			logger.error("配置文件未配置任何输入");
 		}else {
@@ -51,7 +47,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
 				}
 			}
 		}
-		
+
 		//不是公共路径,判断是否登录
 		HttpSession session = request.getSession();
 		Object attribute = session.getAttribute("user");

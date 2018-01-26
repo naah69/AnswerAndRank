@@ -5,8 +5,8 @@ import com.xyl.game.po.TimeParam;
 import com.xyl.game.utils.ExcelUtil;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.InitData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ import java.util.Date;
 @Controller
 @RequestMapping("/admin")
 public class AnnualMeetingTimeContreller {
-	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingTimeContreller.class);
+	private static final Logger logger = Logger.getLogger(AnnualMeetingTimeContreller.class);
 
 	@Autowired
 	private AnnualMeetingTimeSerivce timeSerivce;
@@ -96,7 +96,7 @@ public class AnnualMeetingTimeContreller {
 		response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment;filename="+"printUserData.xlsx");
 		try {
-			
+
 			outputStream = response.getOutputStream();
 			ExcelUtil.printdata(outputStream);
 		} catch (IOException e) {

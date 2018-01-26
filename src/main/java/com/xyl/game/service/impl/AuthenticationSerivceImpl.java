@@ -1,15 +1,13 @@
 package com.xyl.game.service.impl;
 
-import com.xyl.game.service.AuthenticationSerivce;
 import com.xyl.game.po.Admin;
+import com.xyl.game.service.AuthenticationSerivce;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.PropertiesUtils;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 /**
  * 后台登录认证
@@ -19,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationSerivceImpl implements AuthenticationSerivce{
 
-	private static final Logger logger = LoggerFactory.getLogger(AuthenticationSerivceImpl.class);
+	private static final Logger logger = Logger.getLogger(AuthenticationSerivceImpl.class);
 	/**
 	 * 判断后台是否是第一次登录
 	 */
@@ -46,7 +44,7 @@ public class AuthenticationSerivceImpl implements AuthenticationSerivce{
 			return true;
 		}
 		Admin admin = HeapVariable.pwd;
-		
+
 		if(pwd==null){
 			logger.info("密码未空");
 			return false;

@@ -1,11 +1,10 @@
 package com.xyl.game.contrller;
 
-import com.xyl.game.service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.po.AnnualMeetingGameQuestion;
+import com.xyl.game.service.AnnualMeetingQuestionExctFileSerivce;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,7 +29,7 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AnnualMeetingQuestionFileLoadContraller {
 
-	private static final Logger logger = LoggerFactory.getLogger(AnnualMeetingQuestionFileLoadContraller.class);
+	private static final Logger logger = Logger.getLogger(AnnualMeetingQuestionFileLoadContraller.class);
 
 	@Autowired
 	private AnnualMeetingQuestionExctFileSerivce exctFileSerivce;
@@ -104,7 +103,7 @@ public class AnnualMeetingQuestionFileLoadContraller {
 	@RequestMapping("/savaAnnualMeetingGameQuestion")
 	@ResponseBody
 	public String savaAnnualMeetingGameQuestion(HttpSession session){
-		
+
 		//获得数据
 		Map<String, AnnualMeetingGameQuestionVo> annualMeetingGameQuestionVos = HeapVariable.annualMeetingGameQuestionVos;
 		if(annualMeetingGameQuestionVos == null){

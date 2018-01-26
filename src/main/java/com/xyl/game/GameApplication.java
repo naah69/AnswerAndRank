@@ -9,7 +9,10 @@ import org.apache.log4j.PropertyConfigurator;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 /**
  * SpringBOOT 启动类
@@ -19,6 +22,7 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 @MapperScan("com.xyl.game.mapper")
+
 //@EnableScheduling
 
 public class GameApplication {
@@ -45,5 +49,12 @@ public class GameApplication {
         HeapVariable.context = context;
         InitData.initVariable();
         InitData.initQuestion();
+    }
+
+       @Bean
+    public EmbeddedServletContainerFactory servletContainer() {
+        JettyEmbeddedServletContainerFactory factory =
+                new JettyEmbeddedServletContainerFactory();
+        return factory;
     }
 }

@@ -1,8 +1,8 @@
 package com.xyl.game.contrller;
 
-import com.xyl.game.service.InitService;
 import com.xyl.game.po.GridPage;
 import com.xyl.game.po.User;
+import com.xyl.game.service.InitService;
 import com.xyl.game.utils.HeapVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * InitController

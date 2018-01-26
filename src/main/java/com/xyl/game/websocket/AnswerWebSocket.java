@@ -1,10 +1,10 @@
 package com.xyl.game.websocket;
 
-import com.xyl.game.service.InitService;
-import com.xyl.game.service.UploadScoreService;
 import com.xyl.game.dto.QuestionDTO;
 import com.xyl.game.dto.RequestDTO;
 import com.xyl.game.po.GridPage;
+import com.xyl.game.service.InitService;
+import com.xyl.game.service.UploadScoreService;
 import com.xyl.game.utils.FinalVariable;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.JsonUtils;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 

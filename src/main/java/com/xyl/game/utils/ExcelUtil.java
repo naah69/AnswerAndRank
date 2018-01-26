@@ -7,8 +7,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -21,7 +21,7 @@ import java.util.*;
  *
  */
 public class ExcelUtil {
-	private static final Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
+	private static final Logger logger = Logger.getLogger(ExcelUtil.class);
 
 	public static void savaUserData(String path) {
 		savaUserData(new File(path));
@@ -47,7 +47,7 @@ public class ExcelUtil {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 
