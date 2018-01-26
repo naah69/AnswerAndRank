@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>排行榜</title>
+<link rel="stylesheet" href="css/style.css">
+<style type="text/css">
+.fh5co-form {
+  padding: 30px;
+  margin-top: 4em;
+  -webkit-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+  -o-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+}
+
+</style>
+</head>
+<body>
+<!--排行榜-->
+<div id="div3">
+    <div class="col">
+        <!-- Start Sign In Form -->
+        <form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
+            <table style="width:100%" id="table-result">
+                <thead>
+                <tr style="font-size: 20px;color: #333;">
+                    <th style="width:25%">用户名</th>
+                    <th style="width:25%">部门</th>
+                    <th style="width:25%">用时</th>
+                    <th style="width:25%">分数</th>
+                </tr>
+                </thead>
+                <tbody id="tbody-result">
+                </tbody>
+            </table>
+        </form>
+        <!-- END Sign In Form -->
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+var host = window.location.hostname;
+	var websocket = null;
+	if ('WebSocket' in window) {
+   		 websocket = new WebSocket("ws://"+host+"/Manage");
+	}
+
+	websocket.onmessage = function(event){
+		console.log(event.data);
+		var json=null;
+		try{
+			json=JSON.parse(event.data)
+		}
+		catch(e){
+		}
+
+		if(json!=null){
+			if(json.method=='rank'){
+				var user = json.rows;
+				console.log(user.length)
+				if(user!=null){
+					var str = "";
+		            for (i in user) {
+		                str += "<tr style=\"font-size: 18px;color: #333;\">" +
+		                    "<td>" + user[i].username + "</td>" +
+		                    "<td>" + user[i].department + "</td>" +
+		                    "<td>" + user[i].timesSecond + "</td>" +
+		                    "<td>" + user[i].score + "</td>" +
+		                    "</tr>";
+		            }
+		            $('#tbody-result').html(str);
+				}
+			}
+		}
+	}
+</script>
+</html>

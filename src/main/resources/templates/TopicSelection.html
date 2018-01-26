@@ -118,7 +118,7 @@ layui.use(['util','laydate','layer','table'], function(){
 			}
 			if(json.method=='rank'){
 				var user = json.rows;
-				console.log()
+				console.log(user.length)
 				if(user!=null){
 					table.reload('ConnectNum',{
 						data:user
@@ -138,6 +138,9 @@ layui.use(['util','laydate','layer','table'], function(){
              , {field: 'timesSecond', title: '用时', width: '25%'}
 	 	]]
 	 	,id:'ConnectNum'
+	 	,height: 450
+	 	,page:true
+	 	,limit:10
 	})
 })
 </script>

@@ -27,7 +27,6 @@
 <div class="container" id="div1">
     <div class="row">
         <div class="col-md-6">
-
             <!-- Start Sign In Form -->
             <form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
                 <img src="images/logo.png" style="padding-bottom: 20px;text-align: center"/>
@@ -46,7 +45,6 @@
                 </div>
             </form>
             <!-- END Sign In Form -->
-
         </div>
     </div>
 </div>
@@ -68,19 +66,19 @@
         </div>
         <div id="answers" class="radio">
             <input type="hidden" id="id" name="id">
-            <p><input type="radio" id="a1r" name="answer" value="1"><label for="a1r"
+            <p class="pa1r"><input type="radio" id="a1r" name="answer" value="1"><label for="a1r"
                                                                            style="color: #333333;word-wrap: break-word;"
                                                                            id="answer1"></label>
             </p>
-            <p><input type="radio" id="a2r" name="answer" value="2"><label for="a2r"
+            <p class="pa2r"><input type="radio" id="a2r" name="answer" value="2"><label for="a2r"
                                                                            style="color: #333333;word-wrap: break-word;"
                                                                            id="answer2"></label>
             </p>
-            <p><input type="radio" id="a3r" name="answer" value="3"><label for="a3r"
+            <p class="pa3r"><input type="radio" id="a3r" name="answer" value="3"><label for="a3r"
                                                                            style="color: #333333;word-wrap: break-word;"
                                                                            id="answer3"></label>
             </p>
-            <p><input type="radio" id="a4r" name="answer" value="4"><label for="a4r"
+            <p class="pa4r"><input type="radio" id="a4r" name="answer" value="4"><label for="a4r"
                                                                            style="color: #333333;word-wrap: break-word;"
                                                                            id="answer4"></label>
             </p>
@@ -158,9 +156,10 @@
 
     var websocketChart = null;
 
+	var host = window.location.hostname;
     //判断当前浏览器是否支持WebSocket
     if ('websocketChart' in window) {
-        websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+        websocketChart = new WebSocket("ws://"+host+":8080/chat");
     }
     else {
         alert('Not support websocketChart')
@@ -183,7 +182,7 @@
     }
 
     websocketChart.onerror = function () {
-        websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+        websocketChart = new WebSocket("ws://"+host+":8080/chat");
     };
 
     function run(enddate) {
@@ -240,7 +239,7 @@
 
     $('#rank').on('click', function () {
         $('#div3').toggle();
-        $.get("http://192.168.78.46/rank", function (msg) {
+        $.get("http://"+host+"/rank", function (msg) {
             console.log(msg.rows)
 //            table.reload('annualMeeting_question_table', {
 //                data: data.rows
@@ -265,7 +264,7 @@
     var timesRun = 0;
     var interval;
     var intervalSecond = 12;
-    $.get("http://192.168.78.46/intervalSecond",
+    $.get("http://"+host+"/intervalSecond",
         function (data) {
             intervalSecond = data;
         });
