@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>排行榜</title>
+<link rel="stylesheet" href="css/style.css">
 <style type="text/css">
+.barrage_box div.p span{ margin-right: 10px 0 0 10px; font-size: 24px;color: #fff;}/*line-height: 40px;*/
+.barrage{position: fixed;bottom:70px;right:-500px;display: inline-block;width: 500px;z-index: 9999;height: 40px;}
 .fh5co-form {
   padding: 30px;
   margin-top: 4em;
@@ -44,7 +47,6 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.barrager.js"></script>
 <!-- websocket -->
-<script src="js/websocket.js"></script>
 <script type="text/javascript">
 var host = window.location.hostname;
 	var websocket = null;
@@ -93,7 +95,7 @@ var host = window.location.hostname;
     var websocketChat;
     //判断当前浏览器是否支持WebSocket
         if ('websocketChat' in window) {
-            websocketChat = new WebSocket("ws://"+host+":8080/chat");
+            websocketChat = new WebSocket("ws://dazhizhi.free.ngrok.cc/chat");
         }
         else {
             alert('Not support websocketChat')
@@ -107,7 +109,7 @@ var host = window.location.hostname;
                 info: event.data, //文字
                 href: '', //链接
                 close: true, //显示关闭按钮
-                speed: 5, //延迟,单位秒,默认6
+                speed: 10, //延迟,单位秒,默认6
                 top: i, //距离底部高度,单位px,默认随机
                 color: '#ffffff', //颜色,默认白色
                 old_ie_color: '#ffffff' //ie低版兼容色,不能与网页背景相同,默认黑色
@@ -116,7 +118,7 @@ var host = window.location.hostname;
         }
 
         websocketChat.onerror = function () {
-            websocketChat = new WebSocket("ws://"+host+":8080/chat");
+            websocketChat = new WebSocket("ws://dazhizhi.free.ngrok.cc/chat");
 
 }
 </script>

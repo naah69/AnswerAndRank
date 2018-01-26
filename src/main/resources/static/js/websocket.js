@@ -273,7 +273,7 @@ function initChat() {
     //判断当前浏览器是否支持WebSocket
     if (websocketChat == null) {
         if ('websocketChat' in window) {
-            websocketChat = new WebSocket("ws://"+host+":8080/chat");
+            websocketChat = new WebSocket("ws://dazhizhi.free.ngrok.cc/chat");
             $('#chatDiv').css('display', 'block');
         }
         else {
@@ -297,7 +297,7 @@ function initChat() {
         }
 
         websocketChat.onerror = function () {
-            websocketChat = new WebSocket("ws://"+host+":8080/chat");
+            websocketChat = new WebSocket("ws://dazhizhi.free.ngrok.cc/chat");
         };
 
     }
