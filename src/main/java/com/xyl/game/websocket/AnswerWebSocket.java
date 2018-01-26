@@ -102,11 +102,7 @@ public class AnswerWebSocket {
     }
 
     public void sendMessage(String message) {
-        try {
-            this.session.getBasicRemote().sendText(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            this.session.getAsyncRemote().sendText(message);
 
         //this.session.getAsyncRemote().sendText(message);
     }

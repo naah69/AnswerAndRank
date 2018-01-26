@@ -52,7 +52,7 @@ public class WebSocketTest {
         }
          System.out.println(list.size()+"个");
         try {
-            Thread.sleep(1000*60*5);
+            Thread.sleep(1000*60*2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
