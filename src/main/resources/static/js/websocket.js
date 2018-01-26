@@ -1,5 +1,5 @@
 var websocket;
-var websocketChart = null;
+var websocketChat = null;
 var host = window.location.hostname;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
@@ -254,7 +254,7 @@ var isChat = false;
 function chat() {
     if (!isChat) {
         if ($('#commentValue').val() != '' && $('#commentValue').val() != null && $('#commentValue').val() != undefined) {
-            websocketChart.send($('#commentValue').val());
+            websocketChat.send($('#commentValue').val());
             $('#commentValue').val('');
             isChat = true;
             setTimeout(function () {
@@ -271,17 +271,17 @@ function chat() {
 
 function initChat() {
     //判断当前浏览器是否支持WebSocket
-    if (websocketChart == null) {
-        if ('websocketChart' in window) {
-            websocketChart = new WebSocket("ws://"+host+":8080/chat");
+    if (websocketChat == null) {
+        if ('websocketChat' in window) {
+            websocketChat = new WebSocket("ws://"+host+":8080/chat");
             $('#chatDiv').css('display', 'block');
         }
         else {
-            alert('Not support websocketChart')
+            alert('Not support websocketChat')
         }
 
         //接收到消息的回调方法
-        websocketChart.onmessage = function (event) {
+        websocketChat.onmessage = function (event) {
             console.log(event.data);
             var i = Math.round(Math.random() * 7);
             var item = {
@@ -296,8 +296,8 @@ function initChat() {
             $('body').barrager(item);
         }
 
-        websocketChart.onerror = function () {
-            websocketChart = new WebSocket("ws://"+host+":8080/chat");
+        websocketChat.onerror = function () {
+            websocketChat = new WebSocket("ws://"+host+":8080/chat");
         };
 
     }
