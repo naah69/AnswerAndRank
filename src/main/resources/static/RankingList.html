@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>排行榜</title>
+    <link rel="stylesheet" href="css/style.css">
 <style type="text/css">
+    .barrage_box div.p span{ margin-right: 10px; font-size: 24px;color: #fff;margin-left: 18px;}/*;*/
+    .barrage_box{background-color: rgba(0,0,0,.5);padding-right: 8px; height: 40px;display: inline-block;border-radius: 25px;transition: all .3s;}
 .fh5co-form {
   padding: 30px;
   margin-top: 4em;
@@ -49,7 +52,7 @@
 var host = window.location.hostname;
 	var websocket = null;
 	if ('WebSocket' in window) {
-   		 websocket = new WebSocket("ws://"+host+"/Manage");
+   		 websocket = new WebSocket("ws://127.0.0.1:8080/Manage");
 	}
 
 	websocket.onmessage = function(event){
@@ -93,7 +96,7 @@ var host = window.location.hostname;
     var websocketChat;
     //判断当前浏览器是否支持WebSocket
         if ('websocketChat' in window) {
-            websocketChat = new WebSocket("ws://"+host+":8080/chat");
+            websocketChat = new WebSocket("ws://127.0.0.1:8080/chat");
         }
         else {
             alert('Not support websocketChat')
@@ -116,7 +119,7 @@ var host = window.location.hostname;
         }
 
         websocketChat.onerror = function () {
-            websocketChat = new WebSocket("ws://"+host+":8080/chat");
+            websocketChat = new WebSocket("ws://127.0.0.1:8080/chat");
 
 }
 </script>
