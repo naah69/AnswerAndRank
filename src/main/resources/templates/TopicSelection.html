@@ -92,6 +92,8 @@ layui.use(['util','laydate','layer','table'], function(){
 		$.post('/admin/sendAnswer', function(data) {
 			if(data.errorCode !=0){
 				layer.alert(data.message);
+			}else{
+				layer.msg('答案已经发送');
 			}
 		})
 	})
