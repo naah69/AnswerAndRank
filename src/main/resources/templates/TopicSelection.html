@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>题目选择</title>
-<link rel="stylesheet" href="../js/layui/css/layui.css"/>
+<link rel="stylesheet" href="http://naah.eqqhr.com/layui/css/layui.css"/>
 </head>
 <body>
 <pre class="layui-code" id="questionShow">
@@ -48,7 +48,7 @@
 <table class="layui-table" id="ConnectNum" lay-filter="ConnectNum"></table>
 <a class="layui-btn" href="/admin/PrintData" id="PrintData">打印数据</a>
 </body>
-<script type="text/javascript" src="../js/layui/layui.js"></script>
+<script type="text/javascript" src="http://naah.eqqhr.com/layui/layui.js"></script>
 <script type="text/javascript">
 layui.use(['util','laydate','layer','table'], function(){
 	var $ = layui.$ ,layer = layui.layer,table=layui.table;
@@ -81,7 +81,7 @@ layui.use(['util','laydate','layer','table'], function(){
 				      rightAnswerStr = 'D';
 				      break;
 				    default:
-				      rightAnswerStr = ''; 
+				      rightAnswerStr = '';
 				}
 				$('#answer').html(rightAnswerStr);
 				layer.msg('题目已经发送！');
@@ -102,7 +102,7 @@ layui.use(['util','laydate','layer','table'], function(){
 	if ('WebSocket' in window) {
    		 websocket = new WebSocket("ws://"+host+"/Manage");
 	}
-	
+
 	websocket.onmessage = function(event){
 		console.log(event.data);
 		var json=null;
@@ -111,11 +111,11 @@ layui.use(['util','laydate','layer','table'], function(){
 		}
 		catch(e){
 		}
-		
+
 		if(json!=null){
 			if(json.method=='count'){
 				$('#takePartNum').html(json.message)
-			} 
+			}
 			if(json.method=='rank'){
 				var user = json.rows;
 				console.log()
@@ -124,10 +124,10 @@ layui.use(['util','laydate','layer','table'], function(){
 						data:user
 					});
 				}
-			} 		
+			}
 		}
 	}
-	
+
 	table.render({
 		elem: '#ConnectNum'
 		,data:[]

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>登录</title>
-<link rel="stylesheet" href="../js/layui/css/layui.css" />
+<link rel="stylesheet" href="http://naah.eqqhr.com/layui/css/layui.css" />
 <style type="text/css">
 #fristDiv{
 	margin:10px;
@@ -36,7 +36,7 @@
 </div>
 
 </body>
-<script type="text/javascript" src="../js/layui/layui.js"></script>
+<script type="text/javascript" src="http://naah.eqqhr.com/layui/layui.js"></script>
 <script type="text/javascript">
 	layui.use('form',function(){
 		var $ = layui.$;
@@ -50,7 +50,7 @@
 				$('#adminId').val(data);
 			}
 		})
-		
+
 		//监听提交
 		form.on('submit(submit)', function(data){
 		  $.post("/admin/admin",$('#form1').serialize(),function(data){

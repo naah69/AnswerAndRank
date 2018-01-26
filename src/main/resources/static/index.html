@@ -1,60 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>demo</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>happyNewYear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free HTML5 Template by FreeHTML5.co"/>
+    <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive"/>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/animate.css/3.5.1/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<link rel="stylesheet" href="../js/layui/css/layui.css"/>
-<body>
-
-<!--用户信息初始化-->
-<div id="div1">
-    <p>用户名:<input type="text" id="username" name="username"></p>
-    <p>部门:<input type="text" id="department" name="department"></p>
-    <p>电话号码:<input type="text" id="tel" name="tel"></p>
-    <p><input type="button" value="开始游戏" id="initBtn"></p>
+<body class="style-2">
+<div id='hasSome' class="form-inline" style="position: fixed;bottom: 0px;z-index: 999;display: none;
+    left: 0px;
+    right: 0px;
+    width: 100%;">
+    <input type="text" class="form-control" style="width:79%;color:#333;float: left;margin-left: 2%;" id="commentValue"
+           value=""/>
+    <input type="button" class="btn "
+           style="float:right;margin-right: 2%;color:#fff;background-color:#337ab7;border-color:#2e6da4;" id="comment"
+           onclick="show()" value="评论">
 </div>
+<span style="position: fixed;z-index: 9999;left:25%;padding:5px;width:200px;margin: 10px auto;border-radius: 20px;background: #282b2d;color: #fff;text-align: center;display: none;opacity: 0.6"
+      id="tooltip"></span>
+<div class="container" id="div1">
+    <div class="row">
+        <div class="col-md-6">
 
-<!--答题-->
-<div id="div2" style="display: none">
-    <h1 id="timeViewer"></h1>
-    <h1 id="userTime"></h1>
-    <div id="question"></div>
-    <div id="answers">
-        <form id="form1">
-            <input type="hidden" id="id" name="id">
-            <p><input type="radio" id="a1r" name="answer" value="1"><span id="answer1"></span></p>
-            <p><input type="radio" id="a2r" name="answer" value="2"><span id="answer2"></span></p>
-            <p><input type="radio" id="a3r" name="answer" value="3"><span id="answer3"></span></p>
-            <p><input type="radio" id="a4r" name="answer" value="4"><span id="answer4"></span></p>
-        </form>
-        <input type="button" value="提交" id="comit">
+            <!-- Start Sign In Form -->
+            <form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
+                <img src="images/logo.png" style="padding-bottom: 20px;text-align: center"/>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="department" placeholder="部门">
+                </div>
+                <div class="form-group">
+                    <label for="tel" class="sr-only">电话号码</label>
+                    <input type="text" class="form-control" id="tel" placeholder="电话号码">
+                </div>
+                <div class="form-group">
+                    <input type="button" value="开始游戏" id="initBtn" class="btn btn-primary">
+                </div>
+            </form>
+            <!-- END Sign In Form -->
+
+        </div>
     </div>
 </div>
-<button onclick="rank()">排行榜</button>
+<!--答题-->
+<div id="div2" style="display: none">
+
+    <form style="padding-left: 10%;padding-bottom: 6rem;" id="form1" action="#" class="fh5co-form animate-box"
+          data-animate-effect="fadeInLeft">
+        <h1 style="font-size: 35px;color: #0c6db7;font-weight: bold;letter-spacing: 4px">年会答题竞赛</h1>
+        <div>
+            <span style="font-size: 25px;color: #333333">倒计时：</span>
+            <h1 style="color: #ffffff;font-size: 20px;width: 30px;height: 30px;border-radius: 15px;text-align: center;display: inline-block;line-height: 30px;background: #0e6db7;display: inline-block"
+                id="timeViewer"></h1>
+        </div>
+        <h1 style="font-size: 20px;color: #333333" id="userTime"></h1>
+        <div id="obj"><!--style="width: 80%"-->
+            <span id="question" style="font-size: 28px;color: #0c6db7;word-wrap: break-word;"></span>
+            <span style="font-size: 28px;color: #0c6db7">&nbsp;?</span>
+        </div>
+        <div id="answers" class="radio">
+            <input type="hidden" id="id" name="id">
+            <p><input type="radio" id="a1r" name="answer" value="1"><label for="a1r"
+                                                                           style="color: #333333;word-wrap: break-word;"
+                                                                           id="answer1"></label>
+            </p>
+            <p><input type="radio" id="a2r" name="answer" value="2"><label for="a2r"
+                                                                           style="color: #333333;word-wrap: break-word;"
+                                                                           id="answer2"></label>
+            </p>
+            <p><input type="radio" id="a3r" name="answer" value="3"><label for="a3r"
+                                                                           style="color: #333333;word-wrap: break-word;"
+                                                                           id="answer3"></label>
+            </p>
+            <p><input type="radio" id="a4r" name="answer" value="4"><label for="a4r"
+                                                                           style="color: #333333;word-wrap: break-word;"
+                                                                           id="answer4"></label>
+            </p>
+            <div class="form-group">
+                <input type="button" style="float:left;margin-right: 10px" value="提交" id="comit"
+                       class="btn btn-primary">
+                <input type="button" style="display: none;float:left;margin-right: 10px" id="rank" value="排行榜"
+                       class="btn btn-primary">
+            </div>
+        </div>
+
+    </form>
+
+</div>
+</div>
+
+<!--<button onclick="rank()">排行榜</button>-->
 <!--排行榜-->
 <div id="div3" style="display: none">
-    <table class="layui-hide" id="annualMeeting_question_table" lay-filter="annualMeeting_question_table"></table>
 
-    <!--等待-->
-    <h1 id="wait" style="display: none"></h1>
+    <div class="col">
+        <!-- Start Sign In Form -->
+        <form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
+            <table class="ui nine column table celled table-result" id="table-result">
+                <thead>
+                <tr style="font-size: 20px;color: #333;">
+                    <th>用户名</th>
+                    <th>部门</th>
+                    <th>用时</th>
+                    <th>分数</th>
+                </tr>
+                </thead>
+                <tbody id="tbody-result">
+                </tbody>
+            </table>
+        </form>
+        <!-- END Sign In Form -->
+    </div>
+
 </div>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-<script type="text/javascript" src="js/layui/layui.js"></script>
+
+<div id="div4" style="display: none">
+    <div class="col">
+        <!-- Start Sign In Form -->
+        <form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
+            <p style="text-align: center;font-size: 22px" id="timeEnd"></p>
+            <h1 style="text-align: center;font-size: 30px">还没开始出题，请稍等！</h1>
+        </form>
+        <!-- END Sign In Form -->
+    </div>
+</div>
+
+<!--<div style="position: fixed;bottom: 30px;left: 0px;right: 0px;width: 200px;height: 200px;margin-left:auto;margin-right:auto;">-->
+<!--<div class="col-md-12 text-center"><p><small>©&nbsp;网新新云联技术有限公司</small></p></div>-->
+<!--</div>-->
 <script src="js/websocket.js"></script>
+<!-- jQuery -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- Placeholder -->
+<script src="https://cdn.bootcss.com/jquery-placeholder/2.3.1/jquery.placeholder.js"></script>
+<!-- Waypoints -->
+<script src="https://cdn.bootcss.com/waypoints/4.0.1/jquery.waypoints.js"></script>
+<!-- Main JS -->
+<script src="js/main.js"></script>
+<script type="text/javascript" src="js/jquery.barrager.js"></script>
+
 <script>
+
+
+    function show() {
+        websocketChart.send($('#commentValue').val());
+    }
+
+    var websocketChart = null;
+
+    //判断当前浏览器是否支持WebSocket
+    if ('websocketChart' in window) {
+        websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+    }
+    else {
+        alert('Not support websocketChart')
+    }
+
+    //接收到消息的回调方法
+    websocketChart.onmessage = function (event) {
+        console.log(event.data);
+        var i = Math.round(Math.random() * 9);
+        var item = {
+            info: event.data, //文字
+            href: '', //链接
+            close: true, //显示关闭按钮
+            speed: 5, //延迟,单位秒,默认6
+            top: i, //距离底部高度,单位px,默认随机
+            color: '#ffffff', //颜色,默认白色
+            old_ie_color: '#ffffff', //ie低版兼容色,不能与网页背景相同,默认黑色
+        }
+        $('body').barrager(item);
+    }
+
+    websocketChart.onerror = function () {
+        websocketChart = new WebSocket("ws://192.168.78.46:8080/chat");
+    };
+
+    function run(enddate) {
+        setInterval(function () {
+            var date1 = new Date();
+            var date3 = enddate - date1.getTime();
+            var days = Math.floor(date3 / (24 * 3600 * 1000));
+            var leave1 = date3 % (24 * 3600 * 1000);
+            var hours = Math.floor(leave1 / (3600 * 1000));
+            var leave2 = leave1 % (3600 * 1000);
+            var minutes = Math.floor(leave2 / (60 * 1000));
+            var leave3 = leave2 % (60 * 1000);
+            var seconds = Math.round(leave3 / 1000);
+            $('#timeEnd').html(days + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒");
+        }, 1000);
+    }
 
     var table = null;
 
     $('#initBtn').on('click', function () {
-        var message = {
-            "method": "init",
-            "user": {"username": $('#username').val(), "department": $('#department').val(), "tel": $('#tel').val()}
-        };
-        send(JSON.stringify(message));
+
+        if ($('#username').val() == "" || $('#department').val() == "" || $('#tel').val() == "") {
+            alert("请填写本人姓名部门和电话！");
+            return false; //如果验证不通过，则不执行后面
+        } else {
+            $('#hasSome').css('display', 'block')
+            var message = {
+                "method": "init",
+                "user": {"username": $('#username').val(), "department": $('#department').val(), "tel": $('#tel').val()}
+            };
+            $('#rank').css('display', 'block');
+//       $('#div2').css('display', 'block');
+            send(JSON.stringify(message));
+        }
     });
     var isCommit = false;
     $('#comit').on('click', function () {
+
         var time = intervalSecond - timesRun;
         var message = {
             "method": "updateScore",
@@ -67,23 +234,38 @@
         $('#comit').css('display', 'none');
         $('#userTime').text("本次用时：" + time);
         send(JSON.stringify(message));
-        $("input[type='radio']").removeAttr('checked');
+        // $("input[type='radio']").removeAttr('checked');
     });
 
-    function rank() {
-        $('#div3').css('display', 'block');
-        $.get("/rank", function (data) {
-            console.log(data)
-            table.reload('annualMeeting_question_table', {
-                data: data.rows
-            })
+
+    $('#rank').on('click', function () {
+        $('#div3').toggle();
+        $.get("http://192.168.78.46/rank", function (msg) {
+            console.log(msg.rows)
+//            table.reload('annualMeeting_question_table', {
+//                data: data.rows
+//            })
+            var str = "";
+            var data = msg.rows;
+            for (i in data) {
+                str += "<tr style=\"font-size: 18px;color: #333;\">" +
+                    "<td>" + data[i].username + "</td>" +
+                    "<td>" + data[i].department + "</td>" +
+                    "<td>" + data[i].timesSecond + "</td>" +
+                    "<td>" + data[i].score + "</td>" +
+                    "</tr>";
+            }
+            tbody.innerHTML = str;
         });
-    }
+    });
+
+    var tbody = window.document.getElementById("tbody-result");
+
 
     var timesRun = 0;
     var interval;
     var intervalSecond = 12;
-    $.get("/intervalSecond",
+    $.get("http://192.168.78.46/intervalSecond",
         function (data) {
             intervalSecond = data;
         });
@@ -91,10 +273,9 @@
     function time() {
         timesRun = intervalSecond;
         interval = setInterval(function () {
-
-
-            if (timesRun == 0) {
+            if (timesRun === 0) {
                 clearTime();
+                interval = null;
                 if (!isCommit && inited) {
                     $('#comit').click();
                 }
@@ -115,39 +296,23 @@
 
 
     function refreshForm(que) {
-
         time();
         $('#userTime').text("");
         $('#id').val(que['id']);
         console.log($('#id').val())
         $('#question').text(que['question']);
         $('#answer1').text(que['answerOne']);
-        $('#answer1').css('color', 'black');
+        $('#answer1').css({"font-size": "25px", "color": "#333"});
         $('#answer2').text(que['answerTwo']);
-        $('#answer2').css('color', 'black');
+        $('#answer2').css({"font-size": "25px", "color": "#333"});
         $('#answer3').text(que['answerThree']);
-        $('#answer3').css('color', 'black');
+        $('#answer3').css({"font-size": "25px", "color": "#333"});
         $('#answer4').text(que['answerFour']);
-        $('#answer4').css('color', 'black');
+        $('#answer4').css({"font-size": "25px", "color": "#333333"});
 
     }
 
-    layui.use('table', function () {
-        table = layui.table;
-        table.render({
-            elem: '#annualMeeting_question_table'
-            , cols: [[
-                {field: 'username', title: '名称', width: '25%'}
-                , {field: 'department', title: '部门', width: '25%'}
-                , {field: 'score', title: '分数', width: '25%'}
-                , {field: 'timesSecond', title: '用时', width: '25%'}
-            ]]
-            , id: 'annualMeeting_question_table'
-        })
-    });
-
 </script>
-
 </body>
-
 </html>
+
