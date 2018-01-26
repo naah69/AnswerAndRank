@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
+
+import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -101,7 +103,12 @@ public class AnswerWebSocket {
     }
 
     public void sendMessage(String message) {
-            this.session.getAsyncRemote().sendText(message);
+            try {
+				this.session.getBasicRemote().sendText(message);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
         //this.session.getAsyncRemote().sendText(message);
     }
