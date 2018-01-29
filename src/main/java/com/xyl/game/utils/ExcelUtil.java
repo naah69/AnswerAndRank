@@ -1,5 +1,6 @@
 package com.xyl.game.utils;
 
+import com.xyl.game.po.Answer;
 import com.xyl.game.po.User;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -50,6 +52,94 @@ public class ExcelUtil {
 
 		}
 	}
+	
+	public static void printUserData(String filePath){
+		Map<String, User> usersMap = HeapVariable.usersMap;
+		Collection<User> values = usersMap.values();
+		Workbook workbook = null;
+		
+		try {
+			//实例化文件
+			logger.info("excel文件创建成功");
+			workbook = new XSSFWorkbook(new FileInputStream(new File(filePath)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		Sheet sheet = workbook.createSheet("user");
+		Class clazz = User.class;
+		//生成sheet
+		try {
+			createSheet(workbook,sheet,clazz,values);
+			workbook.write(new FileOutputStream(new File(filePath)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void printUserData(OutputStream outputStream){
+		Map<String, User> usersMap = HeapVariable.usersMap;
+		Collection<User> values = usersMap.values();
+		Workbook workbook = null;
+		
+		try {
+			//实例化文件
+			logger.info("excel文件创建成功");
+			workbook = new XSSFWorkbook();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		Sheet sheet = workbook.createSheet("user");
+		Class clazz = User.class;
+		//生成sheet
+		try {
+			createSheet(workbook,sheet,clazz,values);
+			workbook.write(outputStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void createSheet(Workbook workbook,Sheet sheet,Class clazz,Collection<User> values) throws Exception {
+		Field[] declaredFields = clazz.getDeclaredFields();
+		if("answers".equals(sheet.getSheetName())){
+			createRow(-1, sheet);
+		}else{
+			createRow(-1, sheet);
+		}
+		Row createRow = sheet.createRow(1);
+		for (int i = 0; i < declaredFields.length; i++) {
+			if(declaredFields[i].getName().equals("answers")){
+				Sheet answers = workbook.createSheet(declaredFields[i].getName());
+				createSheet(workbook, answers,Answer.class,values);
+			}else{
+				Cell createCell = createRow.createCell(i);
+				createCell.setCellValue(declaredFields[i].getName());
+			}
+		}
+		writeDataExecl(sheet, createRow, clazz, declaredFields, 2, values);
+	}
+	
+	private static void createRow(int count, Sheet createSheet) {
+		Row time = createSheet.createRow(count + 1);
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String format = dateFormat.format(date);
+		CellRangeAddress cra = new CellRangeAddress(count + 1, count + 1, 0, 7);
+		Cell createCell2 = time.createCell(0);
+		createCell2.setCellValue(format);
+		createSheet.addMergedRegion(cra);
+	}
+	private static void createRow(int count, Sheet createSheet,String name) {
+		Row time = createSheet.createRow(count + 1);
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String format = dateFormat.format(date);
+		CellRangeAddress cra = new CellRangeAddress(count + 1, count + 1, 0, 7);
+		Cell createCell2 = time.createCell(0);
+		createCell2.setCellValue(format+"用户:"+name);
+		createSheet.addMergedRegion(cra);
+	}
+	
 
 	public static void savaUserData(File file) {
 		int count = 0;
@@ -104,17 +194,10 @@ public class ExcelUtil {
 	 */
 	private static void analyticData(int count, Sheet createSheet, Collection<User> values) throws Exception {
 		// 记录时间
-		Row time = createSheet.createRow(count + 1);
-		Date date = new Date(System.currentTimeMillis());
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		String format = dateFormat.format(date);
-		CellRangeAddress cra = new CellRangeAddress(count + 1, count + 1, 0, 7);
-		Cell createCell2 = time.createCell(0);
-		createCell2.setCellValue(format);
-		createSheet.addMergedRegion(cra);
+		createRow(count, createSheet);
 
 		// 生成表格标题
-		Row createRow = createSheet.createRow(count + 2);
+		Row createRow = createSheet.createRow(count + 3);
 		Class clazz = User.class;
 
 		Field[] declaredFields = clazz.getDeclaredFields();
@@ -125,8 +208,10 @@ public class ExcelUtil {
 		}
 
 		// 迭代插入所有user数据
-		writeDataExecl(createSheet, createRow, clazz, declaredFields, count + 3, values);
+		writeDataExecl(createSheet, createRow, clazz, declaredFields, count + 4, values);
 	}
+
+	
 
 	/**
 	 * 遍历数据
@@ -141,9 +226,50 @@ public class ExcelUtil {
 	 */
 	private static void writeDataExecl(Sheet createSheet, Row createRow, Class clazz, Field[] declaredFields,
 			int countNum, Collection<User> values) throws Exception {
-		System.out.println(values);
 		Iterator<User> iterator = values.iterator();
 		int count = countNum;
+		if(createSheet.getSheetName().equals("user")){
+			count = getData(createSheet, createRow, clazz, declaredFields, iterator, count);
+		}else{
+			for (User user : values) {
+				Iterator<Answer> iterator2 = user.getAnswers().iterator();
+				count = getAnwer(createSheet, createRow, clazz, declaredFields, iterator2, count,user.getUsername());
+			}
+		}
+	}
+	
+	private static int getAnwer(Sheet createSheet, Row createRow, Class clazz, Field[] declaredFields,
+			Iterator<Answer> iterator, int count,String name)
+					throws Exception {
+		while (iterator.hasNext()) {
+			Answer user = iterator.next();
+			short lastCellNum = createRow.getLastCellNum();
+			Row createRow2 = createSheet.createRow(count++);
+			// 遍历插入标题对应的数据
+			for (int i = 0; i < lastCellNum; i++) {
+				Cell cell = createRow.getCell(i);
+				for (int j = 0; j < declaredFields.length; j++) {
+					if (declaredFields[j].getName().equals(cell.toString())) {
+						Cell createCell = createRow2.createCell(i);
+						// 获得user对象中的值
+						Method method = clazz.getMethod("get" + StringUtil.initialsUpper(declaredFields[j].getName()));
+						Object invoke = method.invoke(user);
+						if (invoke != null) {
+							createCell.setCellValue(invoke.toString());
+						}
+						break;
+					}
+					Cell createCell = createRow2.createCell(declaredFields.length+1);
+					createCell.setCellValue(name);
+				}
+			}
+		}
+		return count;
+	}
+
+	private static int getData(Sheet createSheet, Row createRow, Class clazz, Field[] declaredFields,
+			Iterator<User> iterator, int count)
+					throws Exception {
 		while (iterator.hasNext()) {
 			User user = iterator.next();
 			short lastCellNum = createRow.getLastCellNum();
@@ -165,7 +291,9 @@ public class ExcelUtil {
 				}
 			}
 		}
+		return count;
 	}
+	
 
 
 }

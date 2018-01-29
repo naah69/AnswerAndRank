@@ -33,7 +33,7 @@ public class AnnualMeetingTimeSerivceImpl implements AnnualMeetingTimeSerivce {
 		if(beginTime != null){
 			logger.info("游戏开始时间修改成功！");
 			param.setBeginTime(beginTime.getTime());
-			param.setBeginTimeStr(TimeFormatUtil.getTimeStr(new Date(beginTime.getTime())));
+			param.setBeginTimeStr(TimeFormatUtil.getTimeStr(beginTime.getTime()));
 		}else{
 			logger.info("游戏开始时间修未传入，未设置游戏开始时间！");
 			param.setBeginTime(0L);
