@@ -1,11 +1,7 @@
 package com.xyl.game;
 
 import com.xyl.game.mapper.AnnualMeetingGameQuestionMapper;
-import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.InitData;
-import com.xyl.game.utils.PropertiesUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -25,34 +21,19 @@ import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 @MapperScan("com.xyl.game.mapper")
-
 //@EnableScheduling
 
 public class GameApplication {
-    private static Logger log = null;
 
     public static void main(String[] args) {
 
         ApplicationContext context = SpringApplication.run(GameApplication.class, args);
         AnnualMeetingGameQuestionMapper mapper = context.getBean(AnnualMeetingGameQuestionMapper.class);
-        initLog4j();
-
-        initData(mapper, context);
+        InitData.initData(mapper, context);
     }
 
-    private static void initLog4j() {
-        PropertyConfigurator.configure(PropertiesUtils.initProperties("log4j.properties"));
-        log = Logger.getLogger(GameApplication.class);
 
 
-    }
-
-    private static void initData(AnnualMeetingGameQuestionMapper mapper, ApplicationContext context) {
-        HeapVariable.mapper = mapper;
-        HeapVariable.context = context;
-        InitData.initVariable();
-        InitData.initQuestion();
-    }
 
     @Bean
     public EmbeddedServletContainerFactory servletContainer() {
@@ -77,7 +58,7 @@ public class GameApplication {
             // Tweak the connection config used by Jetty to handle incoming HTTP
             // connections
             final QueuedThreadPool threadPool = server.getBean(QueuedThreadPool.class);
-            threadPool.setMaxThreads(10000);
+            threadPool.setMaxThreads(1000);
             threadPool.setMinThreads(20);
         };
     }

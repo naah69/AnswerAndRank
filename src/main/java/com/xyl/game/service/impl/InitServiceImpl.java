@@ -20,13 +20,13 @@ import java.util.ArrayList;
  */
 @Service
 public class InitServiceImpl implements InitService {
-    private final static Logger log = Logger.getLogger(InitServiceImpl.class);
+    private final static Logger logger = Logger.getLogger(InitServiceImpl.class);
 
     @Override
     public GridPage initGame(String sessionId, User user) {
         GridPage result = new GridPage();
         result.setMethod(FinalVariable.INIT_METHOD);
-        log.info("初始化用户：" + user.getUsername() + " 开始");
+        logger.info("初始化用户：" + user.getUsername() + " 开始");
         try {
             if (HeapVariable.beginTime == null) {
                 result.setErrorCode(FinalVariable.NO_GAME_STATUS_CODE);
@@ -34,7 +34,7 @@ public class InitServiceImpl implements InitService {
                 return result;
             }
             if (HeapVariable.usersMap.containsKey(sessionId)) {
-                log.info("初始化用户：" + user.getUsername() + " 已存在");
+                logger.info("初始化用户：" + user.getUsername() + " 已存在");
 
                 User u = HeapVariable.usersMap.get(sessionId);
                 if (u.getDieIndex() != null) {
@@ -59,17 +59,16 @@ public class InitServiceImpl implements InitService {
                 result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
                 result.setMessage(HeapVariable.beginTime.getTime() + "");
                 result.setPageList(QuestionUtils.getNowQuestionDTOPage());
-                log.info("初始化用户：" + user.getUsername() + " 成功");
+                logger.info("初始化用户：" + user.getUsername() + " 成功");
             } else {
                 result.setErrorCode(FinalVariable.GAME_HAS_STARTED_STATUS_CODE);
                 result.setMessage(FinalVariable.GAME_HAS_STARTED_MESSAGE);
             }
 
         } catch (Exception e) {
-            log.info("初始化用户异常：" + user.getUsername());
             result.setErrorCode(FinalVariable.INIT_ERROR_STATUS_CODE);
             result.setMessage(FinalVariable.INIT_ERROR_MESSAGE);
-            e.printStackTrace();
+            logger.info("初始化用户异常：" + user.getUsername(),e);
             return result;
         }
         return result;

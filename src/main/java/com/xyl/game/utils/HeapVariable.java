@@ -18,26 +18,72 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * HeapVariable
- *
+ * <p>
  * 内存变量
+ *
  * @author Naah
  * @date 2018-01-21
  */
 
 
 public class HeapVariable {
+    /**
+     * 题目列表
+     */
     public static List<AnnualMeetingGameQuestion> questionsList;
+
+    /**
+     * 题目DTO列表
+     */
     public static List<QuestionDTO> questionDTOList;
-    public static Map<String,User> usersMap;
-    public static Map<String,AnnualMeetingGameQuestionVo> annualMeetingGameQuestionVos;
+
+    /**
+     * 用户数据
+     */
+    public static Map<String, User> usersMap;
+
+    public static Map<String, AnnualMeetingGameQuestionVo> annualMeetingGameQuestionVos;
+
+    /**
+     * spring容器
+     */
     public static ApplicationContext context;
+
+    /**
+     * 数据库mapper
+     */
     public static AnnualMeetingGameQuestionMapper mapper;
+
     public static AtomicInteger atomic;
     public static String MD5DataChange = "";
+
+    /**
+     * 游戏开始时间
+     */
     public static Timestamp beginTime;
+
+    /**
+     * 当前题目
+     */
     public static QuestionDTO now;
-    public static int intervalSecond=12;
-    public static CopyOnWriteArrayList<Map<Byte,AtomicInteger>> answerList;
+
+    /**
+     * 题目倒计时秒数
+     */
+    public static int intervalSecond = 12;
+
+    /**
+     * 答案列表
+     */
+    public static CopyOnWriteArrayList<Map<Byte, AtomicInteger>> answerList;
+
+    /**
+     * 后台密码
+     */
     public static Admin pwd;
+
+    /**
+     * 是否发送答案
+     */
     public static AtomicBoolean isSendAnswer;
 }

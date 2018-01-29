@@ -1,9 +1,11 @@
 var websocket;
 var websocketChat = null;
-var host = window.location.hostname;
+var username='匿名';
+var answerhost = window.location.hostname;
+var chathost = window.location.hostname+":8080";
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
-    websocket = new WebSocket("ws://" + host + "/answer");
+    websocket = new WebSocket("ws://" + answerhost + "/answer");
 }
 else {
     alert('该设备不支持答题！')
@@ -41,7 +43,7 @@ websocket.onmessage = function (event) {
 
         } else if (json.errorCode == 104) {
              inited = false;
-            $.get("http://"+host+"/getQuestion", function (msg) {
+            $.get("http://"+answerhost+"/getQuestion", function (msg) {
                 var que = msg.rows[0];
                 refreshForm(que);
             });
@@ -150,6 +152,7 @@ $('#initBtn').on('click', function () {
             "method": "init",
             "user": {"username": $('#username').val(), "department": $('#department').val(), "tel": $('#tel').val()}
         };
+        username=$('#username').val();
         $('#rankBtn').css('display', 'block');
         send(JSON.stringify(message));
     }
@@ -175,7 +178,7 @@ $('#commitBtn').on('click', function () {
 
 $('#rankBtn').on('click', function () {
     $('#rankDiv').toggle();
-    $.get("http://"+host+"/rank", function (msg) {
+    $.get("http://"+answerhost+"/rank", function (msg) {
         console.log(msg.rows)
 //            table.reload('annualMeeting_question_table', {
 //                data: data.rows
@@ -200,7 +203,7 @@ var tbody = window.document.getElementById("tbody-result");
 var timesRun = 0;
 var interval;
 var intervalSecond = 12;
-$.get("http://"+host+"/intervalSecond",
+$.get("http://"+answerhost+"/intervalSecond",
     function (data) {
         intervalSecond = data;
     });
@@ -254,7 +257,7 @@ var isChat = false;
 function chat() {
     if (!isChat) {
         if ($('#commentValue').val() != '' && $('#commentValue').val() != null && $('#commentValue').val() != undefined) {
-            websocketChat.send($('#commentValue').val());
+            websocketChat.send(username+':$'+$('#commentValue').val());
             $('#commentValue').val('');
             isChat = true;
             setTimeout(function () {
@@ -273,7 +276,7 @@ function initChat() {
     //判断当前浏览器是否支持WebSocket
     if (websocketChat == null) {
         if ('websocketChat' in window) {
-            websocketChat = new WebSocket("ws://dazhizhi.free.ngrok.cc/chat");
+            websocketChat = new WebSocket("ws://"+chathost+"/chat");
             $('#chatDiv').css('display', 'block');
         }
         else {
@@ -297,7 +300,7 @@ function initChat() {
         }
 
         websocketChat.onerror = function () {
-            websocketChat = new WebSocket("ws://dazhizhi.free.ngrok.cc/chat");
+            websocketChat = new WebSocket("ws://"+chathost+"/chat");
         };
 
     }
@@ -358,3 +361,91 @@ function initChat() {
 	});
 
 }());
+
+
+(function($) {
+
+	$.fn.barrager = function(barrage) {
+		barrage = $.extend({
+			close:true,
+			top: 0,
+			max: 10,
+			speed: 8,
+			color: '#fff',
+			old_ie_color : '#000000'
+		}, barrage || {});
+
+		var time = new Date().getTime();
+		var barrager_id = 'barrage_' + time;
+		var id = '#' + barrager_id;
+		var div_barrager = $("<div class='barrage' id='" + barrager_id + "'></div>").appendTo($(this));
+		var window_height = $(window).height() - 100;
+		var this_height =  (window_height > this.height()) ? this.height() : window_height;
+		var window_width = $(window).width() + 500;
+		var this_width =  (window_width > this.width()) ? this.width() : window_width;
+		var top = (barrage.top == 0) ? Math.floor(Math.random() * this_height + 40) : barrage.top;
+		div_barrager.css("top", top + "em");
+		div_barrager_box = $("<div class='barrage_box cl'></div>").appendTo(div_barrager);
+		if(barrage.img){
+
+			div_barrager_box.append("<a class='portrait z' href='javascript:;'></a>");
+			var img = $("<img src='' >").appendTo(id + " .barrage_box .portrait");
+			img.attr('src', barrage.img);
+		}
+		div_barrager_box.append(" <div class='z p'></div>");
+		if(barrage.close){
+
+			div_barrager_box.append(" <div class='close z'></div>");
+
+		}
+
+		var content = $("<span ></span>").appendTo(id + " .barrage_box .p");
+		content.attr({
+			'id': barrage.id
+		}).empty().append(barrage.info);
+		if(navigator.userAgent.indexOf("MSIE 6.0")>0  ||  navigator.userAgent.indexOf("MSIE 7.0")>0 ||  navigator.userAgent.indexOf("MSIE 8.0")>0  ){
+
+			content.css('color', barrage.old_ie_color);
+
+		}else{
+
+			content.css('color', barrage.color);
+
+		}
+
+		var i = 0;
+		div_barrager.css('margin-right', 0);
+
+ 		$(id).animate({right:this_width},barrage.speed*1000,function(){
+
+			$(id).remove();
+		});
+
+		div_barrager_box.mouseover(function() {
+		     $(id).stop(true);
+		});
+
+		div_barrager_box.mouseout(function() {
+
+			$(id).animate({right:this_width},barrage.speed*1000,function(){
+
+				$(id).remove();
+			});
+
+ 		});
+
+		$(id+'.barrage .barrage_box .close').click(function(){
+
+			$(id).remove();
+
+		})
+
+	}
+
+	$.fn.barrager.removeAll=function(){
+
+		 $('.barrage').remove();
+
+	}
+
+})(jQuery);

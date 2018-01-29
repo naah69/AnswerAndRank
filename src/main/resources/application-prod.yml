@@ -10,9 +10,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:clickhouse://127.0.0.1:8123/answer
+      url: jdbc:clickhouse://172.28.0.21:8123/answer
       driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
-      username: root
+      username: default
       password:
       # 下面为连接池的补充设置，应用到上面所有数据源中
       initial-size: 5

@@ -8,6 +8,7 @@ import com.xyl.game.service.UploadScoreService;
 import com.xyl.game.utils.FinalVariable;
 import com.xyl.game.utils.HeapVariable;
 import com.xyl.game.utils.JsonUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -25,20 +26,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 public class AnswerWebSocket {
 
+    private static final Logger logger = Logger.getLogger(AnswerWebSocket.class);
+
     /**
-     * 静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
+     * 当前连接数
      */
     private static AtomicInteger onlineCount = new AtomicInteger();
 
     /**
-     * concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
+     * websocket集合
      */
-
     public static ConcurrentLinkedDeque<AnswerWebSocket> webSocketList = new ConcurrentLinkedDeque<>();
 
 
     /**
-     * 与某个客户端的连接会话，需要通过它来给客户端发送数据
+     * 当前session
      */
     private Session session;
 
@@ -48,9 +50,9 @@ public class AnswerWebSocket {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        session.setMaxIdleTimeout(1000*60*30);
+        session.setMaxIdleTimeout(1000 * 60 * 30);
         webSocketList.add(this);
-        System.out.println("连接Answer成功！当前在线人数为" + addOnlineCount());
+        logger.info("Answer连接！人数:" + addOnlineCount());
         ManageWebSocket.sendCount();
 
     }
@@ -61,7 +63,7 @@ public class AnswerWebSocket {
     @OnClose
     public void onClose() {
         webSocketList.remove(this);
-        System.out.println("有一连接Answer关闭！当前在线人数为" + subOnlineCount());
+        logger.info("Answer关闭！人数:" + subOnlineCount());
         ManageWebSocket.sendCount();
     }
 
@@ -72,17 +74,16 @@ public class AnswerWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("session:"+session.getId());
         RequestDTO req = JsonUtils.jsonToObject(message, RequestDTO.class);
         GridPage<QuestionDTO> result = new GridPage<>();
         String sessionId = session.getId();
         switch (req.getMethod()) {
             case "init":
-                result = HeapVariable.context.getBean(InitService.class).initGame(sessionId, req.getUser());
+                result = initService().initGame(sessionId, req.getUser());
                 ManageWebSocket.sendUserInfo();
                 break;
             case "updateScore":
-                result = HeapVariable.context.getBean(UploadScoreService.class).uploadScore(req.getId(), req.getAnswer()!=null?req.getAnswer().byteValue():(byte)0, req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
+                result = uploadScoreService().uploadScore(req.getId(), req.getAnswer() != null ? req.getAnswer().byteValue() : (byte) 0, req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
                 break;
             default:
                 result.setErrorCode(FinalVariable.NO_METHOD_ERROR_STATUS_CODE);
@@ -92,53 +93,113 @@ public class AnswerWebSocket {
         sendGridPage(result);
     }
 
+
     /**
      * 发生错误时调用
      **/
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("发生错误");
+        logger.info("发生错误");
         error.printStackTrace();
     }
 
+    /**
+     * 发送消息
+     *
+     * @param message
+     */
     public void sendMessage(String message) {
-				//this.session.getBasicRemote().sendText(message);
+        //同步发送
+        //this.session.getBasicRemote().sendText(message);
+        //异步发送
         this.session.getAsyncRemote().sendText(message);
-        //this.session.getAsyncRemote().sendText(message);
     }
 
+    /**
+     * 发送GirdPage
+     *
+     * @param result
+     */
     public void sendGridPage(GridPage result) {
         sendMessage(JsonUtils.objectToJSON(result));
     }
 
     /**
-     * 群发自定义消息
+     * 群发消息
      */
-    public static void sendInfo(String message) {
+    public static int sendInfo(String message) {
+        int i = 0;
         for (AnswerWebSocket item : webSocketList) {
             item.sendMessage(message);
+            i++;
         }
+        return i;
     }
 
-    public static void sendGridPageToAll(GridPage result) {
-        sendInfo(JsonUtils.objectToJSON(result));
+    /**
+     * 群发GirdPage
+     *
+     * @param result
+     * @return
+     */
+    public static int sendGridPageToAll(GridPage result) {
+        return sendInfo(JsonUtils.objectToJSON(result));
     }
 
 
+    /**
+     * 获取当前人数
+     *
+     * @return
+     */
     public static synchronized int getOnlineCount() {
         return onlineCount.get();
     }
 
+    /**
+     * 增加人数
+     *
+     * @return
+     */
     private synchronized int addOnlineCount() {
         return onlineCount.incrementAndGet();
     }
 
+    /**
+     * 减少人数
+     *
+     * @return
+     */
     private synchronized int subOnlineCount() {
         return onlineCount.decrementAndGet();
     }
 
-    public String getSessionId(){
-    	return session.getId();
+    /**
+     * 获取sessionId
+     *
+     * @return
+     */
+    public String getSessionId() {
+        return session.getId();
     }
+
+    /**
+     * uploadScoreService服务
+     *
+     * @return
+     */
+    private UploadScoreService uploadScoreService() {
+        return HeapVariable.context.getBean(UploadScoreService.class);
+    }
+
+    /**
+     * initService服务
+     *
+     * @return
+     */
+    private InitService initService() {
+        return HeapVariable.context.getBean(InitService.class);
+    }
+
 
 }

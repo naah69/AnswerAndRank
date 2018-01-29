@@ -13,10 +13,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2018-01-23
  */
 public class AnswerUtils {
+    /**
+     * 获取当前答案
+     * @return
+     */
      public static int getAnswerNow() {
         return HeapVariable.questionsList.get(HeapVariable.now.getId() - 1).getRightAnswer() ;
     }
-    public static  Page<AnswerDTO> getAnswerCount(){
+
+    /**
+     * 获取当前答案统计
+     * @return
+     */
+    public static  Page<AnswerDTO> getAnswerCountNow(){
         int id=HeapVariable.now.getId();
         int rightAnswer = AnswerUtils.getAnswerNow();
         Map<Byte, AtomicInteger> resultMap = HeapVariable.answerList.get(id-1);

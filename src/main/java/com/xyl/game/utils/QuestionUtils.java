@@ -15,6 +15,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2018-01-22
  */
 public class QuestionUtils {
+
+    /**
+     * 下一题目Page
+     * @param id 当前题目id
+     * @return
+     */
     public static Page<QuestionDTO> getNextQuestionDTOPage(int id) {
         List<QuestionDTO> list = HeapVariable.questionDTOList;
         Page<QuestionDTO> page = new Page<>();
@@ -24,21 +30,38 @@ public class QuestionUtils {
         return page;
     }
 
+    /**
+     * 现在题目Page
+     * @return
+     */
     public static Page<QuestionDTO> getNowQuestionDTOPage() {
         Page<QuestionDTO> page = new Page<>();
         page.add(HeapVariable.now);
         return page;
     }
 
+    /**
+     * 获得题目和答案
+     * @param id 题目id
+     * @return
+     */
     public static AnnualMeetingGameQuestion getQuestion(int id) {
         return HeapVariable.questionsList.get(id - 1);
     }
 
-
+    /**
+     * 获取答案统计数据
+     * @param id 题目id
+     * @return
+     */
     public static Map<Byte, AtomicInteger> getAnswerMap(int id) {
         return HeapVariable.answerList.get(id - 1);
     }
 
+    /**
+     * 获取下一题DTO
+     * @return
+     */
     public static QuestionDTO getNextQuestionDTO() {
         QuestionDTO now = HeapVariable.now;
         if (now == null) {

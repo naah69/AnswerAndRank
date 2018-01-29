@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -47,6 +46,7 @@ public class ManageWebSocket {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
+        session.setMaxIdleTimeout(1000*60*30);
         webSocketList.add(this);
         System.out.println("连接Manage成功！当前在线人数为" + addOnlineCount());
         sendUserInfo();

@@ -16,12 +16,21 @@ import java.util.Map;
  * @date 2018-01-23
  */
 public class UserUtils {
+    /**
+     * 获取用户数据
+     * @param session
+     * @return
+     */
     public static User getUser(AnswerWebSocket session){
         String sessionId=session.getSessionId();
         User user = HeapVariable.usersMap.get(sessionId);
         return user;
     }
 
+    /**
+     * 排行榜
+     * @return
+     */
     public static  Page<UserDTO> getRank(){
          Map<String, User> usersMap = HeapVariable.usersMap;
         Collection<User> users = usersMap.values();

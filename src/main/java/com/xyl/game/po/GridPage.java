@@ -75,7 +75,7 @@ public class GridPage<T> implements Serializable {
 	}
 
 	public boolean isSuccess() {
-		return errorCode == null || "".equals(errorCode.trim());
+		return errorCode == null || "".equals(errorCode.trim())||errorCode=="0"||"0".equals(errorCode.trim());
 	}
 
 	public String getMessage() {

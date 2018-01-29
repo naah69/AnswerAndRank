@@ -15,6 +15,11 @@ import java.util.Properties;
  */
 public class PropertiesUtils {
 
+    /**
+     * 初始化配置文件
+     * @param fileName
+     * @return
+     */
 	public static Properties initProperties(String fileName) {
 		Properties properties = new Properties();
 		InputStreamReader input = null;
