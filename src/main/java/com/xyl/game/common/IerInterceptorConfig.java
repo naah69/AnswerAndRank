@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class IerInterceptorConfig extends WebMvcConfigurerAdapter{
 	 /**
-     * 注册 拦截器
+     * 注册拦截器
      */
 	 @Override
 	    public void addInterceptors(InterceptorRegistry registry) {

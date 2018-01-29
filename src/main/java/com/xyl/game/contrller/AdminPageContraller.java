@@ -15,11 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 /**
- * 权限访问控制
- *
- * @author dazhi
- */
-/**
  * 后台页面访问控制
  * @author dazhi
  *
