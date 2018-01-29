@@ -22,7 +22,6 @@ import org.springframework.context.annotation.Profile;
 @SpringBootApplication
 @MapperScan("com.xyl.game.mapper")
 //@EnableScheduling
-
 public class GameApplication {
 
     public static void main(String[] args) {
