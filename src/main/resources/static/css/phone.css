@@ -52,7 +52,7 @@ label:before {
     box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
 }
 
-#commitBtn, #rankBtn {
+#commitBtn, #rankBtn,#chatBtn {
     height: 36px !important;
 }
 

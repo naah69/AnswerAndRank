@@ -59,6 +59,7 @@ public class GameApplication {
             final QueuedThreadPool threadPool = server.getBean(QueuedThreadPool.class);
             threadPool.setMaxThreads(1000);
             threadPool.setMinThreads(20);
+            threadPool.setIdleTimeout(1000*60*30);
         };
     }
 }

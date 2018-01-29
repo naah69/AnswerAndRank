@@ -3,6 +3,7 @@ var websocketChat = null;
 var username='匿名';
 var answerhost = window.location.hostname;
 var chathost = window.location.hostname+":8080";
+var chatFlag=true;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
     websocket = new WebSocket("ws://" + answerhost + "/answer");
@@ -24,7 +25,6 @@ websocket.onopen = function (event) {
 var inited = null;
 //接收到消息的回调方法
 websocket.onmessage = function (event) {
-    console.log(event.data);
     var json = JSON.parse(event.data);
     if (json.method == 'init') {
 
@@ -113,6 +113,7 @@ websocket.onclose = function () {
 //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
 window.onbeforeunload = function () {
     websocket.close();
+    websocketChat.close;
 }
 
 
@@ -179,7 +180,6 @@ $('#commitBtn').on('click', function () {
 $('#rankBtn').on('click', function () {
     $('#rankDiv').toggle();
     $.get("http://"+answerhost+"/rank", function (msg) {
-        console.log(msg.rows)
 //            table.reload('annualMeeting_question_table', {
 //                data: data.rows
 //            })
@@ -239,7 +239,6 @@ function refreshForm(que) {
     time();
     $('#userTime').text("");
     $('#id').val(que['id']);
-    console.log($('#id').val())
     $('#question').html('第' + que['id'] + '题：<br>' + que['question']);
     $('#answer1').text(que['answerOne']);
     $('#answer1').css({"font-size": "25px", "color": "#333"});
@@ -274,10 +273,12 @@ function chat() {
 
 function initChat() {
     //判断当前浏览器是否支持WebSocket
-    if (websocketChat == null) {
+    if (websocketChat == null||chatFlag==false) {
         if ('websocketChat' in window) {
             websocketChat = new WebSocket("ws://"+chathost+"/chat");
             $('#chatDiv').css('display', 'block');
+            chatFlag=true;
+             $('#chatBtn').val('关闭弹幕');
         }
         else {
             alert('Not support websocketChat')
@@ -285,7 +286,6 @@ function initChat() {
 
         //接收到消息的回调方法
         websocketChat.onmessage = function (event) {
-            console.log(event.data);
             var i = Math.round(Math.random() * 7);
             var item = {
                 info: event.data, //文字
@@ -305,6 +305,19 @@ function initChat() {
 
     }
 }
+
+$('#chatBtn').on('click',function () {
+    if(chatFlag){
+         $.fn.barrager.removeAll();
+        websocketChat.close();
+        $('#chatDiv').css('display','none');
+        chatFlag=false;
+        $('#chatBtn').val('开启弹幕');
+    }else{
+        initChat();
+    }
+
+});
 
 
 (function () {
