@@ -96,9 +96,8 @@ public class AnnualMeetingTimeContreller {
 		response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment;filename="+"printUserData.xlsx");
 		try {
-
 			outputStream = response.getOutputStream();
-			ExcelUtil.printdata(outputStream);
+			ExcelUtil.printUserData(outputStream);
 		} catch (IOException e) {
 			logger.info("流获得失败");
 			e.printStackTrace();

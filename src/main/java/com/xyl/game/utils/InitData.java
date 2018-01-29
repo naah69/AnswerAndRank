@@ -89,7 +89,6 @@ public class InitData {
         List<AnnualMeetingGameQuestion> questionList = HeapVariable.questionsList;
         HeapVariable.atomic = new AtomicInteger();
         HeapVariable.atomic.set(questionList.size());
-        ;
         HeapVariable.answerList = new CopyOnWriteArrayList<>();
         for (int i = 0; i < HeapVariable.questionsList.size(); i++) {
             ConcurrentHashMap<Byte, AtomicInteger> hashMap = new ConcurrentHashMap<>(5);
