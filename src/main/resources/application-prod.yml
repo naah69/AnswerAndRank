@@ -10,7 +10,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:clickhouse://172.28.0.21:8123/answer
+      url: jdbc:clickhouse://172.17.0.3:8123/answer
       driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
       username: default
       password:
