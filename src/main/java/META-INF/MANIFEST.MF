@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Class-Path: thymeleaf-spring4-2.1.6.RELEASE.jar druid-spring-boot-star
+ ter-1.1.5.jar thymeleaf-2.1.6.RELEASE.jar spring-websocket-4.3.13.REL
+ EASE.jar stax-api-1.0.1.jar spring-boot-starter-logging-1.5.9.RELEASE
+ .jar log4j-over-slf4j-1.7.25.jar joda-time-2.9.9.jar mybatis-spring-1
+ .3.1.jar tomcat-embed-websocket-8.5.23.jar validation-api-1.1.0.Final
+ .jar curvesapi-1.04.jar ognl-3.0.8.jar jul-to-slf4j-1.7.25.jar poi-3.
+ 15.jar mybatis-spring-boot-autoconfigure-1.3.1.jar spring-messaging-4
+ .3.13.RELEASE.jar spring-beans-4.3.13.RELEASE.jar tomcat-jdbc-8.5.23.
+ jar hibernate-validator-5.3.6.Final.jar poi-ooxml-3.15.jar spring-boo
+ t-starter-thymeleaf-1.5.9.RELEASE.jar slf4j-api-1.7.25.jar classmate-
+ 1.3.4.jar commons-codec-1.10.jar gson-2.8.2.jar jackson-core-2.8.10.j
+ ar mybatis-spring-boot-starter-1.3.1.jar poi-ooxml-schemas-3.15.jar c
+ lickhouse-jdbc-0.1.34.jar jboss-logging-3.3.1.Final.jar log4j-1.2.17.
+ jar httpcore-4.4.8.jar spring-web-4.3.13.RELEASE.jar spring-boot-star
+ ter-websocket-1.5.9.RELEASE.jar spring-context-4.3.13.RELEASE.jar spr
+ ing-boot-devtools-1.5.9.RELEASE.jar logback-classic-1.1.11.jar spring
+ -boot-starter-tomcat-1.5.9.RELEASE.jar spring-expression-4.3.13.RELEA
+ SE.jar jcl-over-slf4j-1.7.25.jar groovy-2.4.13.jar tomcat-embed-core-
+ 8.5.23.jar lz4-1.3.0.jar spring-boot-starter-jdbc-1.5.9.RELEASE.jar j
+ avassist-3.21.0-GA.jar httpclient-4.5.3.jar spring-core-4.3.13.RELEAS
+ E.jar spring-boot-autoconfigure-1.5.9.RELEASE.jar spring-aop-4.3.13.R
+ ELEASE.jar spring-tx-4.3.13.RELEASE.jar thymeleaf-layout-dialect-1.4.
+ 0.jar xmlbeans-2.6.0.jar snakeyaml-1.17.jar tomcat-annotations-api-8.
+ 5.23.jar scala-library-2.11.0.jar spring-jdbc-4.3.13.RELEASE.jar jack
+ son-annotations-2.8.0.jar mybatis-3.4.5.jar jackson-databind-2.8.10.j
+ ar guava-19.0.jar spring-webmvc-4.3.13.RELEASE.jar druid-1.1.5.jar ht
+ tpmime-4.5.3.jar tomcat-embed-el-8.5.23.jar lombok-1.16.18.jar spring
+ -boot-1.5.9.RELEASE.jar unbescape-1.1.0.RELEASE.jar tomcat-juli-8.5.2
+ 3.jar spring-boot-starter-1.5.9.RELEASE.jar logback-core-1.1.11.jar c
+ ommons-collections4-4.1.jar spring-boot-starter-web-1.5.9.RELEASE.jar
+Main-Class: com.xyl.game.GameApplication
+
