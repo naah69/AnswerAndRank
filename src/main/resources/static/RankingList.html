@@ -56,22 +56,22 @@
         <div id="answers" class="radio">
             <input type="hidden" id="id" name="id">
             <p class="pa1r">
-                <span 
+                <span
                        style="color: #333333;word-wrap: break-word;width: 80%"
                        id="answer1"></span>
             </p>
             <p class="pa2r">
-                <span 
+                <span
                        style="color: #333333;word-wrap: break-word;width: 80%"
                        id="answer2"></span>
             </p>
             <p >
-                <span 
+                <span
                        style="word-wrap: break-word;width: 80%"
                        id="answer3"></span>
             </p>
             <p class="pa4r">
-                <span 
+                <span
                        style="color: #333333;word-wrap: break-word;width: 80%"
                        id="answer4"></span>
             </p>
@@ -107,9 +107,9 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <!-- websocket -->
 <script type="text/javascript">
-    var chathost = window.location.hostname + ":8080";
-    var host = window.location.hostname;
-    var answerhost = window.location.hostname;
+    var chathost = "183.136.134.235:8080";
+    var host ='183.136.134.235';
+    var answerhost = '183.136.134.235';
     var websocket = null;
     var websocketAnswer = null;
     var timesRun = 12;
@@ -126,7 +126,7 @@
 	    function (data) {
 	        intervalSecond = data;
 	});
-	
+
 	websocketAnswer.onmessage = function (event) {
 	    var json = JSON.parse(event.data);
 	     if (json.method == 'question') {
@@ -191,7 +191,7 @@
         }
     }
     var websocketChat;
-    
+
     //判断当前浏览器是否支持WebSocket
     if ('websocketChat' in window) {
         websocketChat = new WebSocket("ws://"+chathost+"/chat");
