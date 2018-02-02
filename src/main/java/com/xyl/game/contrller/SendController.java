@@ -144,7 +144,7 @@ public class SendController {
                     times = userAnswer.getTime();
                 }
                 /*答题是否未超时*/
-                boolean overTime = times > 0 && times <= HeapVariable.intervalSecond;
+                boolean overTime = times > 0 && times <= HeapVariable.intervalSecond+5;
 
                 /*判断答案是否正确*/
                 if (overTime && userAnswer != null && userAnswer.getAnswer() == rightAnswer) {
