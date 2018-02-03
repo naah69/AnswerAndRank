@@ -132,7 +132,7 @@ public class SendController {
         for (AnswerWebSocket session : sessionList) {
             User user = UserUtils.getUser(session);
             /*判断用户是否死亡*/
-            if (user != null && user.getDieIndex() == null) {
+            if (user != null && user.getDieIndex()==-1) {
                 /*用户答案列表*/
                 List<Answer> answersList = user.getAnswers();
 
@@ -179,8 +179,8 @@ public class SendController {
                 }
                 /*死亡用户不判断答案*/
             } else {
-                answer.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
-                answer.setMessage(FinalVariable.NORMAL_MESSAGE);
+                answer.setErrorCode(FinalVariable.GAME_LOST_STATUS_CODE);
+                answer.setMessage(FinalVariable.GAME_LOST_MESSAGE);
             }
             /*发送答案*/
             session.sendGridPage(answer);

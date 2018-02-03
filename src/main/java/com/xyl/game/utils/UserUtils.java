@@ -22,9 +22,13 @@ public class UserUtils {
      * @return
      */
     public static User getUser(AnswerWebSocket session){
-        String sessionId=session.getSessionId();
-        User user = HeapVariable.usersMap.get(sessionId);
-        return user;
+        if(session.tel!=null){
+             User user = HeapVariable.usersMap.get(session.tel);
+            return user;
+        }else{
+            return null;
+        }
+
     }
 
     /**

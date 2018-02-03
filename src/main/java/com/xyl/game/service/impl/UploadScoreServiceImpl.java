@@ -24,7 +24,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Service
 public class UploadScoreServiceImpl implements UploadScoreService {
-    private static final Logger logger=Logger.getLogger(UploadScoreService.class);
+    private static final Logger logger = Logger.getLogger(UploadScoreService.class);
+
     @Override
     public GridPage<QuestionDTO> uploadScore(Integer id, Byte answer, Integer times, String sessionId, User user) {
         GridPage<QuestionDTO> result = new GridPage<>();
@@ -59,8 +60,8 @@ public class UploadScoreServiceImpl implements UploadScoreService {
         }
 
 
-        if (user.getDieIndex() != null) {
-            logger.info("用户 "+user.getUsername()+" 游戏结束！");
+        if (user.getDieIndex() != null&&user.getDieIndex()>0) {
+            logger.info("用户 " + user.getUsername() + " 游戏结束！");
             result.setErrorCode(FinalVariable.YOU_HAD_DIED_STATUS_CODE);
             result.setMessage(FinalVariable.YOU_HAD_DIED_MESSAGE);
             return result;
@@ -74,12 +75,18 @@ public class UploadScoreServiceImpl implements UploadScoreService {
             user.setDieIndex(HeapVariable.now.getId());
             return result;
         }
+        Answer userAnswer;
+        if (user.getAnswers() != null && user.getAnswers().size() != 0 && user.getAnswers().size() >=HeapVariable.now.getId()) {
+            result.setErrorCode(FinalVariable.ANSWER_HAS_COMMIT_STATUS_CODE);
+            result.setMessage(FinalVariable.ANSWER_HAS_COMMIT_MESSAGE);
+            return result;
+        }
 
         //判断用户答题是否为空
         answer = answer != null ? answer : 0;
 
         AnnualMeetingGameQuestion question = QuestionUtils.getQuestion(id);
-        Answer userAnswer = new Answer(id, question, answer, times, false, new Timestamp(System.currentTimeMillis()));
+        userAnswer = new Answer(id, question, answer, times, false, new Timestamp(System.currentTimeMillis()));
         /*添加用户答案*/
         user.getAnswers().add(userAnswer);
         /*用户耗时*/
@@ -89,7 +96,7 @@ public class UploadScoreServiceImpl implements UploadScoreService {
         AtomicInteger count = answerMap.get(answer);
         count.incrementAndGet();
 
-        logger.info(user.getUsername()+" 上传第"+id+"题答案成功！ 用户答案："+answer);
+        logger.info(user.getUsername() + " 上传第" + id + "题答案成功！ 用户答案：" + answer);
         result.setErrorCode(FinalVariable.NORMAL_STATUS_CODE);
         result.setMessage(FinalVariable.NORMAL_MESSAGE);
 

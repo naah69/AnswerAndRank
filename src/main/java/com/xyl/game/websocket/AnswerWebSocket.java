@@ -38,7 +38,7 @@ public class AnswerWebSocket {
      */
     public static ConcurrentLinkedDeque<AnswerWebSocket> webSocketList = new ConcurrentLinkedDeque<>();
 
-
+    public String tel;
     /**
      * 当前session
      */
@@ -77,13 +77,24 @@ public class AnswerWebSocket {
         RequestDTO req = JsonUtils.jsonToObject(message, RequestDTO.class);
         GridPage<QuestionDTO> result = new GridPage<>();
         String sessionId = session.getId();
+
+        String tel;
+        try {
+            tel = req.getUser().getTel();
+        } catch (Exception e) {
+            result.setErrorCode("999");
+            result.setMessage("找不到用户");
+            sendGridPage(result);
+            return;
+        }
         switch (req.getMethod()) {
             case "init":
+                this.tel=req.getUser().getTel();
                 result = initService().initGame(sessionId, req.getUser());
                 ManageWebSocket.sendUserInfo();
                 break;
             case "updateScore":
-                result = uploadScoreService().uploadScore(req.getId(), req.getAnswer() != null ? req.getAnswer().byteValue() : (byte) 0, req.getTimes(), session.getId(), HeapVariable.usersMap.get(sessionId));
+                result = uploadScoreService().uploadScore(req.getId(), req.getAnswer() != null ? req.getAnswer().byteValue() : (byte) 0, req.getTimes(), sessionId, HeapVariable.usersMap.get(tel));
                 break;
             default:
                 result.setErrorCode(FinalVariable.NO_METHOD_ERROR_STATUS_CODE);

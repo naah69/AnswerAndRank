@@ -59,7 +59,7 @@ public class AnnualMeetingTimeContreller {
 
 		HeapVariable.beginTime = new Timestamp(times.getTime());
 		logger.info("游戏开始时间初始化成功！");
-		InitData.initCount();
+		InitData.initCount(true);
 		return "ok";
 	}
 

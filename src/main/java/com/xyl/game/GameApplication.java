@@ -12,6 +12,8 @@ import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * SpringBOOT 启动类
@@ -21,14 +23,15 @@ import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 @MapperScan("com.xyl.game.mapper")
-//@EnableScheduling
+@EnableScheduling
 public class GameApplication {
 
     public static void main(String[] args) {
 
         ApplicationContext context = SpringApplication.run(GameApplication.class, args);
         AnnualMeetingGameQuestionMapper mapper = context.getBean(AnnualMeetingGameQuestionMapper.class);
-        InitData.initData(mapper, context);
+        StringRedisTemplate redis = context.getBean(StringRedisTemplate.class);
+        InitData.initData(mapper, context,redis);
     }
 
 

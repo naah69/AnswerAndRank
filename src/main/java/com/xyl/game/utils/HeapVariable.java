@@ -7,6 +7,7 @@ import com.xyl.game.po.AnnualMeetingGameQuestion;
 import com.xyl.game.po.User;
 import com.xyl.game.vo.AnnualMeetingGameQuestionVo;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.redis.core.HashOperations;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -86,4 +87,6 @@ public class HeapVariable {
      * 是否发送答案
      */
     public static AtomicBoolean isSendAnswer;
+
+    public static HashOperations<String, String, Object> redis;
 }

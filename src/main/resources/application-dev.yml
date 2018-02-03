@@ -34,3 +34,7 @@ spring:
       # 打开PSCache，并且指定每个连接上PSCache的大小
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 200
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
