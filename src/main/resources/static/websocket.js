@@ -1,8 +1,10 @@
 var websocket;
 var websocketChat = null;
 var username = '匿名';
-var answerhost = '183.136.134.235';
-var chathost = "183.136.134.235:8080";
+// var answerhost = '183.136.134.235';
+// var chathost = "183.136.134.235:8080";
+var answerhost = window.location.hostname;
+var chathost = answerhost+":8080";
 var chatFlag = true;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {

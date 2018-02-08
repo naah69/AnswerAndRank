@@ -109,9 +109,9 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <!-- websocket -->
 <script type="text/javascript">
-    var chathost = "183.136.134.235:8080";
-    var host = '183.136.134.235';
-    var answerhost = '183.136.134.235';
+    var host = window.location.hostname;
+    var answerhost = host;
+    var chathost = host+":8080";
     var websocket = null;
     var websocketAnswer = null;
     var timesRun = 12;
