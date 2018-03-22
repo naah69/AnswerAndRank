@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Class-Path: spring-webmvc-4.3.13.RELEASE.jar apache-el-8.0.33.jar spri
+ ng-aop-4.3.13.RELEASE.jar websocket-server-9.4.7.v20170914.jar javax.
+ websocket-api-1.0.jar classmate-1.3.4.jar logback-core-1.1.11.jar jet
+ ty-client-9.4.7.v20170914.jar jul-to-slf4j-1.7.25.jar spring-boot-sta
+ rter-jetty-1.5.9.RELEASE.jar validation-api-1.1.0.Final.jar spring-bo
+ ot-starter-1.5.9.RELEASE.jar slf4j-api-1.7.25.jar jetty-util-9.4.7.v2
+ 0170914.jar jetty-annotations-9.4.7.v20170914.jar jackson-annotations
+ -2.8.0.jar spring-boot-autoconfigure-1.5.9.RELEASE.jar spring-beans-4
+ .3.13.RELEASE.jar spring-expression-4.3.13.RELEASE.jar spring-web-4.3
+ .13.RELEASE.jar spring-context-4.3.13.RELEASE.jar javax-websocket-ser
+ ver-impl-9.4.7.v20170914.jar spring-boot-starter-websocket-1.5.9.RELE
+ ASE.jar spring-core-4.3.13.RELEASE.jar log4j-over-slf4j-1.7.25.jar jb
+ oss-logging-3.3.1.Final.jar asm-commons-5.1.jar jetty-webapp-9.4.7.v2
+ 0170914.jar jackson-databind-2.8.10.jar spring-boot-starter-logging-1
+ .5.9.RELEASE.jar jetty-continuation-9.4.7.v20170914.jar jetty-plus-9.
+ 4.7.v20170914.jar jetty-security-9.4.7.v20170914.jar jcl-over-slf4j-1
+ .7.25.jar jackson-core-2.8.10.jar asm-5.1.jar jetty-server-9.4.7.v201
+ 70914.jar javax.servlet-api-4.0.0.jar javax-websocket-client-impl-9.4
+ .7.v20170914.jar websocket-servlet-9.4.7.v20170914.jar spring-messagi
+ ng-4.3.13.RELEASE.jar websocket-common-9.4.7.v20170914.jar jetty-xml-
+ 9.4.7.v20170914.jar jetty-io-9.4.7.v20170914.jar javax.annotation-api
+ -1.2.jar jetty-servlet-9.4.7.v20170914.jar spring-websocket-4.3.13.RE
+ LEASE.jar jetty-http-9.4.7.v20170914.jar jetty-servlets-9.4.7.v201709
+ 14.jar asm-tree-5.1.jar websocket-api-9.4.7.v20170914.jar log4j-1.2.1
+ 7.jar websocket-client-9.4.7.v20170914.jar hibernate-validator-5.3.6.
+ Final.jar spring-boot-1.5.9.RELEASE.jar logback-classic-1.1.11.jar sn
+ akeyaml-1.17.jar spring-boot-starter-web-1.5.9.RELEASE.jar
+Main-Class: com.xyl.bulletchat.WebsockerApplication
+
