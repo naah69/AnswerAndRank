@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>排行榜</title>
+    <link rel="stylesheet" href="http://naah.eqqhr.com/css/style.css">
+    <style type="text/css">
+        .barrage_box div.p span {
+            margin-right: 10px;
+            font-size: 24px;
+            color: #fff;
+            margin-left: 18px;
+        }
+
+        /*;*/
+        .barrage_box {
+            background-color: rgba(0, 0, 0, .5);
+            padding-right: 8px;
+            height: 40px;
+            display: inline-block;
+            border-radius: 25px;
+            transition: all .3s;
+        }
+
+        .fh5co-form {
+            padding-left: 30px;
+            padding: 0px;
+            margin-top: 0em;
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+        }
+
+        body {
+            background-color: #fff;
+        }
+
+        .h1Title {
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+<!--答题-->
+<h1 style="text-align: center; font-size: 50px; color:#638ECE; margin: 0px;" class="h1Title" id="rankTitle">年会答题排行榜</h1>
+<div id="questionDiv">
+    <form style="margin-left: 60px;" id="form1" action="#" class="fh5co-form animate-box"
+          data-animate-effect="fadeInLeft">
+        <div>
+            <span class="time" style="font-size: 25px;color: #333333">倒计时：</span>
+            <h1 style="color: #ffffff;font-size: 20px;width: 30px;height: 30px;border-radius: 15px;text-align: center;display: inline-block;line-height: 30px;background: #0e6db7;display: inline-block"
+                id="timeViewer"></h1>
+        </div>
+        <h1 style="font-size: 20px;color: #333333" id="userTime"></h1>
+        <div id="obj">
+            <span id="question" style="font-size: 28px;color: #0c6db7;word-wrap: break-word;"></span>
+            <span class="space" style="font-size: 28px;color: #0c6db7">&nbsp;</span>
+        </div>
+        <div id="answers" class="radio">
+            <input type="hidden" id="id" name="id">
+            <p class="pa1r">
+                <span
+                        style="color: #333333;word-wrap: break-word;width: 80%"
+                        id="answer1"></span>
+            </p>
+            <p class="pa2r">
+                <span
+                        style="color: #333333;word-wrap: break-word;width: 80%"
+                        id="answer2"></span>
+            </p>
+            <p>
+                <span
+                        style="word-wrap: break-word;width: 80%"
+                        id="answer3"></span>
+            </p>
+            <p class="pa4r">
+                <span
+                        style="color: #333333;word-wrap: break-word;width: 80%"
+                        id="answer4"></span>
+            </p>
+        </div>
+
+    </form>
+</div>
+
+<!--排行榜-->
+<div id="div3" style="padding-top: 30px;margin: 0 60px;">
+    <h1 style="font-size: 35px;color: #0c6db7;font-weight: bold;letter-spacing: 4px" class="h1Title answer"></h1>
+    <div class="col">
+        <!-- Start Sign In Form -->
+        <form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
+            <table style="width:100%" id="table-result">
+                <thead>
+                <tr style="font-size: 30px;color: #333;">
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">排名</th>
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">姓名</th>
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">公司部门</th>
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">用时</th>
+                    <th style="width:20%;background-color: #599BD5; color: #EEFEFF;">分数</th>
+                </tr>
+                </thead>
+                <tbody id="tbody-result" style="text-align: center;">
+                </tbody>
+            </table>
+        </form>
+        <!-- END Sign In Form -->
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- websocket -->
+<script type="text/javascript">
+    var host = window.location.hostname;
+    var answerhost = host;
+    var chathost = host+":8080";
+    var websocket = null;
+    var websocketAnswer = null;
+    var timesRun = 12;
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://" + host + "/Manage");
+    }
+    if ('WebSocket' in window) {
+        websocketAnswer = new WebSocket("ws://" + answerhost + "/answer");
+    }
+    var timesRun = 0;
+    var interval;
+    var intervalSecond = 12;
+    $.get("http://" + answerhost + "/intervalSecond",
+        function (data) {
+            intervalSecond = data;
+        });
+
+
+    websocketAnswer.onmessage = function (event) {
+        var json = JSON.parse(event.data);
+        if (json.method == 'question') {
+            if (json.errorCode == 0) {
+                $("input[type='radio']").removeAttr('checked');
+                var que = json.rows[0];
+                refreshForm(que);
+                $('#questionDiv').css('display', 'block');
+                $('#initDiv').css('display', 'none');
+                $('#waitDiv').css('display', 'none');
+                $('#wait').css('display', 'none');
+            } else {
+                // alert(json.message);
+                $('#rankBtn').click();
+                $('#rankDiv').css('display', 'block');
+            }
+        } else if (json.method == 'answer') {
+            clearTime();
+            var que = json.rows[0];
+            $('#answer1').text($('#answer1').text() + '    ' + que['answerOne'] + '个人');
+            $('#answer2').text($('#answer2').text() + '    ' + que['answerTwo'] + '个人');
+            $('#answer3').text($('#answer3').text() + '    ' + que['answerThree'] + '个人');
+            $('#answer4').text($('#answer4').text() + '    ' + que['answerFour'] + '个人');
+            $('#answer' + que.rightAnswer).css('color', '#009688');
+        } else {
+        }
+    }
+
+    websocket.onmessage = function (event) {
+        var json = null;
+        try {
+            json = JSON.parse(event.data)
+        }
+        catch (e) {
+        }
+        if (json != null) {
+            if (json.method == 'rank') {
+                var user = json.rows;
+                if (user != null) {
+                    var str = "";
+                    for (i in user) {
+                        if (i % 2 != 0) {
+                            str += "<tr style=\"font-size: 30px;color: #000005;\">" +
+                                "<td style='background-color:#EBEEF7;'>" + (parseInt(i) + 1) + "</td>" +
+                                "<td style='background-color:#EBEEF7;'>" + user[i].username + "</td>" +
+                                "<td style='background-color:#EBEEF7;'>" + user[i].department + "</td>" +
+                                "<td style='background-color:#EBEEF7;'>" + user[i].timesSecond + "</td>" +
+                                "<td style='background-color:#EBEEF7;'>" + user[i].score + "</td>" +
+                                "</tr>";
+                        } else {
+                            str += "<tr style=\"font-size: 30px;color: #000005;\">" +
+                                "<td style='background-color:#D2DDEF;'>" + (parseInt(i) + 1) + "</td>" +
+                                "<td style='background-color:#D2DDEF;'>" + user[i].username + "</td>" +
+                                "<td style='background-color:#D2DDEF;'>" + user[i].department + "</td>" +
+                                "<td style='background-color:#D2DDEF;'>" + user[i].timesSecond + "</td>" +
+                                "<td style='background-color:#D2DDEF;'>" + user[i].score + "</td>" +
+                                "</tr>";
+                        }
+                    }
+                    $('#tbody-result').html(str);
+                }
+            }
+        }
+    }
+    var websocketChat;
+    var chatFlag = false;
+    initChat();
+
+    function initChat() {
+        if (websocketChat == null || chatFlag == false) {
+
+            //判断当前浏览器是否支持WebSocket
+            if ('websocketChat' in window) {
+                websocketChat = new WebSocket("ws://" + chathost + "/chat");
+                chatFlag = true;
+            }
+            else {
+                alert('Not support websocketChat')
+            }
+
+            //接收到消息的回调方法
+            websocketChat.onmessage = function (event) {
+                var i = Math.round(Math.random() * 7);
+                var item = {
+                    info: event.data, //文字
+                    href: '', //链接
+                    close: true, //显示关闭按钮
+                    speed: 7, //延迟,单位秒,默认6
+                    color: '#ffffff', //颜色,默认白色
+                    old_ie_color: '#ffffff' //ie低版兼容色,不能与网页背景相同,默认黑色
+                }
+                $('body').barrager(item);
+            }
+
+            websocketChat.onerror = function () {
+                websocketChat = new WebSocket("ws://" + chathost + "/chat");
+
+            }
+        }
+
+    }
+
+
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function () {
+        websocket.close();
+        websocketChat.close();
+    }
+
+
+    $('#rankTitle').on('click', function () {
+        if (chatFlag) {
+            $.fn.barrager.removeAll();
+            websocketChat.close();
+            chatFlag = false;
+        } else {
+            initChat();
+        }
+
+    });
+
+    function refreshForm(que) {
+        clearTime();
+        time();
+        $('#userTime').text("");
+        $('#id').val(que['id']);
+        $('#question').html('第' + que['id'] + '题：<br>' + que['question'] + "?");
+        $('#answer1').text("A. " + que['answerOne']);
+        $('#answer1').css({"font-size": "25px", "color": "#333"});
+        $('#answer2').text("B. " + que['answerTwo']);
+        $('#answer2').css({"font-size": "25px", "color": "#333"});
+        $('#answer3').text("C. " + que['answerThree']);
+        $('#answer3').css({"font-size": "25px", "color": "#333"});
+        $('#answer4').text("D. " + que['answerFour']);
+        $('#answer4').css({"font-size": "25px", "color": "#333333"});
+
+    }
+
+    function time() {
+        timesRun = intervalSecond;
+        interval = setInterval(function () {
+            $('#timeViewer').text(timesRun);
+            if (timesRun === 0) {
+                clearTime();
+                interval = null;
+            } else {
+                timesRun--;
+            }
+        }, 1000);
+    }
+
+    function clearTime() {
+        if (interval != null && interval != undefined) {
+            clearInterval(interval);
+        }
+    }
+</script>
+
+<script>
+
+
+    (function ($) {
+
+        $.fn.barrager = function (barrage) {
+            barrage = $.extend({
+                close: true,
+                top: 0,
+                max: 10,
+                speed: 8,
+                color: '#fff',
+                old_ie_color: '#000000'
+            }, barrage || {});
+
+            var time = new Date().getTime();
+            var barrager_id = 'barrage_' + time;
+            var id = '#' + barrager_id;
+            var div_barrager = $("<div class='barrage' id='" + barrager_id + "'></div>").appendTo($(this));
+            var window_height = $(window).height();
+            var this_height = (window_height > this.height()) ? this.height() : window_height;
+
+            var window_width = $(window).width() + 500;
+            var this_width = (window_width > this.width()) ? this.width() : window_width;
+            var top = (barrage.top == 0) ? Math.floor(Math.random() * window_height -40) : barrage.top;
+            div_barrager.css("top", top + "px");
+            div_barrager_box = $("<div class='barrage_box cl'></div>").appendTo(div_barrager);
+            if (barrage.img) {
+
+                div_barrager_box.append("<a class='portrait z' href='javascript:;'></a>");
+                var img = $("<img src='' >").appendTo(id + " .barrage_box .portrait");
+                img.attr('src', barrage.img);
+            }
+            div_barrager_box.append(" <div class='z p'></div>");
+            if (barrage.close) {
+
+                div_barrager_box.append(" <div class='close z'></div>");
+
+            }
+
+            var content = $("<span ></span>").appendTo(id + " .barrage_box .p");
+            content.attr({
+                'id': barrage.id
+            }).empty().append(barrage.info);
+            if (navigator.userAgent.indexOf("MSIE 6.0") > 0 || navigator.userAgent.indexOf("MSIE 7.0") > 0 || navigator.userAgent.indexOf("MSIE 8.0") > 0) {
+
+                content.css('color', barrage.old_ie_color);
+
+            } else {
+
+                content.css('color', barrage.color);
+
+            }
+
+            var i = 0;
+            div_barrager.css('margin-right', 0);
+
+            $(id).animate({right: this_width}, barrage.speed * 1000, function () {
+
+                $(id).remove();
+            });
+
+            div_barrager_box.mouseover(function () {
+                $(id).stop(true);
+            });
+
+            div_barrager_box.mouseout(function () {
+
+                $(id).animate({right: this_width}, barrage.speed * 1000, function () {
+
+                    $(id).remove();
+                });
+
+            });
+
+            $(id + '.barrage .barrage_box .close').click(function () {
+
+                $(id).remove();
+
+            })
+
+        }
+
+        $.fn.barrager.removeAll = function () {
+
+            $('.barrage').remove();
+
+        }
+
+    })(jQuery);
+
+</script>
+
+</html>
