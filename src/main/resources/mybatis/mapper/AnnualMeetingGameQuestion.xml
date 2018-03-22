@@ -8,7 +8,7 @@
         values
         <foreach collection="list" item="item" index="index"
                  separator=",">
-            (#{item.id},#{item.topic},#{item.answerOne},#{item.answerTwo},#{item.answerThree},#{item.answerFour},#{item.rightAnswer},toDate(now()))
+            (#{item.id},#{item.topic},#{item.answerOne},#{item.answerTwo},#{item.answerThree},#{item.answerFour},#{item.rightAnswer},now())
         </foreach>
 
     </insert>
@@ -16,18 +16,13 @@
 		select * FROM  AnnualMeetingGameQuestion order by id ASC
 	</select>
 
-    <update id="copyTableStruct">
-      	create table if not exists AnnualMeetingGameQuestion1 as AnnualMeetingGameQuestion
-    </update>
 
-    <delete id="deleteTable">
-      drop table if exists AnnualMeetingGameQuestion
+
+    <delete id="deleteAll">
+      truncate AnnualMeetingGameQuestion
     </delete>
 
 
-    <update id="renameTableName">
-      rename TABLE AnnualMeetingGameQuestion1 to AnnualMeetingGameQuestion
-    </update>
 
 
 </mapper>

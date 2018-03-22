@@ -10,10 +10,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:clickhouse://192.168.79.124:8123/dome
-      driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
+      url: jdbc:mysql://127.0.0.1:3306/answergame?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+      driver-class-name: com.mysql.jdbc.Driver
       username: root
-      password:
+      password: naah546969
       # 下面为连接池的补充设置，应用到上面所有数据源中
       initial-size: 5
       # 初始化大小，最小，最大

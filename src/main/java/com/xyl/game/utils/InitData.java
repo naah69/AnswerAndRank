@@ -174,9 +174,7 @@ public class InitData {
      */
     public static void initTable() {
         AnnualMeetingGameQuestionMapper mapper = HeapVariable.mapper;
-        mapper.copyTableStruct();
-        mapper.deleteTable();
-        mapper.renameTableName();
+        mapper.deleteAll();
         logger.info("清空数据库表");
     }
 
